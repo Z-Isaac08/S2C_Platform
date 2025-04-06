@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,100..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Palette yellow */
+  --color-light-yellow-hover: #fef9ea;
+  --color-light-yellow-active: #fdf6e0;
+  --color-light-yellow: #fcedbf;
+  
+  --color-normal-yellow: #f4c430;
+  --color-normal-yellow-hover: #dcb02b;
+  --color-normal-yellow-active: #c39d26;
+  
+
+  /* Palette Bleu */
+  --color-light-purple: #ede6f3;
+  --color-light-purple-hover: #e4d9ec;
+  --color-light-purple-active: #c7b0d8;
+
+  --color-normal-purple: #4b0082;
+  --color-normal-purple-hover: #440077;
+  --color-normal-purple-active: #3c0068;
+
+  --color-tertiary: #ffffff;
+  --color-tertiary-hover: #e6e6e6;
+  --color-tertiary-active: #cccccc;
+
+  --color-tertiary-dark: #bfbfbf;
+  --color-tertiary-dark-hover: #999999;
+  --color-tertiary-dark-active: #737373;
+
+  --color-tertiary-darker: #595959;
+}
+
+@layer base {
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .font-josefin {
+    font-family: 'Josefin Sans', sans-serif;
+  }
+}
+
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+@keyframes drawSVG {
+  0% {
+    stroke-dasharray: 0, 150;
+  }
+  100% {
+    stroke-dasharray: 150, 0;
+  }
+}
+
+.animate-draw {
+  animation: drawSVG 2s ease forwards;
+}
+
+
+#root {
+  width: 100%;
+}
+
+
