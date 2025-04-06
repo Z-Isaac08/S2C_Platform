@@ -20,7 +20,7 @@ const SoutienPage = () => {
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[112px]'>
             <Hero title={"SOUTENIR CET ÉVÈNEMENT"} subtitle={"Cet événement est gratuit parce que tu donnes. Merci !"} />
-            <div className='flex mt-6 flex-col sm:flex-row justify-center items-center gap-4'>
+            <div className='flex mt-6 flex-col px-6 sm:flex-row justify-center items-center gap-4'>
                 <button
                     onClick={goToSoutienP}
                     className={`border px-6 py-3 rounded w-full sm:w-auto transition
