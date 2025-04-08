@@ -9,8 +9,6 @@ const FormPayPonct = () => {
         montant: '',
     });
 
-    const [selectedMethod, setSelectedMethod] = useState(null);
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -21,34 +19,10 @@ const FormPayPonct = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!selectedMethod) {
-            console.warn("Aucun moyen de paiement sélectionné !");
-            return;
-        }
-
         console.log("✅ Données envoyées :", {
             ...formData,
-            moyenPaiement: selectedMethod,
         });
     };
-
-    const paymentMethods = [
-        {
-            id: 'card',
-            label: 'VISA / MASTERCARD / AMERICAN EXPRESS',
-            icons: ['/card.png'],
-        },
-        {
-            id: 'momo',
-            label: 'MOBILE MONEY',
-            icons: ['/momo.png'],
-        },
-        {
-            id: 'wave',
-            label: 'WAVE',
-            icons: ['/wave.png'],
-        },
-    ];
 
     return (
         <form
@@ -61,7 +35,7 @@ const FormPayPonct = () => {
                     type="text"
                     name="nom"
                     placeholder="Nom"
-                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/50"
+                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
                     value={formData.nom}
                     onChange={handleChange}
                 />
@@ -69,7 +43,7 @@ const FormPayPonct = () => {
                     type="text"
                     name="prenoms"
                     placeholder="Prénoms"
-                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/50"
+                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
                     value={formData.prenoms}
                     onChange={handleChange}
                 />
@@ -77,7 +51,7 @@ const FormPayPonct = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/50"
+                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
                     value={formData.email}
                     onChange={handleChange}
                 />
@@ -85,7 +59,7 @@ const FormPayPonct = () => {
                     type="text"
                     name="whatsapp"
                     placeholder="Numéro whatsapp"
-                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/50"
+                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
                     value={formData.whatsapp}
                     onChange={handleChange}
                 />
@@ -94,39 +68,17 @@ const FormPayPonct = () => {
             <input
                 type="number"
                 name="montant"
+                min={0}
                 placeholder="Montant"
-                className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/70"
+                className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
                 value={formData.montant}
                 onChange={handleChange}
             />
 
-            {/* Mode de paiement */}
-            <h2 className="text-center font-semibold text-xl mb-6">Mode de paiement</h2>
-
-            <div className="flex md:flex-row flex-col items-center gap-6 justify-center">
-                {paymentMethods.map((method) => (
-                    <div
-                        key={method.id}
-                        className={`p-3 rounded-lg border-2 cursor-pointer transition ${selectedMethod === method.id
-                                ? 'border-normal-purple bg-white'
-                                : 'border-transparent hover:border-gray-400'
-                            }`}
-                        onClick={() => setSelectedMethod(method.id)}
-                    >
-                        <p className="text-sm text-center font-medium mb-2">{method.label}</p>
-                        <div className="flex justify-center gap-2">
-                            {method.icons.map((icon, index) => (
-                                <img key={index} src={icon} alt={method.label} className="h-6 sm:h-8" />
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </div>
-
             {/* Valider le paiement */}
             <button
                 type="submit"
-                className="bg-normal-purple text-white text-lg font-bold w-full mt-10 py-3 rounded-lg hover:opacity-90 transition"
+                className="bg-normal-purple text-white text-lg font-bold w-full mt-5 py-3 rounded-lg hover:opacity-90 transition"
             >
                 Valider le paiement
             </button>
