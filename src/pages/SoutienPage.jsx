@@ -18,8 +18,8 @@ const SoutienPage = () => {
     }
 
     return (
-        <section className='bg-white text-[#222] font-montserrat mt-[112px]'>
-            <Hero title={"SOUTENIR CET ÉVÈNEMENT"} subtitle={"Cet événement est gratuit parce que tu donnes. Merci !"} />
+        <section className='bg-white text-[#222] font-montserrat mt-[72px]'>
+            <Hero title={"Soutenir le S2C #3"} subtitle={"Cet événement est gratuit parce que tu donnes. Merciiiiiiii !"} />
             <div className='flex mt-6 flex-col px-6 sm:flex-row justify-center items-center gap-4'>
                 <button
                     onClick={goToSoutienP}
@@ -29,7 +29,7 @@ const SoutienPage = () => {
                             : 'border-normal-purple text-normal-purple hover:bg-normal-purple hover:text-white'
                         }`}
                 >
-                    Soutien ponctuel
+                    Je donnne
                 </button>
                 <button
                     onClick={goToSoutienR}
@@ -39,7 +39,7 @@ const SoutienPage = () => {
                             : 'border-normal-yellow text-normal-yellow hover:bg-normal-yellow hover:text-[#222]'
                         }`}
                 >
-                    Soutien récurrent
+                    Je m'engage
                 </button>
             </div>
             <Outlet />

@@ -42,13 +42,13 @@ export default function S2CEventPage() {
     }, []);
 
     return (
-        <main className="bg-white text-[#222] font-montserrat mt-[112px]">
+        <main className="bg-white text-[#222] font-montserrat mt-[72px]">
             <motion.div
                 className="relative h-[500px] sm:h-[600px] bg-[#222]"
                 variants={slideUp}
                 initial="initial"
                 whileInView="whileInView"
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
             >
                 <img
@@ -65,7 +65,7 @@ export default function S2CEventPage() {
                         Lorem ipsum dolor sit amet consectetur. Sed bibendum at nunc egestas rhoncus. Eros sed habitant lacus mauris urna.
                     </p>
                     <button className="mt-10 bg-normal-purple text-white text-base sm:text-lg px-16 py-3 rounded-full hover:bg-normal-purple-hover transition">
-                        Je m'inscris
+                        Je participe gratuitement
                     </button>
                 </div>
             </motion.div>
@@ -95,14 +95,11 @@ export default function S2CEventPage() {
             {/* Soutien Section */}
             <div className="py-10 text-center px-4">
                 <h2 className="text-lg sm:text-xl font-semibold mb-6">
-                    Soutenir notre événement
+                    SOUTENIR NOTRE ÉVÉNEMENT
                 </h2>
-                <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <div className="flex justify-center items-center">
                     <button onClick={goToSoutienP} className="border border-normal-purple text-normal-purple px-6 py-3 rounded hover:bg-normal-purple hover:text-white transition w-full sm:w-auto">
-                        Soutien ponctuel
-                    </button>
-                    <button onClick={goToSoutienR} className="border border-normal-yellow text-normal-yellow px-6 py-3 rounded hover:bg-normal-yellow hover:text-[#222] transition w-full sm:w-auto">
-                        Soutien récurrent
+                        Je particpe financièrement
                     </button>
                 </div>
             </div>
@@ -110,7 +107,7 @@ export default function S2CEventPage() {
             {/* Boutique Section */}
             <div className="bg-gray-100 py-10 px-4">
                 <h2 className="text-center text-lg sm:text-xl font-semibold mb-8">
-                    La boutique S2C
+                    MA BOUTIQUE S2C
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                     {[1, 2, 3].map((item) => (

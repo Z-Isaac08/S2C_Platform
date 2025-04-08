@@ -5,7 +5,7 @@ import {
     FaInstagram,
 } from "react-icons/fa";
 import { MdEmail, MdPhone } from "react-icons/md";
-import LogoWhite from "../assets/logo_white.png"
+import LogoWhite from "../assets/logo_white.svg"
 import { Link } from "react-router";
 
 export default function Footer() {
@@ -14,11 +14,11 @@ export default function Footer() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center max-w-3xl mx-auto">
                 {/* Logo / Titre */}
                 <div className="flex items-center space-x-2">
-                    <img src={LogoWhite} alt="logo" className="h-40 w-auto" />
+                    <img src={LogoWhite} alt="logo" className="h-14 w-auto" />
                 </div>
                 <p className="text-sm font-josefin text-gray-200 max-w-md">
-                    Rejoignez-nous pour une expérience spirituelle et humaine unique,
-                    autour de la louange, la prière et la réflexion. Édition #3.
+                    Rejoignez-nous pour une expérience spirituelle et humaine unique, 
+                    autour de la louange, l'adoration et la prière.
                 </p>
 
                 {/* Icônes de contact */}
@@ -30,6 +30,10 @@ export default function Footer() {
                     <Link to="tel:+2250788257233" className="hover:text-yellow-400 flex items-center space-x-2">
                         <MdPhone size={22} />
                         <span>07 88 25 72 33</span>
+                    </Link>
+                    <Link to="mailto:lastructure.s2c@gmail.com" className="hover:text-yellow-400 flex items-center space-x-2">
+                        <MdEmail size={22} />
+                        <span>lastructure.s2c@gmail.com</span>
                     </Link>
                 </div>
 
@@ -50,8 +54,8 @@ export default function Footer() {
                 </div>
 
                 {/* Footer text */}
-                <p className="text-xs font-montserrat text-gray-300 mt-8">
-                    © {new Date().getFullYear()} Salon Célébration & Contemplation. Tous droits réservés.
+                <p className="text-xs font-montserrat text-gray-300 mt-5">
+                    &copy;{new Date().getFullYear()} - Salon de Célébration & de Contemplation - Tous droits réservés
                 </p>
             </div>
         </footer>
