@@ -25,7 +25,7 @@ const FormPayPonct = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
     
         const payload = {
@@ -35,9 +35,9 @@ const FormPayPonct = () => {
             telephone: formData.whatsapp,
             montant: formData.montant,
         };
-        const API_URL = process.env.REACT_APP_API_URL;
+        
         try {
-            const response = await fetch(`{$API_URL}/api/soutiens/create-with-participant`, {
+            const response = await fetch("http://127.0.0.1:5000/api/soutiens/create-with-participant", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const FormPayPonct = () => {
                 window.open(data.redirectUrl,'_blank');
             
 
-                console.log('Participant et soutien créés:', data);
+                // console.log('Participant et soutien créés:', data);
                 // : reset du form
                 setFormData({
                     nom: '',
