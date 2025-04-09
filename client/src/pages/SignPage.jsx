@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import Hero from '../components/Hero'
 import QRCode from 'react-qr-code'
+import ReCAPTCHA from 'react-google-recaptcha';
+
+
+
+
 
 const SignPage = () => {
     const [formData, setFormData] = useState({
@@ -9,23 +14,50 @@ const SignPage = () => {
         email: '',
         whatsapp: '',
     })
-
     const [qrData, setQrData] = useState('')
     const [submitted, setSubmitted] = useState(false)
+
+    //ajout du reCaptcha control!
+    const [captchaToken, setCaptchaToken] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData({ ...formData, [name]: value })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const data = `Nom : ${formData.nom}\nPrénoms : ${formData.prenoms}\nEmail : ${formData.email}\nWhatsApp : ${formData.whatsapp}`
-        setQrData(data)
-        setSubmitted(true)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!captchaToken) {
+            alert("Veuillez valider le reCAPTCHA !");
+            return;
+          }
+          const payload = {
+            ...formData,
+            captcha: captchaToken
+          }
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/inscriptions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            });
 
-        // Tu peux ici faire un appel à un backend pour envoyer par mail + whatsapp
-    }
+            const result = await response.json();
+
+            if (!response.ok) throw new Error(result.error || 'Erreur inconnue');
+
+            // reception d code qr ....
+            setQrData(result.qrCode);
+            setSubmitted(true);
+
+        } catch (err) {
+            console.error(err);
+            alert("Une erreur est survenue : " + err.message);
+        }
+    };
+
 
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[72px]'>
@@ -39,6 +71,10 @@ const SignPage = () => {
                         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
                         <input type="text" name="whatsapp" placeholder="Numéro whatsapp" value={formData.whatsapp} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
                     </div>
+                    <ReCAPTCHA
+                        sitekey="6Ld_RRArAAAAAE3WGo8_qk4x4_Ew-C55CVRUcRUp"
+                        onChange={token => setCaptchaToken(token)}
+                    />
                     <button type="submit" className="bg-normal-purple text-white py-2 px-4 rounded hover:bg-purple-800 transition">
                         Valider & Recevoir QR
                     </button>

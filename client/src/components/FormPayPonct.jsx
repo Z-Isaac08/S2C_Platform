@@ -91,9 +91,9 @@ const FormPayPonct = () => {
                     name="prenoms"
                     placeholder="Prénoms"
                     className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
-                    value={formData.prenoms}
+                    value={formData.prenoms||" "}
                     onChange={handleChange}
-                    required
+                    
                 />
                 <input
                     type="email"
