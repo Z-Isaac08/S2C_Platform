@@ -2,12 +2,11 @@ const Participant = require('../Models/participants.model');
 const Inscription = require('../Models/inscription.model');
 const QRCode = require('qrcode');
 const crypto = require('crypto');
-const {sendMail} = require('../Utils/sendMail'); // à créer
-const {sendWhatsApp} = require('../Utils/sendWhatsapp'); // à créer
+const fs = require('fs');
+const path = require('path');
+const { sendMail } = require('../Utils/sendMail'); // à créer
 const { verifyCaptcha } = require('../Utils/verifyCaptcha'); // done
-
-
-
+const envoyerQRparWhatsApp = require('../Utils/sendWhatsapp');
 
 exports.create = async (req, res) => {
   try {
@@ -43,40 +42,47 @@ exports.create = async (req, res) => {
       participant: participant._id,
       qr_code_hash: hash,
     });
-    await inscription.save();
 
     // 5. Générer le QR code à partir du hash
     const qrBuffer = await QRCode.toBuffer(hash);
-const htmlContent = `
-  <h2>Salut ${nom} 👋</h2>
-  <p>Merci pour ton inscription à l'événement !</p>
-  <p>Ton QR code est en pièce jointe 📎</p>
-`;
+    const qrCodeBase64 = qrBuffer.toString('base64'); // Convertir le buffer en base64
 
-const attachments = [
-  {
-    filename: 'qr-code.png',
-    content: qrBuffer,
-    contentType: 'image/png',
-  },
-];
+    // Sauvegarder le QR code dans la base de données
+    inscription.qr_code_image = `data:image/png;base64,${qrCodeBase64}`;
+    await inscription.save();
 
-await sendMail(email, 'Confirmation d’inscription au S2C#3 🎉', htmlContent, attachments);
+    // Chemin du logo de l'entreprise et du code QR
+    const logoPath = path.join(__dirname, 'mail', 'logo.svg');
+    const htmlTemplate = fs.readFileSync(path.join(__dirname, 'mail', 'email-template.html'), 'utf-8');
 
-    // await sendMail(email, qrCodeDataURL);
-    // await sendWhatsApp(whatsapp, qrCodeDataURL);
+    const attachments = [
+      {
+        filename: 'qr-code.png',
+        content: qrBuffer,
+        contentType: 'image/png',
+      },
+      {
+        filename: 'logo.svg',
+        path: logoPath,
+        cid: 'logo-image',
+      },
+    ];
 
-    // 7. Répondre au front avec succès
+    // Envoyer un email avec le QR code en pièce jointe
+    await sendMail(email, 'Confirmation d’inscription au S2C#3 🎉', htmlTemplate, attachments);
+    await envoyerQRparWhatsApp(participant.telephone, inscription.qr_code_image);
+
+    // Répondre au front avec succès
     res.status(201).json({
       message: "Inscription réussie",
-      qrCode: hash,
+      qrCode: inscription.qr_code_image, 
     });
-
 
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
 
 
 exports.findAll = async (req, res) => {

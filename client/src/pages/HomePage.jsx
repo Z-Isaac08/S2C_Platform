@@ -26,13 +26,7 @@ export default function S2CEventPage() {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     };
 
-    const goToSoutienP = () => {
-        navigate('/soutien/ponctuel');
-    }
-    
-    const goToSoutienR = () => {
-        navigate('/soutien/recurrent');
-    }
+    const goToChoix = () => navigate('/soutien') 
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -98,7 +92,7 @@ export default function S2CEventPage() {
                     SOUTENIR NOTRE ÉVÉNEMENT
                 </h2>
                 <div className="flex justify-center items-center">
-                    <button onClick={goToSoutienP} className="border border-normal-purple text-normal-purple px-6 py-3 rounded hover:bg-normal-purple hover:text-white transition w-full sm:w-auto">
+                    <button onClick={goToChoix} className="border border-normal-purple text-normal-purple px-6 py-3 rounded hover:bg-normal-purple hover:text-white transition w-full sm:w-auto">
                         Je participe financièrement
                     </button>
                 </div>

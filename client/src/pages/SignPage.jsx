@@ -3,38 +3,35 @@ import Hero from '../components/Hero'
 import QRCode from 'react-qr-code'
 import ReCAPTCHA from 'react-google-recaptcha';
 
-
-
-
-
 const SignPage = () => {
     const [formData, setFormData] = useState({
         nom: '',
         prenoms: '',
         email: '',
         whatsapp: '',
-    })
-    const [qrData, setQrData] = useState('')
-    const [submitted, setSubmitted] = useState(false)
-
-    //ajout du reCaptcha control!
+    });
+    const [qrData, setQrData] = useState('');
+    const [submitted, setSubmitted] = useState(false);
+    const [message, setMessage] = useState('');
     const [captchaToken, setCaptchaToken] = useState(null);
 
     const handleChange = (e) => {
-        const { name, value } = e.target
-        setFormData({ ...formData, [name]: value })
-    }
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!captchaToken) {
             alert("Veuillez valider le reCAPTCHA !");
             return;
-          }
-          const payload = {
+        }
+
+        const payload = {
             ...formData,
             captcha: captchaToken
-          }
+        };
+
         try {
             const response = await fetch('http://127.0.0.1:5000/api/inscriptions', {
                 method: 'POST',
@@ -48,8 +45,14 @@ const SignPage = () => {
 
             if (!response.ok) throw new Error(result.error || 'Erreur inconnue');
 
-            // reception d code qr ....
-            setQrData(result.qrCode);
+            // Message personnalisé selon le cas
+            if (result.message.includes('déjà inscrit')) {
+                setMessage("Merci 🙏 Vous êtes déjà inscrit !");
+            } else {
+                setMessage("Inscription réussie 🎉");
+            }
+
+            setQrData(result.qrCode || '');
             setSubmitted(true);
 
         } catch (err) {
@@ -58,6 +61,13 @@ const SignPage = () => {
         }
     };
 
+    const resetForm = () => {
+        setSubmitted(false);
+        setQrData('');
+        setMessage('');
+        setFormData({ nom: '', prenoms: '', email: '', whatsapp: '' });
+        setCaptchaToken(null);
+    };
 
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[72px]'>
@@ -71,23 +81,38 @@ const SignPage = () => {
                         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
                         <input type="text" name="whatsapp" placeholder="Numéro whatsapp" value={formData.whatsapp} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
                     </div>
+
                     <ReCAPTCHA
                         sitekey="6Ld_RRArAAAAAE3WGo8_qk4x4_Ew-C55CVRUcRUp"
                         onChange={token => setCaptchaToken(token)}
                     />
-                    <button type="submit" className="bg-normal-purple text-white py-2 px-4 rounded hover:bg-purple-800 transition">
+
+                    <button type="submit" className="bg-normal-purple w-1/2 mx-auto text-white cursor-pointer py-3 px-8 mt-4 rounded hover:bg-purple-800 transition">
                         Valider & Recevoir QR
                     </button>
                 </form>
             ) : (
                 <div className="text-center my-10">
-                    <h2 className="text-xl font-semibold mb-4">Voici ton QR Code pour l’événement :</h2>
-                    <QRCode value={qrData} size={200} className='mx-auto' />
-                    <p className="mt-4">📩 Tu vas aussi le recevoir par mail et WhatsApp.</p>
+                    <h2 className="text-xl font-semibold mb-4">{message}</h2>
+
+                    {qrData ? (
+                        <>
+                            <p className="mb-6">📩 Tu vas recevoir ton QR Code par mail et WhatsApp.</p>
+                        </>
+                    ) : (
+                        <p className="text-gray-600 mt-4">Pas de QR Code disponible.</p>
+                    )}
+
+                    <button
+                        onClick={resetForm}
+                        className="mt-6 bg-normal-yellow cursor-pointer text-[#222] py-2 px-4 rounded hover:bg-yellow-400 transition"
+                    >
+                        Retour au formulaire
+                    </button>
                 </div>
             )}
         </section>
-    )
-}
+    );
+};
 
-export default SignPage
+export default SignPage;
