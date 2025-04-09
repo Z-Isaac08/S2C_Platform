@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 const FormPayRect = () => {
+    const inputRef = useRef(null);
+
     const [formData, setFormData] = useState({
         nom: '',
         prenoms: '',
@@ -14,8 +16,6 @@ const FormPayRect = () => {
         montant: '',
     });
 
-
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -24,6 +24,14 @@ const FormPayRect = () => {
     const handleRadioChange = (value) => {
         setFormData(prev => ({ ...prev, periodicite: value }));
     };
+
+
+    const handleWheel = (e) => {
+        if (document.activeElement === inputRef.current) {
+            e.preventDefault();
+        }
+    };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -47,6 +55,8 @@ const FormPayRect = () => {
                 type="number"
                 name="montant"
                 min={0}
+                step={5}
+                onwheel={handleWheel}
                 placeholder="Montant"
                 value={formData.montant}
                 onChange={handleChange}
@@ -76,6 +86,7 @@ const FormPayRect = () => {
                             type="number"
                             name="autrePeriodicite"
                             min={0}
+                            onwheel={handleWheel}
                             placeholder="Entrez la périodicité"
                             value={formData.autrePeriodicite}
                             onChange={handleChange}
@@ -104,6 +115,7 @@ const FormPayRect = () => {
                         type="number"
                         name="duree"
                         min={0}
+                        onwheel={handleWheel}
                         placeholder="Durée"
                         value={formData.duree}
                         onChange={handleChange}
