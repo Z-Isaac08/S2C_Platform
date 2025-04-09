@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 const FormPayPonct = () => {
+    const inputRef = useRef(null);
+
     const [formData, setFormData] = useState({
         nom: '',
         prenoms: '',
@@ -15,6 +17,12 @@ const FormPayPonct = () => {
             ...prev,
             [name]: value,
         }));
+    };
+
+    const handleWheel = (e) => {
+        if (document.activeElement === inputRef.current) {
+            e.preventDefault();
+        }
     };
 
     const handleSubmit = (e) => {
@@ -69,6 +77,8 @@ const FormPayPonct = () => {
                 type="number"
                 name="montant"
                 min={0}
+                step={5}
+                onwheel={handleWheel}
                 placeholder="Montant"
                 className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
                 value={formData.montant}
