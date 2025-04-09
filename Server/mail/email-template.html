@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        /* Importation des polices */
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,400&family=Montserrat:wght@400;700&display=swap");
+
+        body {
+            font-family: "Montserrat", sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4b0082;
+            font-family: "Josefin Sans", sans-serif;
+            font-style: italic;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333333;
+        }
+
+        .cta-button {
+            background-color: #f4c430;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #e3b328;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            color: #facc15;
+            /* yellow-400 */
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+            font-size: 20px;
+        }
+
+        .social-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            color: #facc15;
+            /* yellow-400 */
+        }
+
+        .copyright {
+            font-size: 12px;
+            font-family: 'Montserrat', sans-serif;
+            color: #d1d5db;
+            /* gray-300 */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <img src="cid:logo-image" alt="Logo de l'entreprise" class="logo" />
+        <h1>Votre Code QR est prêt !</h1>
+        <p>Bonjour, voici votre code QR pour accéder à notre plateforme :</p>
+        <img src="cid:qr-code-image" alt="Code QR" />
+        <footer>
+            <div class="footer-container">
+                <div class="contact-links">
+                    <a href="tel:+2250757414458" class="contact-link">
+                        <span class="phone-icon">📞</span>
+                        <span>07 57 41 44 58</span>
+                    </a>
+                    <a href="tel:+2250788257233" class="contact-link">
+                        <span class="phone-icon">📞</span>
+                        <span>07 88 25 72 33</span>
+                    </a>
+                    <a href="mailto:lastructure.s2c@gmail.com" class="contact-link">
+                        <span class="email-icon">✉️</span>
+                        <span>lastructure.s2c@gmail.com</span>
+                    </a>
+                </div>
+
+                <!-- Réseaux sociaux -->
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <span class="facebook-icon">f</span>
+                    </a>
+                    <a href="#" class="social-link">
+                        <span class="youtube-icon">▶️</span>
+                    </a>
+                    <a href="https://wa.me/2250788257233" class="social-link">
+                        <span class="whatsapp-icon">💬</span>
+                    </a>
+                    <a href="#" class="social-link">
+                        <span class="instagram-icon">📷</span>
+                    </a>
+                </div>
+
+                <!-- Footer text -->
+                <p class="copyright">
+                    &copy;<span id="current-year"></span> - Salon de Célébration & de Contemplation - Tous droits
+                    réservés
+                </p>
+        </footer>
+    </div>
+</body>
+
+</html>
