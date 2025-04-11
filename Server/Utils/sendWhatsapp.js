@@ -9,13 +9,14 @@ const client = twilio(accountSid, authToken);
 const envoyerQRparWhatsApp = async (telephone, qrCodeUrl) => {
     try {
         const message = await client.messages.create({
-            from: 'whatsapp:+14155238886', // Le numéro Twilio WhatsApp
+            from: 'whatsapp:+14155238886',
             to: `whatsapp:${telephone}`,
             body: `Bienvenue au S2C #3 ! Voici ton QR Code. Merci pour ton inscription`,
-            mediaUrl: [qrCodeUrl] // le lien vers le QR code (hébergé publiquement)
+            mediaUrl: [qrCodeUrl]
         });
 
         console.log('Message envoyé ! SID :', message.sid);
+        console.log({telephone, qrCodeUrl});
         return message.sid;
     } catch (err) {
         console.error('Erreur lors de l’envoi du message WhatsApp :', err.message);

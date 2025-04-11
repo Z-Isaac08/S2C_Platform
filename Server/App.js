@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 
 const connectDB = require('./Config/database');
 const cors = require('cors');
@@ -14,6 +15,7 @@ app.use(cors({
 // Connexion MongoDB
 connectDB();
 // Routes
+app.use('/qrcodes', express.static(path.join(__dirname, 'public/qrcodes')));
 app.use('/api/participants', require('./Routes/participants.route'));
 app.use('/api/inscriptions', require('./Routes/inscription.route'));
 app.use('/api/soutiens', require('./Routes/soutien.route'));

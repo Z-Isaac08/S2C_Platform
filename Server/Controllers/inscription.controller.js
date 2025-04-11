@@ -45,7 +45,11 @@ exports.create = async (req, res) => {
 
     // 5. Générer le QR code à partir du hash
     const qrBuffer = await QRCode.toBuffer(hash);
-    const qrCodeBase64 = qrBuffer.toString('base64'); // Convertir le buffer en base64
+    const qrCodeBase64 = qrBuffer.toString('base64');
+    const filePath = path.join(__dirname, '..', 'public', 'qrcodes', `${hash}.png`);
+    fs.writeFileSync(filePath, qrBuffer);
+
+    const qrCodeUrl = `https://127.0.0.1:5000/qrcodes/${hash}.png`;
 
     // Sauvegarder le QR code dans la base de données
     inscription.qr_code_image = `data:image/png;base64,${qrCodeBase64}`;
@@ -70,12 +74,12 @@ exports.create = async (req, res) => {
 
     // Envoyer un email avec le QR code en pièce jointe
     await sendMail(email, 'Confirmation d’inscription au S2C#3 🎉', htmlTemplate, attachments);
-    await envoyerQRparWhatsApp(participant.telephone, inscription.qr_code_image);
+    await envoyerQRparWhatsApp(participant.telephone, qrCodeUrl);
 
     // Répondre au front avec succès
     res.status(201).json({
       message: "Inscription réussie",
-      qrCode: inscription.qr_code_image, 
+      qrCode: inscription.qr_code_image,
     });
 
   } catch (err) {
