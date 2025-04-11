@@ -13,7 +13,7 @@ const SoutienPage = () => {
 
     const goToSoutienP = () => navigate('/soutien/ponctuel')
     const goToSoutienR = () => navigate('/soutien/recurrent')
-    const goToChoix = () => navigate('/soutien') 
+    const goToSign = () => navigate('/s') 
 
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[72px]'>
@@ -53,8 +53,8 @@ const SoutienPage = () => {
                         className="my-10 px-6 text-center max-w-4xl mx-auto"
                     >
                         <h2 className="text-xl font-semibold mb-4">Comment veux-tu soutenir ?</h2>
-                        <p className="mb-4">👉 <span className='font-bold text-lg text-normal-purple'>Soutien ponctuel</span> : un don unique, pour encourager ponctuellement le projet.</p>
-                        <p>👉 <span className='font-bold text-lg text-normal-yellow'>Soutien récurrent</span> : un engagement sur une période définie pour soutenir le projet dans la durée.</p>
+                        <p className="mb-4"><span className='font-bold text-lg text-normal-purple'>Je donne</span> : un don unique, pour encourager ponctuellement le projet.</p>
+                        <p><span className='font-bold text-lg text-normal-yellow'>Je m'engage</span> : un engagement sur une période définie pour soutenir le projet dans la durée.</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -68,12 +68,6 @@ const SoutienPage = () => {
                     transition={{ duration: 0.5 }}
                     className="mt-8 px-6"
                 >
-                    <button
-                        onClick={goToChoix}
-                        className="mb-4 text-sm underline text-normal-purple hover:text-purple-800 transition"
-                    >
-                        ⬅ Revenir au choix
-                    </button>
                     <Outlet />
                 </motion.div>
             )}

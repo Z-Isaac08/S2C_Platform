@@ -27,6 +27,7 @@ export default function S2CEventPage() {
     };
 
     const goToChoix = () => navigate('/soutien') 
+    const goToSign = () => navigate('/inscription') 
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -58,7 +59,7 @@ export default function S2CEventPage() {
                     <p className="mt-4 max-w-2xl mx-auto font-josefin text-sm sm:text-base md:text-lg">
                         Lorem ipsum dolor sit amet consectetur. Sed bibendum at nunc egestas rhoncus. Eros sed habitant lacus mauris urna.
                     </p>
-                    <button className="mt-10 bg-normal-purple text-white text-base sm:text-lg px-16 py-3 rounded-full hover:bg-normal-purple-hover transition">
+                    <button onClick={goToSign} className="mt-10 bg-normal-purple cursor-pointer text-white text-base sm:text-lg px-16 py-3 rounded-full hover:bg-normal-purple-hover transition">
                         Je participe gratuitement
                     </button>
                 </div>
