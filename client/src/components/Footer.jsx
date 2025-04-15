@@ -22,7 +22,7 @@ export default function Footer() {
                 </p>
 
                 {/* Icônes de contact */}
-                <div className="flex font-josefin justify-center gap-5 items-center space-y-1">
+                <div className="flex flex-col md:flex-row font-josefin justify-center gap-5 items-center space-y-1">
                     <Link to="tel:+2250757414458" className="hover:text-yellow-400 flex items-center space-x-2">
                         <MdPhone size={22} />
                         <span>07 57 41 44 58</span>

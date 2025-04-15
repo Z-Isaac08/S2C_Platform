@@ -87,6 +87,23 @@ const FormPayRect = () => {
         });
     };
 
+    const isFormValid = () => {
+        const requiredFields = ['nom', 'prenoms', 'email', 'whatsapp', 'montant', 'duree', 'periodicite'];
+
+        // Vérifie les champs de base
+        for (let field of requiredFields) {
+            if (!formData[field]) return false;
+        }
+
+        // Si périodicité est "Autre", il faut aussi vérifier les sous-champs
+        if (formData.periodicite === "Autre") {
+            if (!formData.autrePeriodicite || !formData.unitPeriodicite) return false;
+        }
+
+        return true;
+    };
+
+
 
     return (
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-6 mt-10">
@@ -108,7 +125,7 @@ const FormPayRect = () => {
                 onChange={handleChange}
                 className="outline-none border p-3 rounded w-full focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
             />
-            <div className="flex flex-col md:flex-row justify-center items-start gap-x-10 my-8">
+            <div className="flex flex-col md:flex-row justify-center items-center gap-x-10 my-8">
 
                 {/* Périodicité */}
                 <div className="w-full md:w-1/2">
@@ -128,33 +145,33 @@ const FormPayRect = () => {
                         ))}
                     </div>
 
-                    <div className="mt-5 flex flex-col sm:flex-row gap-4 items-center justify-center">
-                        <input
-                            type="number"
-                            name="autrePeriodicite"
-                            min={0}
-                            onWheel={handleWheel}
-                            placeholder="Entrez la périodicité"
-                            value={formData.autrePeriodicite}
-                            onChange={handleChange}
-                            disabled={formData.periodicite !== "Autre"}
-                            className="outline-none border p-3 rounded w-full sm:w-1/2 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70 disabled:bg-gray-100"
-                        />
-                        <select
-                            name="unitPeriodicite"
-                            value={formData.unitPeriodicite}
-                            onChange={handleChange}
-                            disabled={formData.periodicite !== "Autre"}
-                            className="outline-none border p-3 rounded w-full sm:w-auto focus:ring-2 focus:border-0 focus:ring-normal-yellow/70 disabled:bg-gray-100"
-                        >
-                            <option value="An">An</option>
-                            <option value="Mois">Mois</option>
-                        </select>
-                    </div>
+                    {formData.periodicite === "Autre" && (
+                        <div className="mt-5 flex flex-col sm:flex-row gap-4 items-center justify-center">
+                            <input
+                                type="number"
+                                name="autrePeriodicite"
+                                min={0}
+                                onWheel={handleWheel}
+                                placeholder="Entrez la périodicité"
+                                value={formData.autrePeriodicite}
+                                onChange={handleChange}
+                                className="outline-none border p-3 rounded w-full sm:w-1/2 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
+                            />
+                            <select
+                                name="unitPeriodicite"
+                                value={formData.unitPeriodicite}
+                                onChange={handleChange}
+                                className="outline-none border p-3 rounded w-full sm:w-auto focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
+                            >
+                                <option value="An">An</option>
+                                <option value="Mois">Mois</option>
+                            </select>
+                        </div>
+                    )}
                 </div>
 
                 {/* Durée d’engagement */}
-                <div className="w-full md:w-1/2">
+                <div className="w-full md:w-1/2 md:mt-0 mt-8">
                     <p className="font-semibold text-center mb-4">Durée d'engagement</p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <input
@@ -187,10 +204,15 @@ const FormPayRect = () => {
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-12">
                 <button
                     type="submit"
-                    className="bg-normal-yellow cursor-pointer text-[#1e1e1e] text-lg font-semibold w-1/2 px-6 py-3 rounded-lg hover:opacity-90 transition"
+                    disabled={error || !isFormValid()}
+                    className={`${(error || !isFormValid())
+                        ? 'bg-gray-400 cursor-not-allowed text-white'
+                        : 'bg-normal-yellow cursor-pointer hover:opacity-90'
+                        } text-[#1e1e1e] text-lg font-semibold w-1/2 px-6 py-3 rounded-lg transition`}
                 >
                     Je m’engage
                 </button>
+
             </div>
 
         </form>

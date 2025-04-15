@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 
-const images = ["/img1.jpg", "/img2.jpg", "/img3.jpg"];
+const images = ["/img1.jpg", "/img2.jpg", "/img3.jpg", "/img4.jpg", "/img5.jpg", "/img6.jpg"];
 
 const slideUp = {
     initial: { opacity: 0, y: 40 },
@@ -17,7 +17,7 @@ export default function S2CEventPage() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % images.length);
-        }, 5000);
+        }, 6000);
         return () => clearInterval(interval);
     }, []);
 
@@ -32,9 +32,14 @@ export default function S2CEventPage() {
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
             >
-                <img
+                <motion.img
+                    key={currentIndex}
                     src={images[currentIndex]}
                     alt="carousel"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 2 }}
                     className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-[#222] opacity-50"></div>
@@ -58,29 +63,36 @@ export default function S2CEventPage() {
 
             {/* --- Infos Générales --- */}
             <section className="bg-normal-purple text-white py-10 px-4">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-10 max-w-6xl mx-auto">
+                <div className="flex flex-col md:flex-row justify-center items-center md:items-start md:justify-between gap-10 max-w-6xl mx-auto">
                     <div className="md:w-1/2">
                         <h3 className="text-center md:text-left font-semibold text-lg mb-2">
-                            Infos générales
+                            Informations générales
                         </h3>
                         <p className="text-center md:text-left text-sm sm:text-base">
-                            - Mouvement de jeunes chrétiens passionnés de Christ visant à
+                            Mouvement de jeunes chrétiens passionnés de Christ visant à
                             faire voir et vivre Dieu en cette génération.
                             <br />
-                            - Le #S2C a vu le jour en Mai 2023 par le leader Privat Zrannoueu
+                            <br />
+                            Le #S2C a vu le jour en Mai 2023 grâce au leader Privat Zrannoueu
                             sous inspiration du Saint-Esprit pendant la période de service
-                            dans la maison ACE !
+                            dans la maison ACE.
                         </p>
                     </div>
 
-                    <div className="md:w-1/2 border-l-0 md:border-l-2 border-normal-yellow pl-0 md:pl-6">
+                    <div className="md:w-1/2 w-10/12 h-[180px] border-t-2 md:border-t-0 md:border-l-2 border-normal-yellow pt-6 md:pt-0 pl-0 md:pl-6">
                         <h3 className="text-center md:text-left font-semibold text-lg mb-2">
                             S2C #3
                         </h3>
                         <p className="text-center md:text-left text-sm sm:text-base">
-                            - 30 Mai 2025, 21h00
+                            <span className="font-semibold">Date</span> : 30 Mai 2025, à partir de 21h00
                             <br />
-                            - AD, Temple El-Shammah, Marcory Zone 4
+                            <span className="font-semibold">Lieu</span> : AD, Temple El-Shammah, Marcory Zone 4
+                            <br />
+                            <br />
+                            <span className="font-semibold">Thème</span> :<span className="font-bold"> LE RÉVEIL AUTHENTIQUE</span>
+                            <br />
+                            <span className="font-semibold">Intervenants</span> : Pasteur<span className="font-bold"> Emmanuel YAO</span>,
+                            Chantre<span className="font-bold"> Emmanuel SORO</span> et bien d'autres...
                         </p>
                     </div>
                 </div>
@@ -89,7 +101,7 @@ export default function S2CEventPage() {
             {/* --- Soutien Section --- */}
             <section className="py-10 text-center px-4">
                 <h2 className="text-lg sm:text-xl font-semibold mb-6">
-                    SOUTENIR NOTRE ÉVÉNEMENT
+                    SOUTENIR NOTRE ÉVÈNEMENT
                 </h2>
                 <div className="flex justify-center items-center">
                     <button

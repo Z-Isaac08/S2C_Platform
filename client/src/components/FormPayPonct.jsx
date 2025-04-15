@@ -13,7 +13,7 @@ const FormPayPonct = () => {
         email: '',
         whatsapp: '',
         montant: '',
-        moyen_paiement: 'carte', // par défaut
+        moyen_paiement: '', // par défaut
     });
 
     const handleChange = (e) => {
@@ -60,7 +60,7 @@ const FormPayPonct = () => {
                         email: '',
                         whatsapp: '',
                         montant: '',
-                        moyen_paiement: 'carte',
+                        moyen_paiement: '',
                     });
                 } else {
                     console.error('Erreur lors de la création:', data.error);
@@ -71,6 +71,17 @@ const FormPayPonct = () => {
         } catch (err) {
             console.error('Erreur réseau:', err);
         }
+    };
+
+    const isFormValid = () => {
+        const requiredFields = ['nom', 'prenoms', 'email', 'whatsapp'];
+
+        // Vérifie les champs de base
+        for (let field of requiredFields) {
+            if (!formData[field]) return false;
+        }
+
+        return true;
     };
 
     return (
@@ -143,9 +154,13 @@ const FormPayPonct = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-12">
-                <button
+            <button
                     type="submit"
-                    className="bg-normal-purple text-white text-lg cursor-pointer font-semibold w-1/2 px-6 py-3 rounded-lg hover:opacity-90 transition"
+                    disabled={!isFormValid()}
+                    className={`${!isFormValid()
+                            ? 'bg-gray-400 cursor-not-allowed text-white'
+                            : 'bg-normal-purple cursor-pointer  hover:opacity-90'
+                        } text-white text-lg font-semibold w-1/2 px-6 py-3 rounded-lg transition`}
                 >
                     Je donne
                 </button>
