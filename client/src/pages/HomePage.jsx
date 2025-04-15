@@ -17,7 +17,7 @@ export default function S2CEventPage() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % images.length);
-        }, 6000);
+        }, 4000);
         return () => clearInterval(interval);
     }, []);
 
@@ -39,7 +39,7 @@ export default function S2CEventPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 2 }}
+                    transition={{ duration: 3 }}
                     className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-[#222] opacity-50"></div>
@@ -114,7 +114,7 @@ export default function S2CEventPage() {
             </section>
 
             {/* --- Boutique Section --- */}
-            <section className="bg-gray-100 py-10 px-4">
+            {/* <section className="bg-gray-100 py-10 px-4">
                 <h2 className="text-center text-lg sm:text-xl font-semibold mb-8">
                     MA BOUTIQUE S2C
                 </h2>
@@ -133,7 +133,7 @@ export default function S2CEventPage() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
         </main>
     );
 }

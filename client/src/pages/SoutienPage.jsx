@@ -12,8 +12,7 @@ const SoutienPage = () => {
     const showDescriptif = !isPonctuel && !isRecurrent
 
     const goToSoutienP = () => navigate('/soutien/ponctuel')
-    const goToSoutienR = () => navigate('/soutien/recurrent')
-    const goToSign = () => navigate('/s') 
+    const goToSoutienR = () => navigate('/soutien/recurrent') 
 
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[72px]'>

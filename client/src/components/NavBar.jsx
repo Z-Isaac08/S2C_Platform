@@ -8,7 +8,7 @@ const navLinks = [
     { path: "/", label: "Accueil" },
     { path: "/soutien", label: "Soutenir" },
     { path: "/inscription", label: "S'inscrire" },
-    { path: "/boutique", label: "Boutique" },
+    // { path: "", label: "Boutique" },
 ];
 
 const NavBar = () => {

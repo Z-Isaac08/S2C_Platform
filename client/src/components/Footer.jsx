@@ -39,16 +39,16 @@ export default function Footer() {
 
                 {/* Réseaux sociaux */}
                 <div className="flex items-center justify-center space-x-6 mt-4 text-xl">
-                    <Link href="#" className="hover:text-yellow-400">
+                    <Link href="https://www.facebook.com/share/1A2FRSr4MG/" className="hover:text-yellow-400">
                         <FaFacebookF />
                     </Link>
-                    <Link href="#" className="hover:text-yellow-400">
+                    <Link href="https://youtube.com/@associationchretienneevangeliq?si=cEhd3x3ewoLG8RwT" className="hover:text-yellow-400">
                         <FaYoutube />
                     </Link>
                     <Link to="https://wa.me/2250788257233" className="hover:text-yellow-400">
                         <FaWhatsapp />
                     </Link>
-                    <Link href="#" className="hover:text-yellow-400">
+                    <Link href="https://www.instagram.com/ace_esatic?igsh=eHF5dnd0ZjlnaGgx" className="hover:text-yellow-400">
                         <FaInstagram />
                     </Link>
                 </div>

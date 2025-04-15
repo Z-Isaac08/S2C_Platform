@@ -27,7 +27,7 @@ function App() {
   }
 
   return (
-    <Suspense fallback={<Preloader />}>
+    <Suspense fallback={""}>
       <ScrollToTop />
       <NavBar />
       <main>
