@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 
 const modes = [
     { id: 'carte', label: 'Carte Bancaire', img: '/card.png' },
-    { id: 'moov', label: 'Moov Money', img: '/moov.png' },
-    { id: 'mtn', label: 'MTN MoMo', img: '/mtn.png' },
-    { id: 'orange', label: 'Orange Money', img: '/orange.png' },
-    { id: 'wave', label: 'Wave', img: '/wave.png' },
+    { id: 'momo', label: 'Mobile Money & Wave', img: '/momo.png' },
 ];
 
 const FormPayPonct = () => {
@@ -40,31 +37,36 @@ const FormPayPonct = () => {
         };
 
         try {
-            const response = await fetch(
-                'http://127.0.0.1:5000/api/soutiens/create-with-participant',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload),
+            if (formData.moyen_paiement === 'momo') {
+                // Appel à ton backend qui utilise Djamo
+                const response = await fetch(
+                    'http://127.0.0.1:5000/api/soutiens/create-with-participant',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload),
+                    }
+                );
+
+                const data = await response.json();
+                if (response.ok && data.redirectUrl) {
+                    window.open(data.redirectUrl, '_blank'); // Djamo
+                    // Reset form
+                    setFormData({
+                        nom: '',
+                        prenoms: '',
+                        email: '',
+                        whatsapp: '',
+                        montant: '',
+                        moyen_paiement: 'carte',
+                    });
+                } else {
+                    console.error('Erreur lors de la création:', data.error);
                 }
-            );
-
-            const data = await response.json();
-            if (response.ok && data.redirectUrl) {
-                window.open(data.redirectUrl, '_blank');
-
-                setFormData({
-                    nom: '',
-                    prenoms: '',
-                    email: '',
-                    whatsapp: '',
-                    montant: '',
-                    moyen_paiement: 'carte',
-                });
             } else {
-                console.error('Erreur lors de la création:', data.error);
+                alert("Ce mode de paiement n'est pas encore disponible. Veuillez choisir Mobile Money.");
             }
         } catch (err) {
             console.error('Erreur réseau:', err);
@@ -115,8 +117,8 @@ const FormPayPonct = () => {
 
             {/* Modes de paiement */}
             <div className="mb-6">
-                <h3 className="text-lg font-semibold mb-3">Mode de paiement</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                <h3 className="text-lg text-center font-semibold mb-3">Mode de paiement</h3>
+                <div className="grid grid-cols-2 gap-3">
                     {modes.map((mode) => (
                         <button
                             key={mode.id}

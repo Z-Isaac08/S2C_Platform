@@ -111,7 +111,36 @@ exports.create = async (req, res) => {
     }
 };
 
+exports.scanCode = async (req, res) => {
+    const { qrCodeData } = req.body;
 
+    try {
+        const payload = JSON.parse(qrCodeData); // Le contenu du QR Code est un JSON stringifié
+        const inscriptionId = payload.id;
+
+        // 1. Rechercher l’inscription via l’ID
+        const inscription = await Inscription.findById(inscriptionId).populate('participant');
+
+        if (!inscription) {
+            return res.status(404).json({ error: 'Inscription non trouvée' });
+        }
+
+        // 2. Vérifier si la présence a déjà été validée
+        if (inscription.statut_presence === true) {
+            return res.status(400).json({ error: 'Présence déjà enregistrée' });
+        }
+
+        // 3. Marquer comme présent
+        inscription.statut_presence = true;
+        await inscription.save();
+
+        res.status(200).json({ message: 'Présence confirmée 🎉', participant: inscription.participant });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erreur lors de la validation du QR Code' });
+    }
+}
 
 exports.findAll = async (req, res) => {
     try {
