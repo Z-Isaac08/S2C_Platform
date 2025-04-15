@@ -1,4 +1,5 @@
 // utils/mailer.js
+require('dotenv').config();
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({

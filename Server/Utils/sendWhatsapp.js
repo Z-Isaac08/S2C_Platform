@@ -1,5 +1,5 @@
+require('dotenv').config();
 const twilio = require('twilio');
-
 // Tes identifiants Twilio
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN_TWILIO; // Remplace par ton vrai token

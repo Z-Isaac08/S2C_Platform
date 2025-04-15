@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState } from 'react';
 
 const modes = [
     { id: 'carte', label: 'Carte Bancaire', img: '/card.png' },
@@ -10,8 +9,6 @@ const modes = [
 ];
 
 const FormPayPonct = () => {
-    const navigate = useNavigate()
-    const inputRef = useRef(null);
 
     const [formData, setFormData] = useState({
         nom: '',
@@ -28,13 +25,6 @@ const FormPayPonct = () => {
             ...prev,
             [name]: value,
         }));
-    };
-
-
-    const handleWheel = (e) => {
-        if (document.activeElement === inputRef.current) {
-            e.preventDefault();
-        }
     };
 
     const handleSubmit = async (e) => {
@@ -81,8 +71,6 @@ const FormPayPonct = () => {
         }
     };
 
-    const goToChoix = () => navigate('/soutien')
-
     return (
         <form className="max-w-4xl mx-auto p-6 mt-10" onSubmit={handleSubmit}>
             {/* Inputs texte */}
@@ -124,19 +112,6 @@ const FormPayPonct = () => {
                 />
             </div>
 
-            {/* Montant */}
-            <input
-                type="number"
-                name="montant"
-                min={0}
-                step={5}
-                onWheel={handleWheel}
-                placeholder="Montant"
-                className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
-                value={formData.montant}
-                onChange={handleChange}
-                required
-            />
 
             {/* Modes de paiement */}
             <div className="mb-6">
@@ -167,18 +142,10 @@ const FormPayPonct = () => {
 
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-12">
                 <button
-                    type="button"
-                    onClick={goToChoix}
-                    className="border border-red-500 cursor-pointer text-red-500 font-semibold w-1/2 px-6 py-3 rounded-lg hover:bg-red-500 hover:text-white transition"
-                >
-                    Revenir au choix
-                </button>
-
-                <button
                     type="submit"
                     className="bg-normal-purple text-white text-lg cursor-pointer font-semibold w-1/2 px-6 py-3 rounded-lg hover:opacity-90 transition"
                 >
-                    Je m’engage
+                    Je donne
                 </button>
             </div>
         </form>

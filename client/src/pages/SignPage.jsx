@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Hero from '../components/Hero'
 import QRCode from 'react-qr-code'
 import ReCAPTCHA from 'react-google-recaptcha';
+import { Link } from 'react-router';
 
 const SignPage = () => {
     const [formData, setFormData] = useState({
@@ -71,7 +72,7 @@ const SignPage = () => {
 
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[72px]'>
-            <Hero title={"Enregistre toi pour le S2C #3"} subtitle={"Viens vivre la présence de DIEU"} />
+            {!qrData ? <Hero title={"S'inscrire pour le S2C #3"} subtitle={"C'est une juste une formalité, t'inquiète ! 😊"} /> : <Hero title={"Inscription réussie !!!"} subtitle={"Tu as reçu ton Code QR par Mail et WhatsApp."} />}
 
             {!submitted ? (
                 <form onSubmit={handleSubmit} className='max-w-4xl mx-auto p-6 my-10'>
@@ -82,22 +83,24 @@ const SignPage = () => {
                         <input type="text" name="whatsapp" placeholder="Numéro whatsapp" value={formData.whatsapp} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
                     </div>
 
-                    <ReCAPTCHA
-                        sitekey="6Ld_RRArAAAAAE3WGo8_qk4x4_Ew-C55CVRUcRUp"
-                        onChange={token => setCaptchaToken(token)}
-                    />
+                    <div className='flex flex-col items-center justify-center gap-4'>
+                        <ReCAPTCHA
+                            sitekey="6Ld_RRArAAAAAE3WGo8_qk4x4_Ew-C55CVRUcRUp"
+                            onChange={token => setCaptchaToken(token)}
+                        />
 
-                    <button type="submit" className="bg-normal-purple w-1/2 mx-auto text-white cursor-pointer py-3 px-8 mt-4 rounded hover:bg-purple-800 transition">
-                        Valider & Recevoir QR
-                    </button>
+                        <button type="submit" className="bg-normal-purple w-1/2 mx-auto text-white cursor-pointer py-3 px-8 mt-4 rounded hover:bg-purple-800 transition">
+                            Je m'inscris
+                        </button>
+                    </div>
+
                 </form>
             ) : (
                 <div className="text-center my-10">
-                    <h2 className="text-xl font-semibold mb-4">{message}</h2>
-
                     {qrData ? (
                         <>
-                            <p className="mb-6">📩 Tu vas recevoir ton QR Code par mail et WhatsApp.</p>
+                            <p className="mt-6 italic text-xl">Envie de soutenir l'oeuvre ?</p>
+                            <p className='italic font-bold text-normal-purple text-xl'><Link to={"/soutien"}>CLIQUE ICI</Link></p>
                         </>
                     ) : (
                         <p className="text-gray-600 mt-4">Pas de QR Code disponible.</p>
