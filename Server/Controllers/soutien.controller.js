@@ -85,8 +85,8 @@ exports.createWithParticipant_v1 = async (req, res) => {
     const newSoutien = new Soutien({
       participant: newParticipant._id,
       montant,
-      statut: 'en attente', // ou 'réussi' si déjà validé
-      payment_ref: null, // à compléter plus tard si besoin
+      statut: 'en attente', 
+      payment_ref: null, 
     });
 
     await newSoutien.save();
@@ -117,20 +117,7 @@ exports.createWithParticipant = async (req, res) => {
     if (!participant) {
       participant = new Participant({ nom, prenom, whatsapp, email });
       await participant.save();
-    } else {
-      // Vérifie s'il a déjà un engagement actif
-      const existingSoutien = await Soutien.findOne({
-        participant: participant._id,
-        statut: { $ne: 'annulé' }, // ou filtre selon ton besoin
-      });
-
-      if (existingSoutien) {
-        return res.status(409).json({
-          error: "Ce numéro a déjà un engagement en cours.",
-        });
-      }
-    }
-
+    } 
     // Créer un ID unique local pour la transaction
     const transactionId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
