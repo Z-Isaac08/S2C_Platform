@@ -51,7 +51,7 @@ const FormPayPonct = () => {
             if (formData.moyen_paiement === 'momo') {
                 // Appel à ton backend qui utilise Djamo
                 const response = await fetch(
-                    'https://s2c-platform.onrender.com/api/soutiens/create-with-participant',
+                    '/api/soutiens/create-with-participant',
                     {
                         method: 'POST',
                         headers: {
@@ -64,7 +64,7 @@ const FormPayPonct = () => {
                 const data = await response.json();
                 if (response.ok && data.redirectUrl) {
                     window.open(data.redirectUrl, '_blank'); // Djamo
-                    // Reset form
+                    
                     setFormData({
                         nom: '',
                         prenoms: '',
@@ -79,6 +79,28 @@ const FormPayPonct = () => {
                     console.error('Erreur lors de la création:', data.error);
                 }
             } else {
+              
+                   
+                      const response = await fetch('/api/soutiens/paystack', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          nom: formData.nom,
+                          prenoms: formData.prenoms,
+                          telephone: formData.whatsapp,
+                          email: formData.email,
+                          montant: formData.montant,
+                        }),
+                      });
+                  
+                      const data = await response.json();
+                  
+                      if (data.url) {
+                        window.location.href = data.url; // Redirige vers la page Paystack
+                      }else{console.log("Erreur paystack :", data.error);}
+                   
+                 
+                  
                 
             }
         } catch (err) {
@@ -142,7 +164,7 @@ const FormPayPonct = () => {
                 <input
                     type="number"
                     name="montant"
-                    min={0}
+                    min={500}
                     step={5}
                     onWheel={handleWheel}
                     placeholder="Montant"

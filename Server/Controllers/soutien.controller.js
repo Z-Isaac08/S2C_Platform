@@ -146,7 +146,6 @@ exports.createWithParticipant = async (req, res) => {
 
 exports.handleCallbackDjamo = async (req, res) => {
   try {
-    // Assurer que la transaction ID est présente
     const { transaction_id, status } = req.body; // Assure-toi que Djamo envoie un body similaire
 
     if (!transaction_id || !status) {
@@ -193,10 +192,10 @@ exports.initierPaiementPaystack = async (req, res) => {
       participant = new Participant({ nom, prenom: prenoms, telephone, email });
       await participant.save();
     }
-
+    trueMontant=montant*100
     const soutien = new Soutien({
       participant: participant._id,
-      montant,
+      montant:trueMontant,
       statut: 'en attente',
     });
     await soutien.save();
@@ -206,7 +205,7 @@ exports.initierPaiementPaystack = async (req, res) => {
       'https://api.paystack.co/transaction/initialize',
       {
         email,
-        amount: montant,
+        amount: trueMontant,
         callback_url: `${process.env.PAYSTACK_CALLBACK_URL}?soutienId=${soutien._id}`,
       },
       {
