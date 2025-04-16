@@ -144,40 +144,32 @@ exports.createWithParticipant = async (req, res) => {
   }
 };
 
-exports.handleCallbackDjamo = async (req, res) => {
+exports.verifierPaiementPaystack = async (req, res) => {
   try {
-    const { transaction_id, status } = req.body; // Assure-toi que Djamo envoie un body similaire
+    const { reference } = req.query;
 
-    if (!transaction_id || !status) {
-      return res.status(400).json({ message: 'Transaction ID ou status manquant' });
-    }
+    // Vérifie le paiement
+    const verification = await axios.get(`https://api.paystack.co/transaction/verify/${reference}`, {
+      headers: {
+        Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+      },
+    });
 
-    // Vérifie si le paiement est réussi
-    if (status === 'SUCCESS') {
-      // Met à jour le statut du soutien avec la transaction réussie
-      const soutien = await Soutien.findOneAndUpdate(
-        { payment_ref: transaction_id },
-        { statut: 'réussi' },
-        { new: true }
-      );
+    const data = verification.data.data;
 
-      if (!soutien) {
-        return res.status(404).json({ message: 'Soutien non trouvé avec cette référence de paiement' });
+    if (data.status === 'success') {
+      // Récupère le soutien via la ref
+      const soutien = await Soutien.findOne({ payment_ref: reference });
+      if (soutien) {
+        soutien.statut = 'réussi';
+        await soutien.save();
       }
-
-      return res.status(200).json({ message: 'Paiement validé', soutien });
-    } else {
-      // En cas d'échec, met à jour le statut du soutien comme échoué
-      await Soutien.findOneAndUpdate(
-        { payment_ref: transaction_id },
-        { statut: 'échoué' }
-      );
-
-      return res.status(200).json({ message: 'Paiement échoué' });
     }
-  } catch (err) {
-    console.error('❌ Erreur callback Djamo:', err.message);
-    res.status(500).json({ error: err.message });
+
+    res.redirect('/'); // ou ta page de confirmation
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Erreur de vérification');
   }
 };
 
@@ -185,11 +177,11 @@ exports.handleCallbackDjamo = async (req, res) => {
 
 exports.initierPaiementPaystack = async (req, res) => {
   try {
-    const { email, montant, nom, prenoms, telephone } = req.body;
+    const { email, montant, nom, prenoms, whatsapp } = req.body;
 
     let participant = await Participant.findOne({ telephone });
     if (!participant) {
-      participant = new Participant({ nom, prenom: prenoms, telephone, email });
+      participant = new Participant({ nom, prenom: prenoms, whatsapp, email });
       await participant.save();
     }
     trueMontant=montant*100
@@ -206,6 +198,7 @@ exports.initierPaiementPaystack = async (req, res) => {
       {
         email,
         amount: trueMontant,
+        currency: 'XOF',
         callback_url: `${process.env.PAYSTACK_CALLBACK_URL}?soutienId=${soutien._id}`,
       },
       {

@@ -10,5 +10,5 @@ router.delete('/:id', controller.remove);
 router.post('/create-with-participant', controller.createWithParticipant);
 router.post('/paystack', controller.initierPaiementPaystack);
 
-router.get('/callback', controller.handleCallbackDjamo); // ou POST selon config CinetPay
+router.get('/callback', controller.verifierPaiementPaystack); // ou POST selon config CinetPay
 module.exports = router;
