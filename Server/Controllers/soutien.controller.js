@@ -105,17 +105,17 @@ exports.createWithParticipant_v1 = async (req, res) => {
 
 exports.createWithParticipant = async (req, res) => {
   try {
-    const { nom, prenom, whatsapp, email, montant } = req.body;
+    const { nom, prenom, telephone, email, montant } = req.body;
 
-    if (!whatsapp) {
+    if (!telephone) {
       return res.status(400).json({ error: "Le numéro de téléphone est requis." });
     }
 
     // Vérifie si le participant existe déjà
-    let participant = await Participant.findOne({ whatsapp });
+    let participant = await Participant.findOne({ telephone });
 
     if (!participant) {
-      participant = new Participant({ nom, prenom, whatsapp, email });
+      participant = new Participant({ nom, prenom, telephone, email });
       await participant.save();
     } 
     // Créer un ID unique local pour la transaction
@@ -175,11 +175,11 @@ exports.verifierPaiementPaystack = async (req, res) => {
 
 exports.initierPaiementPaystack = async (req, res) => {
   try {
-    const { email, montant, nom, prenoms, whatsapp } = req.body;
+    const { email, montant, nom, prenoms, telephone } = req.body;
 
-    let participant = await Participant.findOne({ whatsapp });
+    let participant = await Participant.findOne({ telephone });
     if (!participant) {
-      participant = new Participant({ nom, prenom: prenoms, whatsapp, email });
+      participant = new Participant({ nom, prenom: prenoms, telephone, email });
       await participant.save();
     }
     trueMontant=montant*100

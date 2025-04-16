@@ -8,7 +8,7 @@ const SignPage = () => {
         nom: '',
         prenoms: '',
         email: '',
-        whatsapp: '',
+        telephone: '',
     });
     const [qrData, setQrData] = useState('');
     const [submitted, setSubmitted] = useState(false);
@@ -33,7 +33,7 @@ const SignPage = () => {
         };
 
         try {
-            const response = await fetch('https://s2c-platform.onrender.com/api/inscriptions', {
+            const response = await fetch('http://localhost:5000/api/inscriptions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,6 @@ const SignPage = () => {
 
             if (!response.ok) throw new Error(result.error || 'Erreur inconnue');
 
-            // Message personnalisé selon le cas
             if (result.message.includes('déjà inscrit')) {
                 setMessage("Merci 🙏 Vous êtes déjà inscrit !");
             } else {
@@ -65,13 +64,13 @@ const SignPage = () => {
         setSubmitted(false);
         setQrData('');
         setMessage('');
-        setFormData({ nom: '', prenoms: '', email: '', whatsapp: '' });
+        setFormData({ nom: '', prenoms: '', email: '', telephone: '' });
         setCaptchaToken(null);
     };
 
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[72px]'>
-            {!qrData ? <Hero title={"S'inscrire pour le S2C #3"} subtitle={"C'est juste une formalité, t'inquiète ! 😊"} /> : <Hero title={"Inscription réussie !!!"} subtitle={"Tu as reçu ton Code QR par Mail et WhatsApp."} />}
+            {!qrData ? <Hero title={"S'inscrire pour le S2C #3"} subtitle={"C'est juste une formalité, t'inquiète ! 😊"} /> : <Hero title={"Inscription réussie !!!"} subtitle={"Tu as reçu ton Code QR par Mail et Téléphone."} />}
 
             {!submitted ? (
                 <form onSubmit={handleSubmit} className='max-w-4xl mx-auto p-6 my-10'>
@@ -79,7 +78,7 @@ const SignPage = () => {
                         <input type="text" name="nom" placeholder="Nom" value={formData.nom} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
                         <input type="text" name="prenoms" placeholder="Prénoms" value={formData.prenoms} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
                         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
-                        <input type="text" name="whatsapp" placeholder="Numéro whatsapp" value={formData.whatsapp} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
+                        <input type="text" name="telephone" placeholder="Numéro de téléphone" value={formData.telephone} onChange={handleChange} className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70" required />
                     </div>
 
                     <div className='flex flex-col items-center justify-center gap-4'>

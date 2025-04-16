@@ -5,14 +5,13 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const { sendMail } = require('../Utils/sendMail'); // à créer
-const { verifyCaptcha } = require('../Utils/verifyCaptcha'); // done
-const envoyerQRparWhatsApp = require('../Utils/sendWhatsapp');
+const { verifyCaptcha } = require('../Utils/verifyCaptcha'); 
 const { cloudinary } = require('../Utils/cloudinary');
 const streamifier = require('streamifier');
 
 exports.create = async (req, res) => {
     try {
-        const { nom, prenoms, email, whatsapp, captcha } = req.body;
+        const { nom, prenoms, email, telephone, captcha } = req.body;
 
         const captchaValid = await verifyCaptcha(captcha);
 
@@ -21,7 +20,7 @@ exports.create = async (req, res) => {
         }
 
         // 1. Vérifier si le participant existe
-        let participant = await Participant.findOne({ whatsapp: whatsapp });
+        let participant = await Participant.findOne({ telephone: telephone });
 
         // 2. Sinon le créer
         if (!participant) {
@@ -29,7 +28,7 @@ exports.create = async (req, res) => {
                 nom,
                 prenom: prenoms,
                 email,
-                whatsapp: whatsapp,
+                telephone: telephone,
             });
             await participant.save();
         }
@@ -45,7 +44,7 @@ exports.create = async (req, res) => {
 
         // 4. Générer un ID d’inscription unique
         const hash = crypto.createHash('sha512')
-            .update(`${nom}-${prenoms}-${email}-${whatsapp}-${Date.now()}`)
+            .update(`${nom}-${prenoms}-${email}-${telephone}-${Date.now()}`)
             .digest('hex');
 
         // 5. Créer l’inscription
@@ -60,7 +59,7 @@ exports.create = async (req, res) => {
             nom,
             prenoms,
             email,
-            whatsapp,
+            telephone,
         };
 
         const qrContent = JSON.stringify(qrCodePayload);
