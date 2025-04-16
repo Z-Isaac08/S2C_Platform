@@ -80,7 +80,7 @@ const FormPayPonct = () => {
     };
 
     const isFormValid = () => {
-        const requiredFields = ['nom', 'prenoms', 'email', 'whatsapp'];
+        const requiredFields = ['nom', 'prenoms', 'email', 'whatsapp', 'montant'];
 
         // Vérifie les champs de base
         for (let field of requiredFields) {
@@ -132,6 +132,17 @@ const FormPayPonct = () => {
                     />
                 </div>
 
+                <input
+                    type="number"
+                    name="montant"
+                    min={0}
+                    step={5}
+                    onWheel={handleWheel}
+                    placeholder="Montant"
+                    value={formData.montant}
+                    onChange={handleChange}
+                    className="outline-none border p-3 rounded w-full focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
+                />
 
                 {/* Modes de paiement */}
                 <div className="mb-6">
