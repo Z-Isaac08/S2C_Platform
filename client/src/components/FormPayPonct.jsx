@@ -148,7 +148,7 @@ const FormPayPonct = () => {
                     placeholder="Montant"
                     value={formData.montant}
                     onChange={handleChange}
-                    className="outline-none border  p-3 rounded w-full focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
+                    className="outline-none border  p-3 rounded w-full focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
                 />
 
                 {/* Modes de paiement */}
