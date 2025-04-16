@@ -79,7 +79,7 @@ const FormPayPonct = () => {
                     console.error('Erreur lors de la création:', data.error);
                 }
             } else {
-                alert("Ce mode de paiement n'est pas encore disponible. Veuillez choisir Mobile Money.");
+                
             }
         } catch (err) {
             console.error('Erreur réseau:', err);
