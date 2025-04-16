@@ -176,3 +176,51 @@ exports.handleCallbackDjamo = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+
+exports.initierPaiementPaystack = async (req, res) => {
+  try {
+    const { email, montant, nom, prenoms, telephone } = req.body;
+
+    let participant = await Participant.findOne({ telephone });
+    if (!participant) {
+      participant = new Participant({ nom, prenom: prenoms, telephone, email });
+      await participant.save();
+    }
+
+    const soutien = new Soutien({
+      participant: participant._id,
+      montant,
+      statut: 'en attente',
+    });
+    await soutien.save();
+
+
+    const response = await axios.post(
+      'https://api.paystack.co/transaction/initialize',
+      {
+        email,
+        amount: montant,
+        callback_url: `${process.env.PAYSTACK_CALLBACK_URL}?soutienId=${soutien._id}`,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    soutien.payment_ref = response.data.data.reference;
+    await soutien.save();
+
+    res.status(200).json({
+      url: response.data.data.authorization_url,
+      message: 'Rediriger vers Paystack',
+    });
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+    res.status(500).json({ error: 'Erreur lors de l’initiation du paiement' });
+  }
+};
