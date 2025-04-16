@@ -13,6 +13,7 @@ const SignPage = () => {
     });
     const [qrData, setQrData] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [message, setMessage] = useState('');
     const [captchaToken, setCaptchaToken] = useState(null);
 
     const handleChange = (e) => {

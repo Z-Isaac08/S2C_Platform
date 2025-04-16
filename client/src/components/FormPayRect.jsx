@@ -262,7 +262,7 @@ const FormPayRect = () => {
         ) : (
             <div className="text-center my-10">
                 <>
-                    <p className="mt-6 italic text-xl">Merci de participer à l'organisation du S2C #3</p>
+                    <p className="mt-6 italic text-xl">Vous avez reçu les informations de paiement par mail !</p>
                     <br />
                     <p className='italic font-bold text-normal-purple text-xl'>
                         Que DIEU vous bénisse !!

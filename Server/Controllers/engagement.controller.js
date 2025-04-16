@@ -46,7 +46,7 @@ exports.create = async (req, res) => {
             return res.status(500).json({ error: "Erreur de lecture du template email." });
         }
 
-        const logoUrl = "https://res.cloudinary.com/dehvdkzcw/image/upload/v1744709429/logo_bwmo1d.svg";
+        const logoUrl = "https://res.cloudinary.com/dehvdkzcw/image/upload/v1744808837/colorFichier3withBack_hljhvf.png";
         const prenom_html = participant.prenom || "participant";
 
         htmlTemplate = htmlTemplate
