@@ -85,8 +85,8 @@ exports.createWithParticipant_v1 = async (req, res) => {
     const newSoutien = new Soutien({
       participant: newParticipant._id,
       montant,
-      statut: 'en attente', // ou 'réussi' si déjà validé
-      payment_ref: null, // à compléter plus tard si besoin
+      statut: 'en attente', 
+      payment_ref: null, 
     });
 
     await newSoutien.save();
@@ -105,16 +105,19 @@ exports.createWithParticipant_v1 = async (req, res) => {
 
 exports.createWithParticipant = async (req, res) => {
   try {
-    const { nom, prenom, telephone, email, montant } = req.body;
+    const { nom, prenom, whatsapp, email, montant } = req.body;
 
-    // Vérifie si le participant existe déjà
-    let participant = await Participant.findOne({ telephone });
-
-    if (!participant) {
-      participant = new Participant({ nom, prenom, telephone, email });
-      await participant.save();
+    if (!whatsapp) {
+      return res.status(400).json({ error: "Le numéro de téléphone est requis." });
     }
 
+    // Vérifie si le participant existe déjà
+    let participant = await Participant.findOne({ whatsapp });
+
+    if (!participant) {
+      participant = new Participant({ nom, prenom, whatsapp, email });
+      await participant.save();
+    } 
     // Créer un ID unique local pour la transaction
     const transactionId = `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
@@ -122,20 +125,22 @@ exports.createWithParticipant = async (req, res) => {
       participant: participant._id,
       statut: 'en attente',
       payment_ref: transactionId,
+      montant, // utile si tu veux suivre le montant à payer
     });
+
     await newSoutien.save();
 
-    // 🔗 Générer un lien Djamo (exemple générique, à adapter avec ton lien réel)
+    // 🔗 Lien vers Djamo (à personnaliser)
     const redirectUrl = `https://pay.djamo.com/lipya`;
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Redirection vers le paiement Djamo.',
       redirectUrl,
     });
 
   } catch (err) {
     console.error('❌ Erreur createWithParticipant:', err.message);
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: "Une erreur est survenue, veuillez réessayer." });
   }
 };
 

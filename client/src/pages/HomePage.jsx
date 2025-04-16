@@ -52,17 +52,25 @@ export default function S2CEventPage() {
                         Un programme de célébration, de prière, d'adoration, d'enseignement
                         et de réveil !
                     </p>
-                    <button
-                        onClick={() => navigate("/inscription")}
-                        className="mt-10 bg-normal-purple cursor-pointer text-white text-base sm:text-lg px-16 py-3 rounded-full hover:bg-normal-purple-hover transition"
-                    >
-                        Je participe gratuitement
-                    </button>
+                    <div className="flex md:flex-row mt-10 flex-col gap-3 items-center justify-center">
+                        <button
+                            onClick={() => navigate("/inscription")}
+                            className="bg-normal-purple cursor-pointer w-xs text-white text-base sm:text-lg px-10 py-3 rounded-full hover:bg-normal-purple-hover transition"
+                        >
+                            Je participe gratuitement
+                        </button>
+                        <button
+                            onClick={() => navigate("/soutien")}
+                            className="bg-normal-yellow cursor-pointer w-xs text-[#111] text-base sm:text-lg px-10 py-3 rounded-full hover:bg-normal-yellow-hover transition"
+                        >
+                            Je soutiens le #S2C
+                        </button>
+                    </div>
                 </div>
             </motion.div>
 
             {/* --- Infos Générales --- */}
-            <section className="bg-normal-purple text-white py-10 px-4">
+            <section className="bg-normal-purple text-white py-10 p-4">
                 <div className="flex flex-col md:flex-row justify-center items-center md:items-start md:justify-between gap-10 max-w-6xl mx-auto">
                     <div className="md:w-1/2">
                         <h3 className="text-center md:text-left font-semibold text-lg mb-2">
@@ -74,12 +82,12 @@ export default function S2CEventPage() {
                             <br />
                             <br />
                             Le #S2C a vu le jour en Mai 2023 grâce au leader Privat Zrannoueu
-                            sous inspiration du Saint-Esprit pendant la période de service
+                            sous inspiration du Saint-Esprit pendant le service
                             dans la maison ACE.
                         </p>
                     </div>
 
-                    <div className="md:w-1/2 w-10/12 h-[180px] border-t-2 md:border-t-0 md:border-l-2 border-normal-yellow pt-6 md:pt-0 pl-0 md:pl-6">
+                    <div className="md:w-1/2 w-10/12 h-fit md:h-[180px] border-t-2 md:border-t-0 md:border-l-2 border-normal-yellow pt-6 md:pt-0 pl-0 md:pl-6">
                         <h3 className="text-center md:text-left font-semibold text-lg mb-2">
                             S2C #3
                         </h3>
