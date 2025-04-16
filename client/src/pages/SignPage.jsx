@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Hero from '../components/Hero'
-import QRCode from 'react-qr-code'
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Link } from 'react-router';
 
