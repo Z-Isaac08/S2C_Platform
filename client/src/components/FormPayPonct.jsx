@@ -51,7 +51,7 @@ const FormPayPonct = () => {
             if (formData.moyen_paiement === 'momo') {
                 // Appel à ton backend qui utilise Djamo
                 const response = await fetch(
-                    '/api/soutiens/create-with-participant',
+                    'http://localhost:5000/api/soutiens/create-with-participant',
                     {
                         method: 'POST',
                         headers: {
@@ -64,7 +64,7 @@ const FormPayPonct = () => {
                 const data = await response.json();
                 if (response.ok && data.redirectUrl) {
                     window.open(data.redirectUrl, '_blank'); // Djamo
-                    
+
                     setFormData({
                         nom: '',
                         prenoms: '',
@@ -73,36 +73,32 @@ const FormPayPonct = () => {
                         montant: '',
                         moyen_paiement: '',
                     });
-                    setIsValid(true)
-                    handleValue(true)
                 } else {
                     console.error('Erreur lors de la création:', data.error);
                 }
             } else {
-              
-                   
-                      const response = await fetch('/api/soutiens/paystack', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          nom: formData.nom,
-                          prenoms: formData.prenoms,
-                          telephone: formData.whatsapp,
-                          email: formData.email,
-                          montant: formData.montant,
-                        }),
-                      });
-                  
-                      const data = await response.json();
-                  
-                      if (data.url) {
-                        window.location.href = data.url; // Redirige vers la page Paystack
-                      }else{console.log("Erreur paystack :", data.error);}
-                   
-                 
-                  
-                
+
+
+                const response = await fetch('http://localhost:5000/api/soutiens/paystack', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nom: formData.nom,
+                        prenoms: formData.prenoms,
+                        whatsapp: formData.whatsapp,
+                        email: formData.email,
+                        montant: formData.montant,
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (data.url) {
+                    window.open(data.url, '_blank'); // Redirige vers la page Paystack
+                } else { console.log("Erreur paystack :", data.error); }
             }
+            setIsValid(true)
+            handleValue(true)
         } catch (err) {
             console.error('Erreur réseau:', err);
         }

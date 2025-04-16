@@ -181,15 +181,13 @@ exports.handleCallbackDjamo = async (req, res) => {
   }
 };
 
-
-
 exports.initierPaiementPaystack = async (req, res) => {
   try {
-    const { email, montant, nom, prenoms, telephone } = req.body;
+    const { email, montant, nom, prenoms, whatsapp } = req.body;
 
-    let participant = await Participant.findOne({ telephone });
+    let participant = await Participant.findOne({ whatsapp });
     if (!participant) {
-      participant = new Participant({ nom, prenom: prenoms, telephone, email });
+      participant = new Participant({ nom, prenom: prenoms, whatsapp, email });
       await participant.save();
     }
     trueMontant=montant*100

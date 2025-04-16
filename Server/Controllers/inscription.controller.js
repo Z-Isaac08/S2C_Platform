@@ -21,7 +21,7 @@ exports.create = async (req, res) => {
         }
 
         // 1. Vérifier si le participant existe
-        let participant = await Participant.findOne({ telephone: whatsapp });
+        let participant = await Participant.findOne({ whatsapp: whatsapp });
 
         // 2. Sinon le créer
         if (!participant) {
@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
                 nom,
                 prenom: prenoms,
                 email,
-                telephone: whatsapp,
+                whatsapp: whatsapp,
             });
             await participant.save();
         }
@@ -91,7 +91,7 @@ exports.create = async (req, res) => {
         await inscription.save();
 
         let htmlTemplate = fs.readFileSync(path.join(__dirname, 'mail', 'email-template.html'), 'utf-8');
-        const logoUrl = "https://res.cloudinary.com/dehvdkzcw/image/upload/v1744709429/logo_bwmo1d.svg";
+        const logoUrl = "https://res.cloudinary.com/dehvdkzcw/image/upload/v1744808837/colorFichier3withBack_hljhvf.png";
         htmlTemplate = htmlTemplate.replace('{{logoUrl}}', logoUrl);
 
         const attachments = [
@@ -103,7 +103,7 @@ exports.create = async (req, res) => {
         ];
 
         await sendMail(email, 'Confirmation d’inscription au S2C#3 🎉', htmlTemplate, attachments);
-        await envoyerQRparWhatsApp(participant.telephone, qrCodeUrl);
+        // await envoyerQRparWhatsApp(participant.telephone, qrCodeUrl);
 
         res.status(201).json({
             message: "Inscription réussie",

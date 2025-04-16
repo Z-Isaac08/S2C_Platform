@@ -13,6 +13,7 @@ const SignPage = () => {
     });
     const [qrData, setQrData] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [message, setMessage] = useState('');
     const [captchaToken, setCaptchaToken] = useState(null);
 
     const handleChange = (e) => {
@@ -33,7 +34,7 @@ const SignPage = () => {
         };
 
         try {
-            const response = await fetch('https://s2c-platform.onrender.com/api/inscriptions', {
+            const response = await fetch('http://localhost:5000/api/inscriptions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
