@@ -34,18 +34,27 @@ exports.create = async (req, res) => {
             await participant.save();
         }
 
-        // 3. Générer un ID d’inscription unique (si besoin)
+        // 3. Vérifier si ce participant a déjà une inscription
+        const inscriptionExistante = await Inscription.findOne({ participant: participant._id });
+
+        if (inscriptionExistante) {
+            return res.status(400).json({
+                error: "Ce numéro ou cette adresse email a déjà été utilisé pour une inscription.",
+            });
+        }
+
+        // 4. Générer un ID d’inscription unique
         const hash = crypto.createHash('sha512')
             .update(`${nom}-${prenoms}-${email}-${whatsapp}-${Date.now()}`)
             .digest('hex');
 
-        // 4. Créer l’inscription (on laisse le hash dans la DB pour compatibilité)
+        // 5. Créer l’inscription
         const inscription = new Inscription({
             participant: participant._id,
             qr_code_hash: hash,
         });
 
-        // 5. Générer un contenu JSON pour le QR Code
+        // 6. Générer le QR code
         const qrCodePayload = {
             id: inscription._id,
             nom,
@@ -55,9 +64,8 @@ exports.create = async (req, res) => {
         };
 
         const qrContent = JSON.stringify(qrCodePayload);
-
-        // 5. Générer le QR code à partir du hash
         const qrBuffer = await QRCode.toBuffer(qrContent);
+
         const cloudinaryUpload = () => {
             return new Promise((resolve, reject) => {
                 const uploadStream = cloudinary.uploader.upload_stream(
@@ -79,7 +87,6 @@ exports.create = async (req, res) => {
 
         const qrCodeUrl = await cloudinaryUpload();
 
-        // Enregistrer l’URL Cloudinary
         inscription.qr_code_image = qrCodeUrl;
         await inscription.save();
 
@@ -87,20 +94,17 @@ exports.create = async (req, res) => {
         const logoUrl = "https://res.cloudinary.com/dehvdkzcw/image/upload/v1744709429/logo_bwmo1d.svg";
         htmlTemplate = htmlTemplate.replace('{{logoUrl}}', logoUrl);
 
-
         const attachments = [
             {
                 filename: 'qr-code.png',
-                content: qrBuffer, // Le buffer de l'image QR Code
-                cid: 'qr-code', // L'ID de l'image pour l'intégrer dans l'email
+                content: qrBuffer,
+                cid: 'qr-code',
             },
         ];
 
-        // Envoyer un email avec le QR code en pièce jointe
         await sendMail(email, 'Confirmation d’inscription au S2C#3 🎉', htmlTemplate, attachments);
         await envoyerQRparWhatsApp(participant.telephone, qrCodeUrl);
 
-        // Répondre au front avec succès
         res.status(201).json({
             message: "Inscription réussie",
             qrCode: inscription.qr_code_image,

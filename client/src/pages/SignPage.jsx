@@ -72,7 +72,7 @@ const SignPage = () => {
 
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[72px]'>
-            {!qrData ? <Hero title={"S'inscrire pour le S2C #3"} subtitle={"C'est une juste une formalité, t'inquiète ! 😊"} /> : <Hero title={"Inscription réussie !!!"} subtitle={"Tu as reçu ton Code QR par Mail et WhatsApp."} />}
+            {!qrData ? <Hero title={"S'inscrire pour le S2C #3"} subtitle={"C'est juste une formalité, t'inquiète ! 😊"} /> : <Hero title={"Inscription réussie !!!"} subtitle={"Tu as reçu ton Code QR par Mail et WhatsApp."} />}
 
             {!submitted ? (
                 <form onSubmit={handleSubmit} className='max-w-4xl mx-auto p-6 my-10'>

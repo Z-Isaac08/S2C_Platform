@@ -105,14 +105,30 @@ exports.createWithParticipant_v1 = async (req, res) => {
 
 exports.createWithParticipant = async (req, res) => {
   try {
-    const { nom, prenom, telephone, email, montant } = req.body;
+    const { nom, prenom, whatsapp, email, montant } = req.body;
+
+    if (!whatsapp) {
+      return res.status(400).json({ error: "Le numéro de téléphone est requis." });
+    }
 
     // Vérifie si le participant existe déjà
-    let participant = await Participant.findOne({ telephone });
+    let participant = await Participant.findOne({ whatsapp });
 
     if (!participant) {
-      participant = new Participant({ nom, prenom, telephone, email });
+      participant = new Participant({ nom, prenom, whatsapp, email });
       await participant.save();
+    } else {
+      // Vérifie s'il a déjà un engagement actif
+      const existingSoutien = await Soutien.findOne({
+        participant: participant._id,
+        statut: { $ne: 'annulé' }, // ou filtre selon ton besoin
+      });
+
+      if (existingSoutien) {
+        return res.status(409).json({
+          error: "Ce numéro a déjà un engagement en cours.",
+        });
+      }
     }
 
     // Créer un ID unique local pour la transaction
@@ -122,20 +138,22 @@ exports.createWithParticipant = async (req, res) => {
       participant: participant._id,
       statut: 'en attente',
       payment_ref: transactionId,
+      montant, // utile si tu veux suivre le montant à payer
     });
+
     await newSoutien.save();
 
-    // 🔗 Générer un lien Djamo (exemple générique, à adapter avec ton lien réel)
+    // 🔗 Lien vers Djamo (à personnaliser)
     const redirectUrl = `https://pay.djamo.com/lipya`;
 
-    res.status(201).json({
+    return res.status(201).json({
       message: 'Redirection vers le paiement Djamo.',
       redirectUrl,
     });
 
   } catch (err) {
     console.error('❌ Erreur createWithParticipant:', err.message);
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: "Une erreur est survenue, veuillez réessayer." });
   }
 };
 

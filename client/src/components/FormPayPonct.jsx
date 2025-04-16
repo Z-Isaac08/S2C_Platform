@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useOutletContext } from 'react-router';
 
 const modes = [
     { id: 'carte', label: 'Carte Bancaire', img: '/card.png' },
@@ -16,6 +17,9 @@ const FormPayPonct = () => {
         moyen_paiement: '', // par défaut
     });
 
+    const [isValid, setIsValid] = useState(false)
+    const { handleValue } = useOutletContext();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -31,7 +35,7 @@ const FormPayPonct = () => {
             nom: formData.nom,
             prenom: formData.prenoms,
             email: formData.email,
-            telephone: formData.whatsapp,
+            whatsapp: formData.whatsapp,
             montant: formData.montant,
             moyen_paiement: formData.moyen_paiement,
         };
@@ -40,7 +44,7 @@ const FormPayPonct = () => {
             if (formData.moyen_paiement === 'momo') {
                 // Appel à ton backend qui utilise Djamo
                 const response = await fetch(
-                    'https://s2c-platform.onrender.com/api/soutiens/create-with-participant',
+                    'http://localhost:5000/api/soutiens/create-with-participant',
                     {
                         method: 'POST',
                         headers: {
@@ -62,6 +66,8 @@ const FormPayPonct = () => {
                         montant: '',
                         moyen_paiement: '',
                     });
+                    setIsValid(true)
+                    handleValue(true)
                 } else {
                     console.error('Erreur lors de la création:', data.error);
                 }
@@ -85,87 +91,104 @@ const FormPayPonct = () => {
     };
 
     return (
-        <form className="max-w-4xl mx-auto p-6 mt-10" onSubmit={handleSubmit}>
-            {/* Inputs texte */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <input
-                    type="text"
-                    name="nom"
-                    placeholder="Nom"
-                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
-                    value={formData.nom}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="prenoms"
-                    placeholder="Prénoms"
-                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
-                    value={formData.prenoms}
-                    onChange={handleChange}
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="whatsapp"
-                    placeholder="Numéro whatsapp"
-                    className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
-                    value={formData.whatsapp}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-
-
-            {/* Modes de paiement */}
-            <div className="mb-6">
-                <h3 className="text-lg text-center font-semibold mb-3">Mode de paiement</h3>
-                <div className="grid grid-cols-2 gap-3">
-                    {modes.map((mode) => (
-                        <button
-                            key={mode.id}
-                            type="button"
-                            onClick={() =>
-                                setFormData((prev) => ({ ...prev, moyen_paiement: mode.id }))
-                            }
-                            className={`border rounded-lg p-3 text-center transition duration-200 ${formData.moyen_paiement === mode.id
-                                ? 'border-normal-purple bg-purple-50 font-semibold'
-                                : 'hover:border-normal-purple'
-                                }`}
-                        >
-                            <img
-                                src={mode.img}
-                                alt={mode.label}
-                                className="h-10 mx-auto mb-2 object-contain"
-                            />
-                            <span className="text-sm">{mode.label}</span>
-                        </button>
-                    ))}
+        !isValid ? (
+            <form className="max-w-4xl mx-auto p-6 mt-10" onSubmit={handleSubmit}>
+                {/* Inputs texte */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    <input
+                        type="text"
+                        name="nom"
+                        placeholder="Nom"
+                        className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
+                        value={formData.nom}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="prenoms"
+                        placeholder="Prénoms"
+                        className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
+                        value={formData.prenoms}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="whatsapp"
+                        placeholder="Numéro whatsapp"
+                        className="outline-none border p-3 rounded w-full mb-8 focus:ring-2 focus:border-0 focus:ring-normal-purple/60"
+                        value={formData.whatsapp}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
-            </div>
 
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-12">
-            <button
-                    type="submit"
-                    disabled={!isFormValid()}
-                    className={`${!isFormValid()
+
+                {/* Modes de paiement */}
+                <div className="mb-6">
+                    <h3 className="text-lg text-center font-semibold mb-3">Mode de paiement</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                        {modes.map((mode) => (
+                            <button
+                                key={mode.id}
+                                type="button"
+                                onClick={() =>
+                                    setFormData((prev) => ({ ...prev, moyen_paiement: mode.id }))
+                                }
+                                className={`border rounded-lg p-3 text-center transition duration-200 ${formData.moyen_paiement === mode.id
+                                    ? 'border-normal-purple bg-purple-50 font-semibold'
+                                    : 'hover:border-normal-purple'
+                                    }`}
+                            >
+                                <img
+                                    src={mode.img}
+                                    alt={mode.label}
+                                    className="h-10 mx-auto mb-2 object-contain"
+                                />
+                                <span className="text-sm">{mode.label}</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-12">
+                    <button
+                        type="submit"
+                        disabled={!isFormValid()}
+                        className={`${!isFormValid()
                             ? 'bg-gray-400 cursor-not-allowed text-white'
                             : 'bg-normal-purple cursor-pointer  hover:opacity-90'
-                        } text-white text-lg font-semibold w-1/2 px-6 py-3 rounded-lg transition`}
-                >
-                    Je donne
-                </button>
+                            } text-white text-lg font-semibold w-1/2 px-6 py-3 rounded-lg transition`}
+                    >
+                        Je donne
+                    </button>
+                </div>
+            </form>
+        ) : (
+            <div className="text-center my-10">
+                <>
+                    <p className="mt-6 italic text-xl">Merci de participer à l'organisation du S2C #3</p>
+                    <br />
+                    <p className='italic font-bold text-normal-purple text-xl'>
+                        Que DIEU vous bénisse !!
+                    </p>
+                    <button
+                        className="mt-6 bg-normal-yellow cursor-pointer text-[#222] py-2 px-4 rounded hover:bg-yellow-400 transition"
+                    >
+                        <Link to={"/"}>Retour à l'accueil</Link>
+                    </button>
+                </>
             </div>
-        </form>
+        )
     );
 };
 
