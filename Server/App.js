@@ -8,10 +8,13 @@ const cors = require('cors');
 
 // Middlewares
 app.use(express.json());
-app.use(cors({
-  origin: '*', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-}));
+const corsOptions = {
+  origin: ['https://lastructures2c.netlify.app'], // ou ['*'] en test local
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 // Connexion MongoDB
 connectDB();
 // Routes

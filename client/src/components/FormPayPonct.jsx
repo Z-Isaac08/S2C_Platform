@@ -29,16 +29,6 @@ const FormPayPonct = () => {
         }
     };
 
-    const indicatifs = [
-        { code: "+225", pays: "Côte d'Ivoire" },
-        { code: "+33", pays: "France" },
-        { code: "+1", pays: "États-Unis" },
-        { code: "+44", pays: "Royaume-Uni" },
-        { code: "+234", pays: "Nigeria" },
-        { code: "+227", pays: "Niger" },
-        // Ajouter d'autres indicatifs selon besoin
-    ];
-
     // Gestion des changements de champ
     const handleChange = (e) => {
         const { name, value } = e.target;
