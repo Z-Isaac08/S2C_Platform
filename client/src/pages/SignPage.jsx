@@ -14,7 +14,6 @@ const SignPage = () => {
     const [submitted, setSubmitted] = useState(false);
     const [captchaToken, setCaptchaToken] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
-    const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -51,25 +50,18 @@ const SignPage = () => {
                 throw new Error(result.error || 'Erreur inconnue');
             }
 
-            if (result.message.includes('déjà inscrit')) {
-                setMessage("Merci 🙏 Vous êtes déjà inscrit !");
-            } else {
-                setMessage("Inscription réussie 🎉");
-            }
-
             setQrData(result.qrCode || '');
             setSubmitted(true);
 
         } catch (err) {
             console.error(err);
-            setErrorMessage("Une erreur est survenue : " + err.message);
+            setErrorMessage(err.message);
         }
     };
 
     const resetForm = () => {
         setSubmitted(false);
         setQrData('');
-        setMessage('');
         setErrorMessage('');
         setFormData({ nom: '', prenoms: '', email: '', telephone: '' });
         setCaptchaToken(null);
