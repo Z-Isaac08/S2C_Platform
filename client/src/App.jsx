@@ -34,7 +34,6 @@ function App() {
         <Routes>
           <Route path='/' index element={<HomePage />} />
           <Route path='/soutien' element={<SoutienPage />} >
-            <Route index element={<Navigate to="ponctuel" replace />} />
             <Route path='ponctuel' element={<FormPayPonct />} />
             <Route path='recurrent' element={<FormPayRect />} />
           </Route>

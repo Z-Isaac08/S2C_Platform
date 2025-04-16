@@ -54,8 +54,6 @@ const FormPayPonct = () => {
             moyen_paiement: formData.moyen_paiement,
         };
 
-        let linkElement = null;
-
         try {
             if (formData.moyen_paiement === "momo") {
                 const response = await fetch(
