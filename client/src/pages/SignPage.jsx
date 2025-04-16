@@ -34,7 +34,7 @@ const SignPage = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/inscriptions', {
+            const response = await fetch('https://s2c-platform.onrender.com/api/inscriptions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

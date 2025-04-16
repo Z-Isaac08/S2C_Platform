@@ -51,7 +51,7 @@ const FormPayPonct = () => {
             if (formData.moyen_paiement === 'momo') {
                 // Appel à ton backend qui utilise Djamo
                 const response = await fetch(
-                    'http://localhost:5000/api/soutiens/create-with-participant',
+                    'https://s2c-platform.onrender.com/api/soutiens/create-with-participant',
                     {
                         method: 'POST',
                         headers: {
@@ -79,7 +79,7 @@ const FormPayPonct = () => {
             } else {
 
 
-                const response = await fetch('http://localhost:5000/api/soutiens/paystack', {
+                const response = await fetch('https://s2c-platform.onrender.com/api/soutiens/paystack', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
