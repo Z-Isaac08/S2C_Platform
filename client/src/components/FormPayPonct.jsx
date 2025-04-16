@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useOutletContext } from 'react-router';
 
 const modes = [
@@ -7,6 +7,7 @@ const modes = [
 ];
 
 const FormPayPonct = () => {
+    const inputRef = useRef(null);
 
     const [formData, setFormData] = useState({
         nom: '',
@@ -16,6 +17,12 @@ const FormPayPonct = () => {
         montant: '',
         moyen_paiement: '', // par défaut
     });
+
+    const handleWheel = (e) => {
+        if (document.activeElement === inputRef.current) {
+            e.preventDefault();
+        }
+    };
 
     const [isValid, setIsValid] = useState(false)
     const { handleValue } = useOutletContext();
@@ -141,11 +148,11 @@ const FormPayPonct = () => {
                     placeholder="Montant"
                     value={formData.montant}
                     onChange={handleChange}
-                    className="outline-none border p-3 rounded w-full focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
+                    className="outline-none border  p-3 rounded w-full focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
                 />
 
                 {/* Modes de paiement */}
-                <div className="mb-6">
+                <div className="my-6">
                     <h3 className="text-lg text-center font-semibold mb-3">Mode de paiement</h3>
                     <div className="grid grid-cols-2 gap-3">
                         {modes.map((mode) => (
