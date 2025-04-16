@@ -9,7 +9,7 @@ const cors = require('cors');
 // Middlewares
 app.use(express.json());
 const corsOptions = {
-  origin: ['https://lastructures2c.netlify.app'], // ou ['*'] en test local
+  origin: ['https://lastructures2c.netlify.app', 'http://localhost:5173'], // ou ['*'] en test local
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
