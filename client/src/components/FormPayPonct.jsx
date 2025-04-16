@@ -41,6 +41,8 @@ const FormPayPonct = () => {
         return requiredFields.every((field) => !!formData[field]);
     };
 
+    let linkElement = null;
+
     // Soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -68,7 +70,10 @@ const FormPayPonct = () => {
 
                 if (response.ok && data.redirectUrl) {
                     // Crée un lien dynamique
-                    window.location.href = data.redirectUrl
+                    linkElement = document.createElement("a");
+                    linkElement.href = data.redirectUrl;
+                    linkElement.target = "_blank";
+                    linkElement.click();
                 } else {
                     console.error("Erreur lors de la création:", data.error);
                 }
@@ -91,7 +96,10 @@ const FormPayPonct = () => {
 
                 if (data.url) {
                     // Crée un lien dynamique
-                    window.location.href = data.url // Simule le clic pour ouvrir le lien dans un nouvel onglet
+                    linkElement = document.createElement("a");
+                    linkElement.href = data.url;
+                    linkElement.target = "_blank";
+                    linkElement.click(); // Simule le clic pour ouvrir le lien dans un nouvel onglet
                 } else {
                     console.error("Erreur paystack :", data.error);
                 }
