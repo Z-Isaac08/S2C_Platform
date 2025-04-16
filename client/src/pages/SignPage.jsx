@@ -12,8 +12,9 @@ const SignPage = () => {
     });
     const [qrData, setQrData] = useState('');
     const [submitted, setSubmitted] = useState(false);
-    const [message, setMessage] = useState('');
     const [captchaToken, setCaptchaToken] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,8 +23,10 @@ const SignPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
+
         if (!captchaToken) {
-            alert("Veuillez valider le reCAPTCHA !");
+            setErrorMessage("Veuillez valider le reCAPTCHA !");
             return;
         }
 
@@ -43,7 +46,10 @@ const SignPage = () => {
 
             const result = await response.json();
 
-            if (!response.ok) throw new Error(result.error || 'Erreur inconnue');
+            if (!response.ok) {
+                setErrorMessage(result.error || "Une erreur inconnue est survenue.");
+                throw new Error(result.error || 'Erreur inconnue');
+            }
 
             if (result.message.includes('déjà inscrit')) {
                 setMessage("Merci 🙏 Vous êtes déjà inscrit !");
@@ -56,7 +62,7 @@ const SignPage = () => {
 
         } catch (err) {
             console.error(err);
-            alert("Une erreur est survenue : " + err.message);
+            setErrorMessage("Une erreur est survenue : " + err.message);
         }
     };
 
@@ -64,13 +70,17 @@ const SignPage = () => {
         setSubmitted(false);
         setQrData('');
         setMessage('');
+        setErrorMessage('');
         setFormData({ nom: '', prenoms: '', email: '', telephone: '' });
         setCaptchaToken(null);
     };
 
     return (
         <section className='bg-white text-[#222] font-montserrat mt-[72px]'>
-            {!qrData ? <Hero title={"S'inscrire pour le S2C #3"} subtitle={"C'est juste une formalité, t'inquiète ! 😊"} /> : <Hero title={"Inscription réussie !!!"} subtitle={"Tu as reçu ton Code QR par Mail et Téléphone."} />}
+            {!qrData
+                ? <Hero title={"S'inscrire pour le S2C #3"} subtitle={"C'est juste une formalité, t'inquiète ! 😊"} />
+                : <Hero title={"Inscription réussie !!!"} subtitle={"Tu as reçu ton Code QR par Mail et Téléphone."} />
+            }
 
             {!submitted ? (
                 <form onSubmit={handleSubmit} className='max-w-4xl mx-auto p-6 my-10'>
@@ -82,6 +92,13 @@ const SignPage = () => {
                     </div>
 
                     <div className='flex flex-col items-center justify-center gap-4'>
+
+                        {errorMessage && (
+                            <div className="text-red-600 font-semibold text-center mb-4">
+                                {errorMessage}
+                            </div>
+                        )}
+
                         <ReCAPTCHA
                             sitekey="6Ld_RRArAAAAAE3WGo8_qk4x4_Ew-C55CVRUcRUp"
                             onChange={token => setCaptchaToken(token)}
@@ -91,7 +108,6 @@ const SignPage = () => {
                             Je m'inscris
                         </button>
                     </div>
-
                 </form>
             ) : (
                 <div className="text-center my-10">

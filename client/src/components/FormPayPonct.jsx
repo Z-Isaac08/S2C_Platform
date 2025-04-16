@@ -79,7 +79,6 @@ const FormPayPonct = () => {
           } else {
             window.location.href = data.redirectUrl;
           }
-          resetForm();
         } else {
           console.error("Erreur lors de la création:", data.error);
         }
