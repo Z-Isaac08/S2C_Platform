@@ -57,7 +57,7 @@ const FormPayPonct = () => {
         try {
             if (formData.moyen_paiement === 'momo') {
                 const response = await fetch(
-                    'http://localhost:5000/api/soutiens/create-with-participant',
+                    'https://s2c-platform.onrender.com/api/soutiens/create-with-participant',
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -74,7 +74,7 @@ const FormPayPonct = () => {
                 }
             } else {
                 const response = await fetch(
-                    'http://localhost:5000/api/soutiens/paystack',
+                    'https://s2c-platform.onrender.com/api/soutiens/paystack',
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },

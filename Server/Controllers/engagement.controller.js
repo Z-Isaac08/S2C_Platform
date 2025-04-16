@@ -6,14 +6,14 @@ const { sendMail } = require('../Utils/sendMail');
 
 exports.create = async (req, res) => {
     try {
-        const { nom, prenom, whatsapp, email, montant_total, periodicite, duree } = req.body;
+        const { nom, prenom, telephone, email, montant_total, periodicite, duree } = req.body;
 
-        if (!nom || !prenom || !whatsapp || !email || !montant_total || !periodicite || !duree) {
+        if (!nom || !prenom || !telephone || !email || !montant_total || !periodicite || !duree) {
             return res.status(400).json({ error: "Tous les champs requis n'ont pas été fournis." });
         }
 
         // Vérifie si le participant existe
-        let participant = await Participant.findOne({ whatsapp });
+        let participant = await Participant.findOne({ telephone });
 
         if (participant) {
             // Vérifie s'il a déjà un engagement
@@ -26,7 +26,7 @@ exports.create = async (req, res) => {
             }
         } else {
             // Création du participant
-            participant = new Participant({ nom, prenom, whatsapp, email });
+            participant = new Participant({ nom, prenom, telephone, email });
             await participant.save();
         }
 

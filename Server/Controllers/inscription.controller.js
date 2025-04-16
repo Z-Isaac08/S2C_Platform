@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const { sendMail } = require('../Utils/sendMail'); // à créer
-const { verifyCaptcha } = require('../Utils/verifyCaptcha'); 
+const { verifyCaptcha } = require('../Utils/verifyCaptcha.js'); 
 const { cloudinary } = require('../Utils/cloudinary');
 const streamifier = require('streamifier');
 
