@@ -71,7 +71,7 @@ export default function S2CEventPage() {
 
             {/* --- Infos Générales --- */}
             <section className="bg-normal-purple text-white py-10 p-4">
-                <div className="flex flex-col-reverse md:flex-row justify-center items-center md:items-start md:justify-between gap-10 max-w-6xl mx-auto">
+                <div className="flex flex-col-reverse md:flex-row-reverse justify-center items-center md:items-start md:justify-between gap-10 max-w-6xl mx-auto">
                     <div className="md:w-1/2">
                         <h3 className="text-center md:text-left font-semibold text-lg mb-2">
                             Informations générales
@@ -87,7 +87,7 @@ export default function S2CEventPage() {
                         </p>
                     </div>
 
-                    <div className="md:w-1/2 w-10/12 h-fit md:h-[180px] border-b-2 md:border-b-0 md:border-l-2 border-normal-yellow pb-6 md:pb-0 pl-0 md:pl-6">
+                    <div className="md:w-1/2 w-10/12 h-fit md:h-[180px] border-b-2 md:border-b-0 md:border-r-2 border-normal-yellow pb-6 md:pb-0 pr-0 md:pr-6">
                         <h3 className="text-center md:text-left font-semibold text-lg mb-2">
                             S2C #3
                         </h3>
