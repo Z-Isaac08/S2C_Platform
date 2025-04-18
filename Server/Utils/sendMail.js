@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail', // ou un autre provider (Outlook, Mailgun, etc)
   auth: {
     user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD,
+    pass: "L@Team#S2C.com",
   },
 });
 
