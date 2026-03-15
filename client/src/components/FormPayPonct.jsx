@@ -43,8 +43,6 @@ const FormPayPonct = () => {
     return requiredFields.every((field) => !!formData[field]);
   };
 
-  let linkElement = null;
-
   // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,7 +70,7 @@ const FormPayPonct = () => {
 
         if (response.ok && data.redirectUrl) {
           // Crée un lien dynamique
-          linkElement = document.createElement("a");
+          const linkElement = document.createElement("a");
           linkElement.href = data.redirectUrl;
           linkElement.target = "_blank";
           linkElement.click();
@@ -98,7 +96,7 @@ const FormPayPonct = () => {
 
         if (data.url) {
           // Crée un lien dynamique
-          linkElement = document.createElement("a");
+          const linkElement = document.createElement("a");
           linkElement.href = data.url;
           linkElement.target = "_blank";
           linkElement.click(); // Simule le clic pour ouvrir le lien dans un nouvel onglet

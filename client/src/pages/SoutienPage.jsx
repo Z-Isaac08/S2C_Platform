@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Hero from "../components/Hero";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
@@ -6,18 +6,19 @@ import { motion, AnimatePresence } from "framer-motion";
 const SoutienPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [btn, setBtn] = useState(false);
-
   const isPonctuel = location.pathname.includes("ponctuel");
   const isRecurrent = location.pathname.includes("recurrent");
-  const isSoutien = location.pathname.includes("soutien");
   const showDescriptif = !isPonctuel && !isRecurrent;
 
-  useEffect(() => {
-    if (isSoutien) {
-      setBtn(false);
-    } 
-  }, [location.pathname]);
+  // Utilisation d'une clé basée sur l'URL pour réinitialiser l'état 'btn'
+  // sans utiliser un useEffect qui déclenche un re-render synchrone.
+  const [btn, setBtn] = useState(false);
+  const [prevPath, setPrevPath] = useState(location.pathname);
+
+  if (location.pathname !== prevPath) {
+    setPrevPath(location.pathname);
+    setBtn(false);
+  }
 
   const handleValue = (value) => {
     setBtn(value);

@@ -70,23 +70,6 @@ const FormPayRect = () => {
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      nom: "",
-      prenoms: "",
-      email: "",
-      telephone: "",
-      periodicite: "",
-      autrePeriodicite: "",
-      unitPeriodicite: "",
-      duree: "",
-      uniteDuree: "An",
-      montant: "",
-    });
-    setIsValid(false);
-    setError("");
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
