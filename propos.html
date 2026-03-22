@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="fr" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S2C Platform | Notre Vision</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+      @theme {
+        --color-brand-yellow: #fcbe0c;
+        --color-brand-yellow-light: #fdc319;
+        --color-brand-green: #00a19a;
+        --color-brand-white: #fdfdfd;
+        --color-brand-black: #1d1d1b;
+        --color-brand-black-soft: #2a2a28;
+        --font-display: 'Josefin Sans', sans-serif;
+        --font-sans: 'Montserrat', sans-serif;
+      }
+      @layer base {
+        body {
+          @apply bg-brand-black text-brand-white font-sans antialiased overflow-x-hidden;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          @apply font-display tracking-tight text-brand-white;
+        }
+      }
+      @layer utilities {
+        .glass {
+          @apply bg-brand-black/40 backdrop-blur-xl border border-white/10;
+        }
+        .text-gradient {
+          @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-yellow via-brand-white to-brand-green;
+        }
+        .btn-primary {
+          @apply px-8 py-4 bg-brand-yellow text-brand-black font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg shadow-brand-yellow/20 flex items-center gap-2;
+        }
+        .btn-secondary {
+          @apply px-8 py-4 border-2 border-brand-green text-brand-green font-bold rounded-full hover:bg-brand-green hover:text-brand-white transition-all duration-300 flex items-center gap-2;
+        }
+        .section-label {
+          @apply text-brand-green font-bold tracking-[0.2em] uppercase text-xs mb-4 block;
+        }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="selection:bg-brand-green selection:text-white">
+    <nav class="fixed top-0 w-full z-50 px-6 py-8 transition-all duration-500" id="main-nav">
+      <div class="max-w-7xl mx-auto flex items-center justify-between relative">
+        <a
+          href="refonte.html"
+          id="nav-logo"
+          class="flex items-center gap-3 opacity-0 max-w-0 overflow-hidden transition-all duration-500 pointer-events-none whitespace-nowrap"
+        >
+          <div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl shrink-0"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-2xl tracking-wide hidden sm:block shrink-0"
+            >STRUCTURE S2C</span
+          >
+        </a>
+        <div
+          id="nav-links-container"
+          class="flex-1 flex transition-all duration-500 justify-start pr-8 lg:pr-0"
+        >
+          <div class="hidden lg:flex items-center gap-10">
+            <a
+              href="refonte.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >ACCUEIL</a
+            >
+            <a
+              href="dons.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DONS</a
+            >
+            <a
+              href="boutique.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >BOUTIQUE</a
+            >
+            <a
+              href="departements.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DÉPARTEMENTS</a
+            >
+          </div>
+        </div>
+        <div class="flex items-center gap-6 shrink-0">
+          <a
+            href="inscription.html"
+            class="px-6 py-3 border border-brand-white/20 rounded-full text-sm font-bold bg-white/5 hover:bg-white/10 transition-all"
+            >S'INSCRIRE</a
+          >
+          <button class="text-3xl lg:hidden"><i class="ph ph-list"></i></button>
+        </div>
+      </div>
+    </nav>
+
+    <header class="pt-48 pb-20 px-6 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto text-center reveal">
+        <span class="section-label flex justify-center">À Propos</span>
+        <h1 class="text-5xl md:text-7xl font-bold mb-8">
+          S2C : <span class="text-brand-yellow">La Vision</span>
+        </h1>
+      </div>
+    </header>
+
+    <section
+      class="py-20 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+    >
+      <div class="reveal">
+        <h2 class="text-4xl font-bold mb-8 border-l-4 border-brand-green pl-6">Notre Mission</h2>
+        <div class="space-y-6 text-brand-white/70 text-lg leading-relaxed">
+          <p>
+            Le Salon de Célébration & de Contemplation (S2C) n'est pas seulement un événement, c'est
+            un mouvement. Notre objectif est de créer un espace où chaque individu peut rencontrer
+            Dieu à travers une adoration authentique et une louange prophétique.
+          </p>
+          <p>
+            Depuis notre première édition, nous avons vu des milliers de vies transformées, des
+            cœurs restaurés et une jeunesse se lever avec une ferveur nouvelle pour l'Évangile.
+          </p>
+          <p>
+            Nous croyons en un réveil qui impacte non seulement l'église, mais aussi la société, la
+            culture et les nations.
+          </p>
+        </div>
+      </div>
+      <div
+        class="reveal delay-100 rounded-[40px] overflow-hidden aspect-video bg-brand-black-soft border border-white/10 relative group"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=800"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+        />
+      </div>
+    </section>
+
+    <section class="py-20 px-6 bg-brand-black-soft/30">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 text-center reveal">Nos Valeurs Fondamentales</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="glass p-10 rounded-[30px] reveal">
+            <i class="ph ph-heart-straight text-4xl text-brand-yellow mb-6"></i>
+            <h4 class="text-xl font-bold mb-4">AUTHENTICITÉ</h4>
+            <p class="text-brand-white/50">
+              Une adoration qui vient du cœur, sans artifice, pour une connexion réelle.
+            </p>
+          </div>
+          <div class="glass p-10 rounded-[30px] reveal delay-100">
+            <i class="ph ph-crown text-4xl text-brand-green mb-6"></i>
+            <h4 class="text-xl font-bold mb-4">EXCELLENCE</h4>
+            <p class="text-brand-white/50">
+              Offrir le meilleur de nous-mêmes dans chaque détail, pour la gloire de Dieu.
+            </p>
+          </div>
+          <div class="glass p-10 rounded-[30px] reveal delay-200">
+            <i class="ph ph-hand-fist text-4xl text-brand-white mb-6"></i>
+            <h4 class="text-xl font-bold mb-4">UNITÉ</h4>
+            <p class="text-brand-white/50">
+              Bâtir un corps uni, au-delà des dénominations, autour d'une seule vision.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="propos-footer" class="py-12 px-6 border-t border-white/5 mt-20">
+      <div
+        class="max-w-3xl mx-auto flex flex-col items-center justify-center space-y-6 text-center"
+      >
+        <a href="refonte.html" class="flex items-center gap-3 group mt-4"
+          ><div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl group-hover:rotate-0 transition-all duration-300"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-xl tracking-wide">STRUCTURE S2C</span></a
+        >
+        <p class="font-display text-brand-white/60 max-w-md">
+          Rejoignez-nous pour une expérience spirituelle et humaine unique, autour de la louange,
+          l'adoration et la prière.
+        </p>
+        <div
+          class="flex flex-col md:flex-row font-display justify-center gap-6 items-center flex-wrap pt-4"
+        >
+          <a
+            href="tel:+2250757414458"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-phone text-2xl"></i><span>07 57 41 44 58</span></a
+          >
+          <a
+            href="tel:+2250788257233"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-phone text-2xl"></i><span>07 88 25 72 33</span></a
+          >
+          <a
+            href="mailto:lastructure.s2c@gmail.com"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-envelope-simple text-2xl"></i><span>lastructure.s2c@gmail.com</span></a
+          >
+        </div>
+        <p class="text-[10px] text-brand-white/30 mt-8 tracking-widest font-bold uppercase pb-8">
+          &copy; 2026 - Salon de Célébration & de Contemplation - Tous droits réservés
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('main-nav');
+        const logo = document.getElementById('nav-logo');
+        const linksContainer = document.getElementById('nav-links-container');
+        if (window.scrollY > 50) {
+          nav.classList.add('glass', 'py-4');
+          nav.classList.remove('py-8');
+          if (logo) {
+            logo.classList.remove('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.add('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.remove('justify-start');
+            linksContainer.classList.add('justify-center');
+          }
+        } else {
+          nav.classList.remove('glass', 'py-4');
+          nav.classList.add('py-8');
+          if (logo) {
+            logo.classList.add('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.remove('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.add('justify-start');
+            linksContainer.classList.remove('justify-center');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

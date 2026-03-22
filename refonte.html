@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="fr" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S2C Platform | Salon de Célébration et de Contemplation</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS 4 -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+      @theme {
+        --color-brand-yellow: #fcbe0c;
+        --color-brand-yellow-light: #fdc319;
+        --color-brand-green: #00a19a;
+        --color-brand-white: #fdfdfd;
+        --color-brand-black: #1d1d1b;
+        --color-brand-black-soft: #2a2a28;
+
+        --font-display: 'Josefin Sans', sans-serif;
+        --font-sans: 'Montserrat', sans-serif;
+      }
+
+      @layer base {
+        body {
+          @apply bg-brand-black text-brand-white font-sans antialiased overflow-x-hidden;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          @apply font-display tracking-tight text-brand-white;
+        }
+      }
+
+      @layer utilities {
+        .glass {
+          @apply bg-brand-black/40 backdrop-blur-xl border border-white/10;
+        }
+        .text-gradient {
+          @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-yellow via-brand-white to-brand-green;
+        }
+        .btn-primary {
+          @apply px-8 py-4 bg-brand-yellow text-brand-black font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg shadow-brand-yellow/20 flex items-center gap-2;
+        }
+        .btn-secondary {
+          @apply px-8 py-4 border-2 border-brand-green text-brand-green font-bold rounded-full hover:bg-brand-green hover:text-brand-white transition-all duration-300 flex items-center gap-2;
+        }
+        .section-label {
+          @apply text-brand-green font-bold tracking-[0.2em] uppercase text-xs mb-4 block;
+        }
+      }
+
+      /* Animations */
+      @keyframes scrollDown {
+        0% {
+          transform: translateY(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(10px);
+          opacity: 0;
+        }
+      }
+      .animate-scroll {
+        animation: scrollDown 2s infinite;
+      }
+
+      /* Custom Reveal Animation */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-20px) scale(1.05);
+        }
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /* Video Mask */
+      .video-mask {
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      }
+    </style>
+  </head>
+  <body class="selection:bg-brand-green selection:text-white">
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-8 transition-all duration-500" id="main-nav">
+      <div class="max-w-7xl mx-auto flex items-center justify-between relative">
+        <!-- Logo (Hidden initially) -->
+        <a
+          href="#"
+          id="nav-logo"
+          class="flex items-center gap-3 opacity-0 max-w-0 overflow-hidden transition-all duration-500 pointer-events-none whitespace-nowrap"
+        >
+          <div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl shrink-0"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-2xl tracking-wide hidden sm:block shrink-0"
+            >STRUCTURE S2C</span
+          >
+        </a>
+
+        <!-- Links Container -->
+        <div
+          id="nav-links-container"
+          class="flex-1 flex transition-all duration-500 justify-start pr-8 lg:pr-0"
+        >
+          <div class="hidden lg:flex items-center gap-10">
+            <a
+              href="refonte.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >ACCUEIL</a
+            >
+            <a
+              href="dons.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DONS</a
+            >
+            <a
+              href="departements.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DÉPARTEMENTS</a
+            >
+            <a
+              href="boutique.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >BOUTIQUE</a
+            >
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="flex items-center gap-6 shrink-0">
+          <a
+            href="inscription.html"
+            class="px-6 py-3 border border-brand-white/20 rounded-full text-sm font-bold bg-white/5 hover:bg-white/10 transition-all"
+            >S'INSCRIRE</a
+          >
+          <button class="text-3xl lg:hidden"><i class="ph ph-list"></i></button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ==================== HERO (VIDEO LOOP) ==================== -->
+    <section
+      id="hero"
+      class="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      <!-- Background Video Placeholder -->
+      <div class="absolute inset-0 z-0 video-mask">
+        <div class="absolute inset-0 bg-brand-black/60 z-10"></div>
+        <!-- Replacement with a relevant loop or high-quality dark video -->
+        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+          <source src="12663538_1920_1080_30fps.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <div class="relative z-20 text-center px-6 mt-20">
+        <h1 class="reveal text-5xl md:text-8xl lg:text-9xl font-bold mb-4 leading-[0.9]">
+          REJOIGNEZ <br />
+          <span class="text-gradient">LA FAMILLE.</span>
+        </h1>
+        <p
+          class="reveal text-brand-yellow font-display text-lg md:text-2xl font-bold tracking-[0.3em] uppercase mb-8"
+        >
+          Salon de Célébration et de Contemplation
+        </p>
+        <p
+          class="reveal text-lg md:text-xl text-brand-white/70 max-w-2xl mx-auto mb-10 font-medium"
+        >
+          Découvrez une expérience spirituelle sans barrières, centrée sur la transformation et le
+          réveil de soi.
+        </p>
+        <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="inscription.html" class="btn-primary w-full sm:w-auto">
+            NOUS REJOINDRE
+            <i class="ph-bold ph-arrow-right"></i>
+          </a>
+          <a href="propos.html" class="btn-secondary w-full sm:w-auto">EN SAVOIR PLUS</a>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span class="text-[10px] font-bold tracking-widest text-brand-white/30 uppercase"
+          >Scroll</span
+        >
+        <div class="w-1 h-8 bg-white/10 rounded-full relative overflow-hidden">
+          <div class="absolute top-0 w-full h-1/2 bg-brand-yellow animate-scroll"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== NOTRE VISION & NOUVELLES ==================== -->
+    <section id="vision" class="py-32 px-6">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <!-- Left: Vision -->
+        <div class="reveal">
+          <span class="section-label">Notre Vision</span>
+          <h2 class="text-4xl md:text-6xl font-bold mb-8">S2C : La Vision</h2>
+          <div
+            class="relative rounded-3xl overflow-hidden aspect-video bg-brand-black-soft border border-white/5 group"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1000&auto=format&fit=crop"
+              class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+              alt="Session"
+            />
+            <div class="absolute inset-0 flex items-center justify-center">
+              <button
+                class="w-20 h-20 bg-brand-yellow rounded-full flex items-center justify-center text-brand-black text-3xl hover:scale-110 transition-transform"
+              >
+                <i class="ph-fill ph-play"></i>
+              </button>
+            </div>
+          </div>
+          <p class="mt-8 text-brand-white/60 text-lg leading-relaxed">
+            Découvrez la vision derrière le
+            <span class="text-brand-yellow font-bold">Salon de Célébration et de Contemplation</span
+            >. Une invitation à la transformation profonde à travers une interview exclusive de
+            présentation.
+          </p>
+        </div>
+
+        <!-- Right: Latest News -->
+        <div class="flex flex-col gap-8">
+          <div class="reveal">
+            <span class="section-label">Dernières Nouvelles</span>
+            <h2 class="text-4xl md:text-5xl font-bold mb-8">Au cœur de S2C</h2>
+          </div>
+
+          <div
+            class="reveal glass p-2 rounded-[32px] flex flex-col md:flex-row gap-6 hover:bg-white/10 transition-all cursor-pointer"
+          >
+            <div
+              class="w-full md:w-32 h-32 rounded-3xl overflow-hidden bg-brand-black-soft shrink-0"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=400&auto=format&fit=crop"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="flex flex-col justify-center pr-6">
+              <span class="text-brand-yellow text-xs font-bold mb-2">15 MARS 2026</span>
+              <h4 class="text-xl font-bold mb-2">Lancement du S2C #4</h4>
+              <p class="text-brand-white/40 text-sm">
+                Préparez-vous pour le quatrième volet de notre série impactante.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="reveal glass p-2 rounded-[32px] flex flex-col md:flex-row gap-6 hover:bg-white/10 transition-all cursor-pointer"
+          >
+            <div
+              class="w-full md:w-32 h-32 rounded-3xl overflow-hidden bg-brand-black-soft shrink-0"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=400&auto=format&fit=crop"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="flex flex-col justify-center pr-6">
+              <span class="text-brand-yellow text-xs font-bold mb-2">10 MARS 2026</span>
+              <h4 class="text-xl font-bold mb-2">Nouvelle Session S2C Tribes</h4>
+              <p class="text-brand-white/40 text-sm">
+                Rejoignez votre groupe local pour une communion plus profonde.
+              </p>
+            </div>
+          </div>
+
+          <!-- À VENIR Section -->
+          <div class="mt-8 pt-8 border-t border-white/5 reveal">
+            <span class="section-label">À VENIR</span>
+            <div class="space-y-6 mt-6">
+              <div class="flex items-center gap-6 group cursor-pointer">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-brand-green/10 flex items-center justify-center text-brand-green text-2xl group-hover:bg-brand-green group-hover:text-brand-black transition-all"
+                >
+                  <i class="ph ph-calendar"></i>
+                </div>
+                <div>
+                  <h5 class="font-bold">S2C Night: Adoration Non-Stop</h5>
+                  <p class="text-xs text-brand-white/40">25 AVRIL 2026 • 20:00</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-6 group cursor-pointer">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-brand-yellow/10 flex items-center justify-center text-brand-yellow text-2xl group-hover:bg-brand-yellow group-hover:text-brand-black transition-all"
+                >
+                  <i class="ph ph-microphone-stage"></i>
+                </div>
+                <div>
+                  <h5 class="font-bold">Conférence: L'Art du Réveil</h5>
+                  <p class="text-xs text-brand-white/40">12 MAI 2026 • 09:00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a href="#" class="reveal font-bold text-brand-green flex items-center gap-2 group">
+            TOUTES LES ACTUALITÉS
+            <i class="ph ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ÉDITIONS PRÉCÉDENTES (GALLERY) ==================== -->
+    <section id="impact" class="py-32 px-6">
+      <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row items-end justify-between mb-16 gap-4"
+      >
+        <div class="reveal">
+          <span class="section-label">Impact Historique</span>
+          <h2 class="text-4xl md:text-6xl font-bold">Éditions Précédentes</h2>
+        </div>
+        <a href="#" class="reveal btn-secondary py-3 text-sm">ARCHIVES COMPLÈTES</a>
+      </div>
+
+      <!-- Grid layout instead of scroll -->
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="reveal aspect-[4/5] rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
+          onclick="
+            openLightbox(
+              [
+                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200',
+                'https://images.unsplash.com/photo-1544427920-c49ccfb85579?q=80&w=1200',
+                'https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=1200',
+                'https://images.unsplash.com/photo-1559223607-a43c990c692c?q=80&w=1200'
+              ],
+              'PROJET RE-PRESENT 2024',
+              'ÉDITION TULSA'
+            )
+          "
+        >
+          <img
+            src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-60"
+          ></div>
+          <div class="absolute bottom-8 left-8">
+            <h4 class="text-xl font-bold">PROJET RE-PRESENT 2024</h4>
+            <p class="text-brand-yellow text-xs font-bold tracking-widest uppercase">
+              ÉDITION TULSA
+            </p>
+          </div>
+        </div>
+        <div
+          class="reveal aspect-[4/5] rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
+          onclick="
+            openLightbox(
+              [
+                'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1200',
+                'https://images.unsplash.com/photo-1515162305285-0293e4767cc2?q=80&w=1200',
+                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200'
+              ],
+              'V4 CONFERENCE',
+              'ÉDITION 2023'
+            )
+          "
+        >
+          <img
+            src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=600"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-60"
+          ></div>
+          <div class="absolute bottom-8 left-8">
+            <h4 class="text-xl font-bold">V4 CONFERENCE</h4>
+            <p class="text-brand-yellow text-xs font-bold tracking-widest uppercase">
+              ÉDITION 2023
+            </p>
+          </div>
+        </div>
+        <div
+          class="reveal aspect-[4/5] rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
+          onclick="
+            openLightbox(
+              [
+                'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200',
+                'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1200'
+              ],
+              'RELATIONSHIP GOALS LIVE',
+              'ÉDITION 2022'
+            )
+          "
+        >
+          <img
+            src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-60"
+          ></div>
+          <div class="absolute bottom-8 left-8">
+            <h4 class="text-xl font-bold">RELATIONSHIP GOALS LIVE</h4>
+            <p class="text-brand-yellow text-xs font-bold tracking-widest uppercase">
+              ÉDITION 2022
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DÉPARTEMENTS (BENTO) ==================== -->
+    <section id="departements" class="py-32 px-6 bg-brand-black-soft/50">
+      <div class="max-w-7xl mx-auto">
+        <div class="reveal mb-16">
+          <span class="section-label">NOS DEPARTEMENTS</span>
+          <h2 class="text-4xl md:text-6xl font-bold">S2C : Nos Départements</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+          <!-- S2C TRIBES (Green focus) -->
+          <div
+            class="reveal md:col-span-8 h-80 bg-white/5 border border-white/10 rounded-[40px] p-10 flex flex-col justify-end relative overflow-hidden group hover:border-brand-green/50 transition-all duration-500"
+          >
+            <i
+              class="ph ph-users-three text-8xl absolute top-8 right-8 text-white/5 group-hover:text-brand-green/30 group-hover:rotate-12 transition-all duration-700"
+            ></i>
+            <h3 class="text-3xl font-bold mb-4 group-hover:text-brand-green transition-colors">
+              S2C TRIBES
+            </h3>
+            <p class="text-brand-white/50 max-w-md">
+              Trouvez votre communauté locale. Des petits groupes pour grandir ensemble dans la foi.
+            </p>
+          </div>
+
+          <!-- COMITÉ MUSICAL (Green focus) -->
+          <div
+            class="reveal md:col-span-4 h-80 bg-white/5 border border-white/10 rounded-[40px] p-10 flex flex-col justify-end relative group hover:border-brand-green/50 transition-all duration-500"
+          >
+            <i
+              class="ph ph-music-notes text-6xl absolute top-8 right-8 text-white/5 group-hover:text-brand-green/30 group-hover:rotate-12 transition-all duration-700"
+            ></i>
+            <h3
+              class="text-3xl font-bold mb-4 uppercase group-hover:text-brand-green transition-colors"
+            >
+              COMITÉ MUSICAL
+            </h3>
+            <p class="text-brand-white/50">
+              L'excellence musicale au service de l'adoration et du réveil.
+            </p>
+          </div>
+
+          <!-- SNT YTH (Yellow focus) -->
+          <div
+            class="reveal md:col-span-4 h-80 bg-white/5 border border-white/10 rounded-[40px] p-10 flex flex-col justify-end relative group hover:border-brand-yellow/50 transition-all duration-500"
+          >
+            <i
+              class="ph ph-lightning text-6xl absolute top-8 right-8 text-white/5 group-hover:text-brand-yellow/30 group-hover:rotate-12 transition-all duration-700"
+            ></i>
+            <h3
+              class="text-3xl font-bold mb-4 text-brand-yellow/80 group-hover:text-brand-yellow transition-colors"
+            >
+              SNT YTH
+            </h3>
+            <p class="text-brand-white/50">
+              Pour la jeunesse (12-18 ans). Impact, style et gospel.
+            </p>
+          </div>
+
+          <!-- OUTREACH (Yellow focus) -->
+          <div
+            class="reveal md:col-span-8 h-80 bg-white/5 border border-white/10 rounded-[40px] p-10 flex flex-col justify-end relative overflow-hidden group hover:border-brand-yellow/50 transition-all duration-500"
+          >
+            <i
+              class="ph ph-globe-hemisphere-west text-8xl absolute top-8 right-8 text-white/5 group-hover:text-brand-yellow/30 group-hover:rotate-12 transition-all duration-700"
+            ></i>
+            <h3 class="text-3xl font-bold mb-4 group-hover:text-brand-yellow transition-colors">
+              OUTREACH & MISSIONS
+            </h3>
+            <p class="text-brand-white/50 max-w-md">
+              Notre rayonnement au-delà des murs. Des missions internationales à l'action locale.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TÉMOIGNAGES ==================== -->
+    <section class="py-32 px-6 relative">
+      <div class="max-w-4xl mx-auto text-center reveal">
+        <span class="section-label">Retours & Témoignages</span>
+        <i class="ph ph-quotes text-6xl text-brand-green/30 mb-8 block"></i>
+        <h2 class="text-3xl md:text-5xl font-bold italic leading-tight mb-12">
+          "Le Réveil Authentique n'est pas seulement un évènement, c'est devenu mon mode de vie. Ma
+          foi a été restaurée et ma vision clarifiée."
+        </h2>
+        <div class="flex items-center justify-center gap-4">
+          <div class="w-16 h-16 rounded-full bg-brand-yellow overflow-hidden p-1">
+            <img
+              src="https://i.pravatar.cc/150?u=s2c1"
+              class="w-full h-full rounded-full object-cover"
+            />
+          </div>
+          <div class="text-left">
+            <h4 class="font-bold">Jean-Désiré K.</h4>
+            <p class="text-xs text-brand-white/40 uppercase tracking-widest">Membre S2C Tribes</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DONS & SOUTIEN ==================== -->
+    <section id="dons" class="py-32 px-6">
+      <div
+        class="max-w-7xl mx-auto glass rounded-[50px] p-10 md:p-20 relative overflow-hidden text-center reveal hover:scale-[1.01] transition-all duration-700"
+      >
+        <!-- Background Glow -->
+        <div
+          class="absolute -right-20 -top-20 w-96 h-96 bg-brand-green/20 rounded-full blur-[120px] animate-float"
+        ></div>
+        <div
+          class="absolute -left-20 -bottom-20 w-96 h-96 bg-brand-green/10 rounded-full blur-[120px] animate-float"
+          style="animation-delay: -3s"
+        ></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <span class="section-label flex justify-center">Générosité</span>
+          <h2 class="text-4xl md:text-6xl font-bold mb-8">Soutenir l'œuvre</h2>
+          <p class="text-brand-white/60 text-lg mb-12 leading-relaxed">
+            Chaque don est une graine semée pour le réveil. Rejoignez-nous dans cette mission de
+            transformation digitale et spirituelle. Votre générosité permet de propager le message
+            du Christ à travers toutes nos actions.
+          </p>
+          <div class="flex justify-center">
+            <a href="dons.html" class="btn-primary inline-flex">
+              FAIRE UN DON
+              <i class="ph-bold ph-heart"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== LA BOUTIQUE ==================== -->
+    <section id="boutique" class="py-32 px-6">
+      <div
+        class="max-w-7xl mx-auto glass rounded-[50px] p-10 md:p-20 relative overflow-hidden text-center bg-brand-black-soft/30 reveal hover:scale-[1.01] transition-all duration-700"
+      >
+        <!-- Background Glow -->
+        <div
+          class="absolute -right-20 -bottom-20 w-96 h-96 bg-brand-yellow/10 rounded-full blur-[120px] animate-float"
+        ></div>
+        <div
+          class="absolute -left-20 -top-20 w-96 h-96 bg-brand-yellow/5 rounded-full blur-[120px] animate-float"
+          style="animation-delay: -2s"
+        ></div>
+
+        <div class="relative z-10 max-w-2xl mx-auto">
+          <span class="section-label flex justify-center">Lifestyle Merch</span>
+          <h2 class="text-4xl md:text-6xl font-bold mb-8">
+            La Boutique <span class="text-brand-yellow">Represent</span>
+          </h2>
+          <p class="text-brand-white/60 text-lg mb-12 leading-relaxed">
+            Portez le message. Notre collection de vêtements et d'accessoires est conçue pour ceux
+            qui veulent re-présenter Dieu dans leur quotidien avec style et excellence.
+          </p>
+          <div class="flex justify-center">
+            <a href="boutique.html" class="btn-secondary inline-flex">
+              EXPLORER LA COLLECTION
+              <i class="ph-bold ph-shopping-bag"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REJOINDRE LA FAMILLE (SOCIALS) ==================== -->
+    <section class="py-32 px-6 bg-brand-yellow text-brand-black overflow-hidden relative">
+      <div class="absolute -right-20 -bottom-20 rotate-12 opacity-10">
+        <i class="ph-bold ph-users-three text-[400px]"></i>
+      </div>
+
+      <div class="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
+        <h2 class="text-5xl md:text-8xl font-black mb-12 tracking-tighter uppercase">
+          Rejoindre la famille.
+        </h2>
+        <div class="flex flex-wrap justify-center gap-12 md:gap-24">
+          <a href="#" class="group flex flex-col items-center gap-4">
+            <div
+              class="w-24 h-24 rounded-[32px] bg-brand-black text-brand-yellow flex items-center justify-center text-4xl group-hover:-translate-y-4 transition-transform duration-500 shadow-2xl"
+            >
+              <i class="ph ph-instagram-logo"></i>
+            </div>
+            <span class="font-bold tracking-widest text-xs">INSTAGRAM</span>
+          </a>
+          <a href="#" class="group flex flex-col items-center gap-4">
+            <div
+              class="w-24 h-24 rounded-[32px] bg-brand-black text-brand-yellow flex items-center justify-center text-4xl group-hover:-translate-y-4 transition-transform duration-500 shadow-2xl"
+            >
+              <i class="ph ph-tiktok-logo"></i>
+            </div>
+            <span class="font-bold tracking-widest text-xs">TIKTOK</span>
+          </a>
+          <a href="#" class="group flex flex-col items-center gap-4">
+            <div
+              class="w-24 h-24 rounded-[32px] bg-brand-black text-brand-yellow flex items-center justify-center text-4xl group-hover:-translate-y-4 transition-transform duration-500 shadow-2xl"
+            >
+              <i class="ph ph-facebook-logo"></i>
+            </div>
+            <span class="font-bold tracking-widest text-xs">FACEBOOK</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer id="main-footer" class="py-12 px-6 border-t border-white/5 mt-20">
+      <div
+        class="max-w-3xl mx-auto flex flex-col items-center justify-center space-y-6 text-center"
+      >
+        <a href="refonte.html" class="flex items-center gap-3 group mt-4"
+          ><div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl group-hover:rotate-0 transition-all duration-300"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-xl tracking-wide">STRUCTURE S2C</span></a
+        >
+        <p class="font-display text-brand-white/60 max-w-md">
+          Rejoignez-nous pour une expérience spirituelle et humaine unique, autour de la louange,
+          l'adoration et la prière.
+        </p>
+        <div
+          class="flex flex-col md:flex-row font-display justify-center gap-6 items-center flex-wrap pt-4"
+        >
+          <a
+            href="tel:+2250757414458"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-phone text-2xl"></i><span>07 57 41 44 58</span></a
+          >
+          <a
+            href="tel:+2250788257233"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-phone text-2xl"></i><span>07 88 25 72 33</span></a
+          >
+          <a
+            href="mailto:lastructure.s2c@gmail.com"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-envelope-simple text-2xl"></i><span>lastructure.s2c@gmail.com</span></a
+          >
+        </div>
+        <p class="text-[10px] text-brand-white/30 mt-8 tracking-widest font-bold uppercase pb-8">
+          &copy; 2026 - Salon de Célébration & de Contemplation - Tous droits réservés
+        </p>
+      </div>
+    </footer>
+
+    <!-- ==================== LIGHTBOX OVERLAY ==================== -->
+    <div
+      id="lightbox"
+      class="fixed inset-0 z-[100] bg-brand-black/95 backdrop-blur-2xl hidden flex-col items-center justify-center p-4 md:p-20"
+    >
+      <!-- Close Button -->
+      <button
+        onclick="closeLightbox()"
+        class="absolute top-6 right-6 md:top-10 md:right-10 text-brand-white text-4xl md:text-5xl hover:text-brand-yellow transition-colors z-[110]"
+      >
+        <i class="ph ph-x"></i>
+      </button>
+
+      <!-- Navigation Arrows -->
+      <button
+        onclick="changeImage(-1)"
+        class="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-[110]"
+      >
+        <i class="ph ph-caret-left"></i>
+      </button>
+      <button
+        onclick="changeImage(1)"
+        class="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-[110]"
+      >
+        <i class="ph ph-caret-right"></i>
+      </button>
+
+      <!-- Content -->
+      <div class="max-w-5xl w-full h-[70vh] flex items-center justify-center relative">
+        <img
+          id="lightbox-img"
+          src=""
+          class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl transition-opacity duration-300"
+        />
+      </div>
+
+      <div class="mt-8 text-center">
+        <h3 id="lightbox-title" class="text-2xl font-bold mb-2"></h3>
+        <p
+          id="lightbox-desc"
+          class="text-brand-white/40 uppercase tracking-widest text-xs font-bold mb-4"
+        ></p>
+        <div id="lightbox-counter" class="text-brand-yellow font-bold text-sm bg-white/5 px-4 py-1 rounded-full inline-block"></div>
+      </div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+      // Reveal on scroll logic
+      const observerOptions = {
+        threshold: 0.15,
+      };
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      // Nav Scroll Effect
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('main-nav');
+        const logo = document.getElementById('nav-logo');
+        const linksContainer = document.getElementById('nav-links-container');
+
+        if (window.scrollY > 100) {
+          nav.classList.add('glass', 'py-4');
+          nav.classList.remove('py-8');
+          if (logo) {
+            logo.classList.remove('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.add('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.remove('justify-start');
+            linksContainer.classList.add('justify-center');
+          }
+        } else {
+          nav.classList.remove('glass', 'py-4');
+          nav.classList.add('py-8');
+          if (logo) {
+            logo.classList.add('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.remove('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.add('justify-start');
+            linksContainer.classList.remove('justify-center');
+          }
+        }
+      });
+
+      // Lightbox Logic
+      let currentGallery = [];
+      let currentImageIndex = 0;
+
+      function openLightbox(images, title, desc) {
+        const lightbox = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+        const lbTitle = document.getElementById('lightbox-title');
+        const lbDesc = document.getElementById('lightbox-desc');
+        const lbCounter = document.getElementById('lightbox-counter');
+
+        currentGallery = images;
+        currentImageIndex = 0;
+
+        lbImg.src = currentGallery[currentImageIndex];
+        lbTitle.innerText = title;
+        lbDesc.innerText = desc;
+        updateCounter();
+
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function updateCounter() {
+        const lbCounter = document.getElementById('lightbox-counter');
+        lbCounter.innerText = `${currentImageIndex + 1} / ${currentGallery.length}`;
+      }
+
+      function changeImage(delta) {
+        const lbImg = document.getElementById('lightbox-img');
+        lbImg.style.opacity = '0';
+        
+        setTimeout(() => {
+          currentImageIndex = (currentImageIndex + delta + currentGallery.length) % currentGallery.length;
+          lbImg.src = currentGallery[currentImageIndex];
+          updateCounter();
+          lbImg.style.opacity = '1';
+        }, 300);
+      }
+
+      function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+      }
+
+      // Keyboard Support
+      document.addEventListener('keydown', (e) => {
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox.classList.contains('hidden')) return;
+
+        if (e.key === 'ArrowRight') changeImage(1);
+        if (e.key === 'ArrowLeft') changeImage(-1);
+        if (e.key === 'Escape') closeLightbox();
+      });
+    </script>
+  </body>
+</html>

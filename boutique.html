@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="fr" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S2C Platform | Boutique</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+      @theme {
+        --color-brand-yellow: #fcbe0c;
+        --color-brand-yellow-light: #fdc319;
+        --color-brand-green: #00a19a;
+        --color-brand-white: #fdfdfd;
+        --color-brand-black: #1d1d1b;
+        --color-brand-black-soft: #2a2a28;
+        --font-display: 'Josefin Sans', sans-serif;
+        --font-sans: 'Montserrat', sans-serif;
+      }
+      @layer base {
+        body {
+          @apply bg-brand-black text-brand-white font-sans antialiased overflow-x-hidden;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          @apply font-display tracking-tight text-brand-white;
+        }
+      }
+      @layer utilities {
+        .glass {
+          @apply bg-brand-black/40 backdrop-blur-xl border border-white/10;
+        }
+        .text-gradient {
+          @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-yellow via-brand-white to-brand-green;
+        }
+        .btn-primary {
+          @apply px-8 py-4 bg-brand-yellow text-brand-black font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg shadow-brand-yellow/20 flex items-center gap-2;
+        }
+        .btn-secondary {
+          @apply px-8 py-4 border-2 border-brand-green text-brand-green font-bold rounded-full hover:bg-brand-green hover:text-brand-white transition-all duration-300 flex items-center gap-2;
+        }
+        .section-label {
+          @apply text-brand-green font-bold tracking-[0.2em] uppercase text-xs mb-4 block;
+        }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="selection:bg-brand-green selection:text-white">
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-8 transition-all duration-500" id="main-nav">
+      <div class="max-w-7xl mx-auto flex items-center justify-between relative">
+        <a
+          href="refonte.html"
+          id="nav-logo"
+          class="flex items-center gap-3 opacity-0 max-w-0 overflow-hidden transition-all duration-500 pointer-events-none whitespace-nowrap"
+        >
+          <div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl shrink-0"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-2xl tracking-wide hidden sm:block shrink-0"
+            >STRUCTURE S2C</span
+          >
+        </a>
+        <div
+          id="nav-links-container"
+          class="flex-1 flex transition-all duration-500 justify-start pr-8 lg:pr-0"
+        >
+          <div class="hidden lg:flex items-center gap-10">
+            <a
+              href="refonte.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >ACCUEIL</a
+            >
+            <a
+              href="dons.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DONS</a
+            >
+            <a
+              href="boutique.html"
+              class="text-sm font-semibold text-brand-yellow transition-colors"
+              >BOUTIQUE</a
+            >
+            <a
+              href="departements.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DÉPARTEMENTS</a
+            >
+          </div>
+        </div>
+        <div class="flex items-center gap-6 shrink-0">
+          <a
+            href="inscription.html"
+            class="px-6 py-3 border border-brand-white/20 rounded-full text-sm font-bold bg-white/5 hover:bg-white/10 transition-all"
+            >S'INSCRIRE</a
+          >
+          <button class="text-3xl lg:hidden"><i class="ph ph-list"></i></button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HEADER: BOUTIQUE -->
+    <header
+      class="pt-48 pb-20 px-6 relative overflow-hidden bg-brand-black-soft/30 border-b border-white/5"
+    >
+      <div
+        class="absolute -left-20 -bottom-20 w-80 h-80 bg-brand-yellow/10 rounded-full blur-[100px]"
+      ></div>
+      <div class="max-w-4xl mx-auto text-center relative z-10 reveal">
+        <span class="section-label flex justify-center">Lifestyle Merch</span>
+        <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+          La Boutique <br />
+          <span class="text-brand-yellow">Represent.</span>
+        </h1>
+        <p class="text-xl text-brand-white/60 leading-relaxed max-w-2xl mx-auto">
+          Découvrez notre collection de vêtements, ressources et accessoires exclusifs.
+        </p>
+      </div>
+    </header>
+
+    <!-- CONTENT: BOUTIQUE ITEMS -->
+    <section class="py-24 px-6 relative z-10">
+      <div class="max-w-7xl mx-auto pt-8">
+        <div class="flex flex-wrap gap-4 mb-12 justify-center reveal">
+          <button
+            class="px-6 py-2 rounded-full border border-white/20 text-sm font-bold bg-brand-yellow text-brand-black"
+          >
+            TOUT
+          </button>
+          <button
+            class="px-6 py-2 rounded-full border border-white/20 text-sm font-bold hover:bg-white/5"
+          >
+            VÊTEMENTS
+          </button>
+          <button
+            class="px-6 py-2 rounded-full border border-white/20 text-sm font-bold hover:bg-white/5"
+          >
+            OUVRAGES
+          </button>
+          <button
+            class="px-6 py-2 rounded-full border border-white/20 text-sm font-bold hover:bg-white/5"
+          >
+            ACCESSOIRES
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+          <!-- Item 1 -->
+          <div class="reveal group cursor-pointer">
+            <div
+              class="relative rounded-[40px] overflow-hidden aspect-square bg-brand-black-soft mb-6"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div
+                class="absolute inset-0 bg-brand-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="w-14 h-14 bg-brand-white text-brand-black rounded-full flex items-center justify-center text-xl"
+                  ><i class="ph-bold ph-plus"></i
+                ></span>
+              </div>
+            </div>
+            <h4 class="font-bold text-xl uppercase tracking-tight">T-Shirt "REVEIL" Noir</h4>
+            <p class="text-brand-yellow font-bold mt-1">15 000 FCFA</p>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="reveal group cursor-pointer delay-100">
+            <div
+              class="relative rounded-[40px] overflow-hidden aspect-square bg-brand-black-soft mb-6"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div
+                class="absolute inset-0 bg-brand-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="w-14 h-14 bg-brand-white text-brand-black rounded-full flex items-center justify-center text-xl"
+                  ><i class="ph-bold ph-plus"></i
+                ></span>
+              </div>
+            </div>
+            <h4 class="font-bold text-xl uppercase tracking-tight">Ouvrage: La Voie du Réveil</h4>
+            <p class="text-brand-yellow font-bold mt-1">10 000 FCFA</p>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="reveal group cursor-pointer delay-200">
+            <div
+              class="relative rounded-[40px] overflow-hidden aspect-square bg-brand-black-soft mb-6"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute inset-x-0 bottom-4 px-4">
+                <span
+                  class="bg-brand-green text-brand-white text-[10px] font-bold px-3 py-1 rounded-full"
+                  >SOLD OUT</span
+                >
+              </div>
+            </div>
+            <h4 class="font-bold text-xl uppercase tracking-tight">Hoodie S2C Authentique</h4>
+            <p class="text-brand-white/30 font-bold mt-1">25 000 FCFA</p>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="reveal group cursor-pointer delay-300">
+            <div
+              class="relative rounded-[40px] overflow-hidden aspect-square bg-brand-black-soft mb-6"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div
+                class="absolute inset-0 bg-brand-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="w-14 h-14 bg-brand-white text-brand-black rounded-full flex items-center justify-center text-xl"
+                  ><i class="ph-bold ph-plus"></i
+                ></span>
+              </div>
+            </div>
+            <h4 class="font-bold text-xl uppercase tracking-tight">Casquette "Represent" 24</h4>
+            <p class="text-brand-yellow font-bold mt-1">8 000 FCFA</p>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="reveal group cursor-pointer">
+            <div
+              class="relative rounded-[40px] overflow-hidden aspect-square bg-brand-black-soft mb-6"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1620012253291-b3b320d32bb5?q=80&w=800"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div
+                class="absolute inset-0 bg-brand-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span
+                  class="w-14 h-14 bg-brand-white text-brand-black rounded-full flex items-center justify-center text-xl"
+                  ><i class="ph-bold ph-plus"></i
+                ></span>
+              </div>
+            </div>
+            <h4 class="font-bold text-xl uppercase tracking-tight">T-Shirt "TRIBES" Blanc</h4>
+            <p class="text-brand-yellow font-bold mt-1">15 000 FCFA</p>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="reveal group cursor-pointer delay-100">
+            <div
+              class="relative rounded-[40px] overflow-hidden aspect-[4/5] bg-brand-black-soft mb-6 flex items-center justify-center border border-white/5"
+            >
+              <div class="text-center p-6">
+                <i class="ph-bold ph-books text-4xl text-brand-green mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Pack Vision Complète</h3>
+                <p class="text-sm text-brand-white/40 mb-4">
+                  Comprenant tous nos ouvrages de la deuxième édition.
+                </p>
+                <button
+                  class="px-6 py-2 bg-white/10 rounded-full text-xs font-bold hover:bg-brand-green hover:text-brand-black transition-all"
+                >
+                  VOIR L'OFFRE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="propos-footer" class="py-12 px-6 border-t border-white/5 mt-20">
+      <div
+        class="max-w-3xl mx-auto flex flex-col items-center justify-center space-y-6 text-center"
+      >
+        <a href="refonte.html" class="flex items-center gap-3 group mt-4">
+          <div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl group-hover:rotate-0 transition-all duration-300"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-xl tracking-wide">STRUCTURE S2C</span>
+        </a>
+        <p class="font-display text-brand-white/60 max-w-md">
+          Rejoignez-nous pour une expérience spirituelle et humaine unique, autour de la louange,
+          l'adoration et la prière.
+        </p>
+        <div
+          class="flex flex-col md:flex-row font-display justify-center gap-6 items-center flex-wrap pt-4"
+        >
+          <a
+            href="tel:+2250757414458"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-phone text-2xl"></i><span>07 57 41 44 58</span></a
+          >
+          <a
+            href="tel:+2250788257233"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-phone text-2xl"></i><span>07 88 25 72 33</span></a
+          >
+          <a
+            href="mailto:lastructure.s2c@gmail.com"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-envelope-simple text-2xl"></i><span>lastructure.s2c@gmail.com</span></a
+          >
+        </div>
+        <p class="text-[10px] text-brand-white/30 mt-8 tracking-widest font-bold uppercase pb-8">
+          &copy; 2026 - Salon de Célébration & de Contemplation - Tous droits réservés
+        </p>
+      </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('main-nav');
+        const logo = document.getElementById('nav-logo');
+        const linksContainer = document.getElementById('nav-links-container');
+        if (window.scrollY > 50) {
+          nav.classList.add('glass', 'py-4');
+          nav.classList.remove('py-8');
+          if (logo) {
+            logo.classList.remove('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.add('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.remove('justify-start');
+            linksContainer.classList.add('justify-center');
+          }
+        } else {
+          nav.classList.remove('glass', 'py-4');
+          nav.classList.add('py-8');
+          if (logo) {
+            logo.classList.add('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.remove('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.add('justify-start');
+            linksContainer.classList.remove('justify-center');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

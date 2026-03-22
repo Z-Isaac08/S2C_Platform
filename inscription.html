@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="fr" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S2C Platform | Inscription</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+      @theme {
+        --color-brand-yellow: #fcbe0c;
+        --color-brand-yellow-light: #fdc319;
+        --color-brand-green: #00a19a;
+        --color-brand-white: #fdfdfd;
+        --color-brand-black: #1d1d1b;
+        --color-brand-black-soft: #2a2a28;
+        --font-display: 'Josefin Sans', sans-serif;
+        --font-sans: 'Montserrat', sans-serif;
+      }
+      @layer base {
+        body {
+          @apply bg-brand-black text-brand-white font-sans antialiased overflow-x-hidden;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          @apply font-display tracking-tight text-brand-white;
+        }
+      }
+      @layer utilities {
+        .glass {
+          @apply bg-brand-black/40 backdrop-blur-xl border border-white/10;
+        }
+        .btn-primary {
+          @apply px-8 py-4 bg-brand-yellow text-brand-black font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg shadow-brand-yellow/20 flex items-center gap-2;
+        }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="selection:bg-brand-green selection:text-white">
+    <nav class="fixed top-0 w-full z-50 px-6 py-8 transition-all duration-500" id="main-nav">
+      <div class="max-w-7xl mx-auto flex items-center justify-between relative">
+        <a
+          href="refonte.html"
+          id="nav-logo"
+          class="flex items-center gap-3 opacity-0 max-w-0 overflow-hidden transition-all duration-500 pointer-events-none whitespace-nowrap"
+        >
+          <div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl shrink-0"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-2xl tracking-wide hidden sm:block shrink-0"
+            >STRUCTURE S2C</span
+          >
+        </a>
+        <div
+          id="nav-links-container"
+          class="flex-1 flex transition-all duration-500 justify-start pr-8 lg:pr-0"
+        >
+          <div class="hidden lg:flex items-center gap-10">
+            <a
+              href="refonte.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >ACCUEIL</a
+            >
+            <a
+              href="dons.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DONS</a
+            >
+            <a
+              href="boutique.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >BOUTIQUE</a
+            >
+            <a
+              href="departements.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DÉPARTEMENTS</a
+            >
+          </div>
+        </div>
+        <div class="flex items-center gap-6 shrink-0">
+          <a
+            href="inscription.html"
+            class="px-6 py-3 border-2 border-brand-yellow rounded-full text-sm font-bold text-brand-yellow bg-brand-yellow/5"
+            >S'INSCRIRE</a
+          >
+          <button class="text-3xl lg:hidden"><i class="ph ph-list"></i></button>
+        </div>
+      </div>
+    </nav>
+
+    <header class="pt-48 pb-10 px-6 text-center reveal">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 uppercase tracking-tighter">
+        Rejoindre le <span class="text-brand-yellow italic">Mouvement</span>
+      </h1>
+      <p class="text-brand-white/50 text-xl font-display uppercase tracking-widest">
+        Inscrivez-vous pour la prochaine édition
+      </p>
+    </header>
+
+    <section class="py-12 px-6 max-w-2xl mx-auto reveal delay-100">
+      <div class="glass p-10 md:p-12 rounded-[40px]">
+        <form class="space-y-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label class="text-[10px] font-bold tracking-widest text-brand-white/40 uppercase"
+                >Prénom</label
+              >
+              <input
+                type="text"
+                placeholder="Paul"
+                class="w-full bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-yellow transition-all"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="text-[10px] font-bold tracking-widest text-brand-white/40 uppercase"
+                >Nom</label
+              >
+              <input
+                type="text"
+                placeholder="Koffi"
+                class="w-full bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-yellow transition-all"
+              />
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-[10px] font-bold tracking-widest text-brand-white/40 uppercase"
+              >Adresse Email</label
+            >
+            <input
+              type="email"
+              placeholder="paul.koffi@example.com"
+              class="w-full bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-yellow transition-all"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-[10px] font-bold tracking-widest text-brand-white/40 uppercase"
+              >Numéro de Téléphone</label
+            >
+            <div class="flex gap-4">
+              <div
+                class="bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-4 flex items-center text-sm font-bold"
+              >
+                +225
+              </div>
+              <input
+                type="tel"
+                placeholder="07 XX XX XX XX"
+                class="flex-1 bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-yellow transition-all"
+              />
+            </div>
+          </div>
+
+          <div class="pt-4">
+            <button
+              type="button"
+              class="w-full btn-primary justify-center text-lg uppercase tracking-widest font-display"
+            >
+              CONFIRMER MON INSCRIPTION
+            </button>
+            <p class="text-[10px] text-center text-brand-white/30 mt-6 uppercase tracking-[0.2em]">
+              En vous inscrivant, vous acceptez de recevoir nos actualités par email.
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="propos-footer" class="py-12 px-6 border-t border-white/5 mt-20">
+      <div
+        class="max-w-3xl mx-auto flex flex-col items-center justify-center space-y-6 text-center"
+      >
+        <a href="refonte.html" class="flex items-center gap-3 group mt-4"
+          ><div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl group-hover:rotate-0 transition-all duration-300"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-xl tracking-wide">STRUCTURE S2C</span></a
+        >
+        <p class="font-display text-brand-white/60 max-w-md">
+          Rejoignez-nous pour une expérience spirituelle et humaine unique, autour de la louange,
+          l'adoration et la prière.
+        </p>
+        <div
+          class="flex flex-col md:flex-row font-display justify-center gap-6 items-center flex-wrap pt-4"
+        >
+          <a
+            href="tel:+2250757414458"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-phone text-2xl"></i><span>07 57 41 44 58</span></a
+          >
+          <a
+            href="tel:+2250788257233"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-phone text-2xl"></i><span>07 88 25 72 33</span></a
+          >
+          <a
+            href="mailto:lastructure.s2c@gmail.com"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+            ><i class="ph ph-envelope-simple text-2xl"></i><span>lastructure.s2c@gmail.com</span></a
+          >
+        </div>
+        <p class="text-[10px] text-brand-white/30 mt-8 tracking-widest font-bold uppercase pb-8">
+          &copy; 2026 - Salon de Célébration & de Contemplation - Tous droits réservés
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('main-nav');
+        const logo = document.getElementById('nav-logo');
+        const linksContainer = document.getElementById('nav-links-container');
+        if (window.scrollY > 50) {
+          nav.classList.add('glass', 'py-4');
+          nav.classList.remove('py-8');
+          if (logo) {
+            logo.classList.remove('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.add('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.remove('justify-start');
+            linksContainer.classList.add('justify-center');
+          }
+        } else {
+          nav.classList.remove('glass', 'py-4');
+          nav.classList.add('py-8');
+          if (logo) {
+            logo.classList.add('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.remove('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.add('justify-start');
+            linksContainer.classList.remove('justify-center');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="fr" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S2C Platform | Faire un Don</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+      @theme {
+        --color-brand-yellow: #fcbe0c;
+        --color-brand-yellow-light: #fdc319;
+        --color-brand-green: #00a19a;
+        --color-brand-white: #fdfdfd;
+        --color-brand-black: #1d1d1b;
+        --color-brand-black-soft: #2a2a28;
+        --font-display: 'Josefin Sans', sans-serif;
+        --font-sans: 'Montserrat', sans-serif;
+      }
+      @layer base {
+        body {
+          @apply bg-brand-black text-brand-white font-sans antialiased overflow-x-hidden;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          @apply font-display tracking-tight text-brand-white;
+        }
+      }
+      @layer utilities {
+        .glass {
+          @apply bg-brand-black/40 backdrop-blur-xl border border-white/10;
+        }
+        .text-gradient {
+          @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-yellow via-brand-white to-brand-green;
+        }
+        .btn-primary {
+          @apply px-8 py-4 bg-brand-yellow text-brand-black font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg shadow-brand-yellow/20 flex items-center gap-2;
+        }
+        .btn-secondary {
+          @apply px-8 py-4 border-2 border-brand-green text-brand-green font-bold rounded-full hover:bg-brand-green hover:text-brand-white transition-all duration-300 flex items-center gap-2;
+        }
+        .section-label {
+          @apply text-brand-green font-bold tracking-[0.2em] uppercase text-xs mb-4 block;
+        }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="selection:bg-brand-green selection:text-white">
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-8 transition-all duration-500" id="main-nav">
+      <div class="max-w-7xl mx-auto flex items-center justify-between relative">
+        <a
+          href="refonte.html"
+          id="nav-logo"
+          class="flex items-center gap-3 opacity-0 max-w-0 overflow-hidden transition-all duration-500 pointer-events-none whitespace-nowrap"
+        >
+          <div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl shrink-0"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-2xl tracking-wide hidden sm:block shrink-0"
+            >STRUCTURE S2C</span
+          >
+        </a>
+        <div
+          id="nav-links-container"
+          class="flex-1 flex transition-all duration-500 justify-start pr-8 lg:pr-0"
+        >
+          <div class="hidden lg:flex items-center gap-10">
+            <a
+              href="refonte.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >ACCUEIL</a
+            >
+            <a href="dons.html" class="text-sm font-semibold text-brand-yellow transition-colors"
+              >DONS</a
+            >
+            <a
+              href="boutique.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >BOUTIQUE</a
+            >
+            <a
+              href="departements.html"
+              class="text-sm font-semibold hover:text-brand-yellow transition-colors"
+              >DÉPARTEMENTS</a
+            >
+          </div>
+        </div>
+        <div class="flex items-center gap-6 shrink-0">
+          <a
+            href="inscription.html"
+            class="px-6 py-3 border border-brand-white/20 rounded-full text-sm font-bold bg-white/5 hover:bg-white/10 transition-all"
+            >S'INSCRIRE</a
+          >
+          <button class="text-3xl lg:hidden"><i class="ph ph-list"></i></button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HEADER: DONS -->
+    <header class="pt-48 pb-20 px-6 relative overflow-hidden">
+      <div
+        class="absolute -right-20 top-20 w-80 h-80 bg-brand-green/10 rounded-full blur-[100px] z-0"
+      ></div>
+      <div
+        class="absolute -left-20 bottom-0 w-80 h-80 bg-brand-yellow/10 rounded-full blur-[100px] z-0"
+      ></div>
+      <div class="max-w-4xl mx-auto text-center relative z-10 reveal">
+        <span class="section-label flex justify-center">Soutenir le Réveil</span>
+        <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+          Générosité <br />
+          <span class="text-brand-yellow">Sans Limites.</span>
+        </h1>
+        <p class="text-xl text-brand-white/60 leading-relaxed">
+          Chaque don est une graine semée pour le réveil. Soutenez S2C dans ses missions
+          d'évangélisation, d'équipement et de déploiement.
+        </p>
+      </div>
+    </header>
+
+    <!-- CONTENT: DONS OPTIONS -->
+    <section class="py-20 px-6 relative z-10">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <!-- Informations actuelles -->
+        <div class="glass p-10 md:p-16 rounded-[40px] reveal">
+          <h2 class="text-3xl font-bold mb-6">Comment vos dons sont-ils utilisés ?</h2>
+          <ul class="space-y-6 text-brand-white/70">
+            <li class="flex items-start gap-4">
+              <i class="ph-fill ph-check-circle text-brand-green text-2xl mt-1"></i>
+              <div>
+                <h4 class="text-brand-white font-bold text-lg">Financement des événements</h4>
+                <p class="text-sm line-clamp-2">
+                  Soutenir nos rassemblements massifs et nos conférences locales.
+                </p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <i class="ph-fill ph-check-circle text-brand-green text-2xl mt-1"></i>
+              <div>
+                <h4 class="text-brand-white font-bold text-lg">Missions Outreach</h4>
+                <p class="text-sm line-clamp-2">
+                  Aider nos missionnaires à atteindre de nouvelles communautés.
+                </p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <i class="ph-fill ph-check-circle text-brand-green text-2xl mt-1"></i>
+              <div>
+                <h4 class="text-brand-white font-bold text-lg">Équipement digital</h4>
+                <p class="text-sm line-clamp-2">
+                  Développer la plateforme S2C et produire un contenu de haute qualité.
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Formulaire de don -->
+        <div
+          class="bg-brand-black-soft/50 p-10 md:p-16 rounded-[40px] border border-white/10 flex flex-col justify-center reveal delay-100"
+        >
+          <!-- Types de dons -->
+          <div class="flex flex-wrap gap-4 mb-10">
+            <button
+              class="flex-1 py-4 px-6 rounded-2xl font-bold text-center border-2 border-brand-yellow text-brand-yellow bg-brand-yellow/10 transition-all flex flex-col items-center gap-2"
+            >
+              <span class="text-lg">Je donne</span>
+              <span class="text-[10px] tracking-widest uppercase opacity-70">Don ponctuel</span>
+            </button>
+            <button
+              class="flex-1 py-4 px-6 rounded-2xl font-bold text-center border-2 border-white/10 text-brand-white/50 hover:border-white/30 hover:text-brand-white transition-all flex flex-col items-center gap-2"
+            >
+              <span class="text-lg">Je m'engage</span>
+              <span class="text-[10px] tracking-widest uppercase opacity-70">Soutien régulier</span>
+            </button>
+          </div>
+
+          <h3 class="text-xl font-bold mb-6">Saisissez votre montant</h3>
+
+          <div class="flex flex-wrap gap-4 mb-8">
+            <button
+              class="px-6 py-3 glass rounded-xl font-bold hover:border-brand-yellow transition-all flex-1 text-center"
+            >
+              10 000 FCFA
+            </button>
+            <button
+              class="px-6 py-3 bg-brand-white text-brand-black rounded-xl font-bold hover:bg-brand-yellow transition-all flex-1 text-center scale-105 shadow-xl"
+            >
+              30 000 FCFA
+            </button>
+            <button
+              class="px-6 py-3 glass rounded-xl font-bold hover:border-brand-yellow transition-all flex-1 text-center"
+            >
+              50 000 FCFA
+            </button>
+          </div>
+
+          <form class="space-y-6">
+            <div class="space-y-2">
+              <label class="text-xs font-bold tracking-widest text-brand-white/50 uppercase"
+                >Montant personnalisé (FCFA)</label
+              >
+              <input
+                type="number"
+                placeholder="0"
+                class="w-full bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-green transition-all text-xl"
+              />
+            </div>
+
+            <button
+              type="button"
+              class="w-full btn-primary justify-center text-lg mt-4 shadow-none"
+            >
+              VALIDER MON SOUTIEN
+              <i class="ph-bold ph-heart"></i>
+            </button>
+
+            <div
+              class="flex items-center justify-center gap-2 text-[10px] text-brand-white/30 uppercase tracking-widest mt-6"
+            >
+              <i class="ph-fill ph-lock-key"></i>
+              <span>Paiement sécurisé crypté 256-bit</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer id="propos-footer" class="py-12 px-6 border-t border-white/5 mt-20">
+      <div
+        class="max-w-3xl mx-auto flex flex-col items-center justify-center space-y-6 text-center"
+      >
+        <!-- Logo / Titre -->
+        <a href="refonte.html" class="flex items-center gap-3 group mt-4">
+          <div
+            class="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl group-hover:rotate-0 transition-all duration-300"
+          >
+            <span class="text-brand-black font-display font-bold text-2xl tracking-tighter"
+              >S2C</span
+            >
+          </div>
+          <span class="font-display font-bold text-xl tracking-wide">STRUCTURE S2C</span>
+        </a>
+
+        <p class="font-display text-brand-white/60 max-w-md">
+          Rejoignez-nous pour une expérience spirituelle et humaine unique, autour de la louange,
+          l'adoration et la prière.
+        </p>
+
+        <!-- Icônes de contact -->
+        <div
+          class="flex flex-col md:flex-row font-display justify-center gap-6 items-center flex-wrap pt-4"
+        >
+          <a
+            href="tel:+2250757414458"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+          >
+            <i class="ph ph-phone text-2xl"></i>
+            <span>07 57 41 44 58</span>
+          </a>
+          <a
+            href="tel:+2250788257233"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+          >
+            <i class="ph ph-phone text-2xl"></i>
+            <span>07 88 25 72 33</span>
+          </a>
+          <a
+            href="mailto:lastructure.s2c@gmail.com"
+            class="hover:text-brand-yellow text-brand-white/80 transition-colors flex items-center space-x-2"
+          >
+            <i class="ph ph-envelope-simple text-2xl"></i>
+            <span>lastructure.s2c@gmail.com</span>
+          </a>
+        </div>
+
+        <p class="text-[10px] text-brand-white/30 mt-8 tracking-widest font-bold uppercase pb-8">
+          &copy; 2026 - Salon de Célébration & de Contemplation - Tous droits réservés
+        </p>
+      </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('main-nav');
+        const logo = document.getElementById('nav-logo');
+        const linksContainer = document.getElementById('nav-links-container');
+        if (window.scrollY > 50) {
+          nav.classList.add('glass', 'py-4');
+          nav.classList.remove('py-8');
+          if (logo) {
+            logo.classList.remove('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.add('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.remove('justify-start');
+            linksContainer.classList.add('justify-center');
+          }
+        } else {
+          nav.classList.remove('glass', 'py-4');
+          nav.classList.add('py-8');
+          if (logo) {
+            logo.classList.add('opacity-0', 'max-w-0', 'pointer-events-none');
+            logo.classList.remove('opacity-100', 'max-w-xs', 'pointer-events-auto', 'mr-8');
+          }
+          if (linksContainer) {
+            linksContainer.classList.add('justify-start');
+            linksContainer.classList.remove('justify-center');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
