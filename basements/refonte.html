@@ -51,7 +51,7 @@
           @apply bg-brand-black/40 backdrop-blur-xl border border-white/10;
         }
         .text-gradient {
-          @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-yellow via-brand-white to-brand-green;
+          @apply bg-clip-text text-transparent bg-linear-to-r from-brand-yellow via-brand-white to-brand-green;
         }
         .btn-primary {
           @apply px-8 py-4 bg-brand-yellow text-brand-black font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg shadow-brand-yellow/20 flex items-center gap-2;
@@ -354,14 +354,14 @@
       <!-- Grid layout instead of scroll -->
       <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div
-          class="reveal aspect-[4/5] rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
+          class="reveal aspect-4/5 rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
           onclick="
             openLightbox(
               [
                 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200',
                 'https://images.unsplash.com/photo-1544427920-c49ccfb85579?q=80&w=1200',
                 'https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=1200',
-                'https://images.unsplash.com/photo-1559223607-a43c990c692c?q=80&w=1200'
+                'https://images.unsplash.com/photo-1559223607-a43c990c692c?q=80&w=1200',
               ],
               'PROJET RE-PRESENT 2024',
               'ÉDITION TULSA'
@@ -373,7 +373,7 @@
             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-60"
+            class="absolute inset-0 bg-linear-to-t from-brand-black via-transparent to-transparent opacity-60"
           ></div>
           <div class="absolute bottom-8 left-8">
             <h4 class="text-xl font-bold">PROJET RE-PRESENT 2024</h4>
@@ -389,7 +389,7 @@
               [
                 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1200',
                 'https://images.unsplash.com/photo-1515162305285-0293e4767cc2?q=80&w=1200',
-                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200'
+                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200',
               ],
               'V4 CONFERENCE',
               'ÉDITION 2023'
@@ -416,7 +416,7 @@
             openLightbox(
               [
                 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200',
-                'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1200'
+                'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1200',
               ],
               'RELATIONSHIP GOALS LIVE',
               'ÉDITION 2022'
@@ -730,7 +730,10 @@
           id="lightbox-desc"
           class="text-brand-white/40 uppercase tracking-widest text-xs font-bold mb-4"
         ></p>
-        <div id="lightbox-counter" class="text-brand-yellow font-bold text-sm bg-white/5 px-4 py-1 rounded-full inline-block"></div>
+        <div
+          id="lightbox-counter"
+          class="text-brand-yellow font-bold text-sm bg-white/5 px-4 py-1 rounded-full inline-block"
+        ></div>
       </div>
     </div>
 
@@ -814,9 +817,10 @@
       function changeImage(delta) {
         const lbImg = document.getElementById('lightbox-img');
         lbImg.style.opacity = '0';
-        
+
         setTimeout(() => {
-          currentImageIndex = (currentImageIndex + delta + currentGallery.length) % currentGallery.length;
+          currentImageIndex =
+            (currentImageIndex + delta + currentGallery.length) % currentGallery.length;
           lbImg.src = currentGallery[currentImageIndex];
           updateCounter();
           lbImg.style.opacity = '1';
@@ -831,7 +835,7 @@
       }
 
       // Keyboard Support
-      document.addEventListener('keydown', (e) => {
+      document.addEventListener('keydown', e => {
         const lightbox = document.getElementById('lightbox');
         if (lightbox.classList.contains('hidden')) return;
 

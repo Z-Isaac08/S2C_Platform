@@ -12,14 +12,14 @@ const StorePage = () => {
       name: 'T-Shirt "REVEIL" Noir',
       price: '15 000 FCFA',
       category: 'VÊTEMENTS',
-      img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800'
+      img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800',
     },
     {
       id: 2,
       name: 'Ouvrage: La Voie du Réveil',
       price: '10 000 FCFA',
       category: 'OUVRAGES',
-      img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800'
+      img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800',
     },
     {
       id: 3,
@@ -27,27 +27,26 @@ const StorePage = () => {
       price: '25 000 FCFA',
       category: 'VÊTEMENTS',
       img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800',
-      soldOut: true
+      soldOut: true,
     },
     {
       id: 4,
       name: 'Casquette "Represent" 24',
       price: '8 000 FCFA',
       category: 'ACCESSOIRES',
-      img: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800'
+      img: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800',
     },
     {
       id: 5,
       name: 'T-Shirt "TRIBES" Blanc',
       price: '15 000 FCFA',
       category: 'VÊTEMENTS',
-      img: 'https://images.unsplash.com/photo-1620012253291-b3b320d32bb5?q=80&w=800'
-    }
+      img: 'https://images.unsplash.com/photo-1620012253291-b3b320d32bb5?q=80&w=800',
+    },
   ];
 
-  const filteredProducts = filter === 'TOUT' 
-    ? products 
-    : products.filter(p => p.category === filter);
+  const filteredProducts =
+    filter === 'TOUT' ? products : products.filter(p => p.category === filter);
 
   return (
     <div className="selection:bg-brand-green selection:text-white">
@@ -69,13 +68,13 @@ const StorePage = () => {
         <div className="max-w-7xl mx-auto pt-8">
           {/* Filters */}
           <div className="flex flex-wrap gap-4 mb-12 justify-center reveal">
-            {['TOUT', 'VÊTEMENTS', 'OUVRAGES', 'ACCESSOIRES'].map((cat) => (
+            {['TOUT', 'VÊTEMENTS', 'OUVRAGES', 'ACCESSOIRES'].map(cat => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
                 className={`px-6 py-2 rounded-full border border-white/20 text-sm font-bold transition-all ${
-                  filter === cat 
-                    ? 'bg-brand-yellow text-brand-black' 
+                  filter === cat
+                    ? 'bg-brand-yellow text-brand-black'
                     : 'hover:bg-white/5 text-brand-white'
                 }`}
               >
@@ -108,10 +107,14 @@ const StorePage = () => {
                     </div>
                   )}
                 </div>
-                <h4 className={`font-bold text-xl uppercase tracking-tight ${product.soldOut ? 'text-brand-white/30' : 'text-brand-white'}`}>
+                <h4
+                  className={`font-bold text-xl uppercase tracking-tight ${product.soldOut ? 'text-brand-white/30' : 'text-brand-white'}`}
+                >
                   {product.name}
                 </h4>
-                <p className={`font-bold mt-1 ${product.soldOut ? 'text-brand-white/10' : 'text-brand-yellow'}`}>
+                <p
+                  className={`font-bold mt-1 ${product.soldOut ? 'text-brand-white/10' : 'text-brand-yellow'}`}
+                >
                   {product.price}
                 </p>
               </div>
@@ -120,10 +123,12 @@ const StorePage = () => {
             {/* Special Pack Item */}
             {filter === 'TOUT' || filter === 'OUVRAGES' ? (
               <div className="reveal group cursor-pointer delay-100">
-                <div className="relative rounded-[40px] overflow-hidden aspect-[4/5] bg-brand-black-soft mb-6 flex items-center justify-center border border-white/5">
+                <div className="relative rounded-[40px] overflow-hidden aspect-4/5 bg-brand-black-soft mb-6 flex items-center justify-center border border-white/5">
                   <div className="text-center p-6">
                     <Books className="text-4xl text-brand-green mb-4 mx-auto" weight="bold" />
-                    <h3 className="text-xl font-bold mb-2 text-brand-white">Pack Vision Complète</h3>
+                    <h3 className="text-xl font-bold mb-2 text-brand-white">
+                      Pack Vision Complète
+                    </h3>
                     <p className="text-sm text-brand-white/40 mb-4">
                       Comprenant tous nos ouvrages de la deuxième édition.
                     </p>

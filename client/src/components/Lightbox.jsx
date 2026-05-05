@@ -21,7 +21,7 @@ const Lightbox = ({ isOpen, images, initialIndex, title, desc, onClose }) => {
 
   if (!isOpen || !images || images.length === 0) return null;
 
-  const changeImage = (dir) => {
+  const changeImage = dir => {
     let next = currentIndex + dir;
     if (next < 0) next = images.length - 1;
     if (next >= images.length) next = 0;
@@ -31,12 +31,12 @@ const Lightbox = ({ isOpen, images, initialIndex, title, desc, onClose }) => {
   return (
     <div
       id="lightbox"
-      className="fixed inset-0 z-[100] bg-brand-black/95 backdrop-blur-2xl flex flex-col items-center justify-center p-4 md:p-20"
+      className="fixed inset-0 z-100 bg-brand-black/95 backdrop-blur-2xl flex flex-col items-center justify-center p-4 md:p-20"
     >
       {/* Close Button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 md:top-10 md:right-10 text-brand-white text-4xl md:text-5xl hover:text-brand-yellow transition-colors z-[110]"
+        className="absolute top-6 right-6 md:top-10 md:right-10 text-brand-white text-4xl md:text-5xl hover:text-brand-yellow transition-colors z-110"
       >
         <X />
       </button>
@@ -44,13 +44,13 @@ const Lightbox = ({ isOpen, images, initialIndex, title, desc, onClose }) => {
       {/* Navigation Arrows */}
       <button
         onClick={() => changeImage(-1)}
-        className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-[110]"
+        className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-110"
       >
         <CaretLeft />
       </button>
       <button
         onClick={() => changeImage(1)}
-        className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-[110]"
+        className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-110"
       >
         <CaretRight />
       </button>
