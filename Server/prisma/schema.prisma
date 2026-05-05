@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Member {
+  id          String   @id @default(uuid())
+  firstName   String
+  lastName    String
+  email       String   @unique
+  countryCode String   @default("+225")
+  phone       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  donations Donation[]
+}
+
+model Donation {
+  id            String        @id @default(uuid())
+  amount        Float
+  email         String // Requis par Hub2
+  phone         String // Pour le push Mobile Money
+  method        String? // "MOMO" or "CARD"
+  provider      String? // "ORANGE", "MTN", "WAVE", etc.
+  type          DonationType  @default(ONCE)
+  status        PaymentStatus @default(PENDING)
+  transactionId String?       @unique // ID fourni par Hub2
+
+  member Member? @relation(fields: [email], references: [email])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum DonationType {
+  ONCE
+  REGULAR
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
