@@ -1,32 +1,35 @@
-const express = require('express');
+import cors from 'cors';
+import 'dotenv/config';
+import express from 'express';
+import helmet from 'helmet';
+import apiRoutes from './src/routes/api.js';
+
 const app = express();
-const path = require('path');
-
-const connectDB = require('./Config/database');
-const cors = require('cors');
-
-
-// Middlewares
-app.use(express.json());
-const corsOptions = {
-  origin: ['https://lastructure-s2c.netlify.app', 'http://localhost:5173'], // sans slash à la fin
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-app.use(cors(corsOptions));
-// Connexion MongoDB
-connectDB();
-// Routes
-app.use('/api/participants', require('./Routes/participants.route'));
-app.use('/api/inscriptions', require('./Routes/inscription.route'));
-app.use('/api/soutiens', require('./Routes/soutien.route'));
-app.use('/api/engagements', require('./Routes/engagement.route'));
-app.use('/api/goodies', require('./Routes/goodie.route'));
-app.use('/api/commandes', require('./Routes/commande.route'));
-app.use('/api/commande-items', require('./Routes/article_commande.route'));
-
-
-// Lancer serveur
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+// 1. Sécurité Globale (Zero Trust)
+app.use(helmet()); // En-têtes sécurisés
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:5173', // Restriction d'origine
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
+
+// 2. Middlewares de base
+app.use(express.json()); // Parsing JSON
+app.use(express.urlencoded({ extended: true }));
+
+// 3. Routes API
+app.use('/api/v1', apiRoutes);
+
+// 4. Gestion des erreurs 404
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route non trouvée' });
+});
+
+// 5. Lancement
+app.listen(PORT, () => {
+  console.log(`🚀 Serveur S2C démarré sur http://localhost:${PORT}`);
+});
