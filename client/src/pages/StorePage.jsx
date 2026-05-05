@@ -1,283 +1,142 @@
-import { useEffect, useState } from "react";
-import { FaShoppingCart } from "react-icons/fa";
-
-const produits = [
-  {
-    _id: "1",
-    nom: "T-shirt DevFest",
-    prix: 5000,
-    tailles: ["S", "M", "L"],
-    couleurs: ["Rouge", "Noir"],
-  },
-  {
-    _id: "2",
-    nom: "Casquette JS",
-    prix: 3000,
-    tailles: ["Taille unique"],
-    couleurs: ["Bleu"],
-  },
-];
-
-const colorMap = {
-  Rouge: "#e11d48",
-  Noir: "#000000",
-  Bleu: "#2563eb",
-};
+import React, { useState } from 'react';
+import { Plus, Books } from '@phosphor-icons/react';
+import useReveal from '../hooks/useReveal';
 
 const StorePage = () => {
-  const [panier, setPanier] = useState(() => {
-    const saved = localStorage.getItem("panier");
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [form, setForm] = useState({
-    nom: "",
-    numero: "",
-    paiement: "livraison",
-  });
-  const [showModal, setShowModal] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [selectedColors, setSelectedColors] = useState({});
+  useReveal();
+  const [filter, setFilter] = useState('TOUT');
 
-  useEffect(() => {
-    localStorage.setItem("panier", JSON.stringify(panier));
-  }, [panier]);
-
-  const ajouterAuPanier = (produit) => {
-    const exist = panier.find((p) => p._id === produit._id);
-    if (exist) {
-      setPanier(
-        panier.map((p) =>
-          p._id === produit._id ? { ...p, quantite: p.quantite + 1 } : p
-        )
-      );
-    } else {
-      setPanier([...panier, { ...produit, quantite: 1 }]);
+  const products = [
+    {
+      id: 1,
+      name: 'T-Shirt "REVEIL" Noir',
+      price: '15 000 FCFA',
+      category: 'VÊTEMENTS',
+      img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800'
+    },
+    {
+      id: 2,
+      name: 'Ouvrage: La Voie du Réveil',
+      price: '10 000 FCFA',
+      category: 'OUVRAGES',
+      img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800'
+    },
+    {
+      id: 3,
+      name: 'Hoodie S2C Authentique',
+      price: '25 000 FCFA',
+      category: 'VÊTEMENTS',
+      img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800',
+      soldOut: true
+    },
+    {
+      id: 4,
+      name: 'Casquette "Represent" 24',
+      price: '8 000 FCFA',
+      category: 'ACCESSOIRES',
+      img: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800'
+    },
+    {
+      id: 5,
+      name: 'T-Shirt "TRIBES" Blanc',
+      price: '15 000 FCFA',
+      category: 'VÊTEMENTS',
+      img: 'https://images.unsplash.com/photo-1620012253291-b3b320d32bb5?q=80&w=800'
     }
-  };
+  ];
 
-  const retirerDuPanier = (id) => {
-    setPanier(panier.filter((p) => p._id !== id));
-  };
-
-  const viderPanier = () => {
-    setPanier([]);
-  };
-
-  const total = panier.reduce((acc, p) => acc + p.prix * p.quantite, 0);
-  const nombreArticles = panier.reduce((acc, p) => acc + p.quantite, 0);
-
-  const toggleColor = (produitId, couleur) => {
-    setSelectedColors((prev) => {
-      const currentColors = prev[produitId];
-      if (currentColors === couleur) {
-        // Si la couleur est déjà sélectionnée, on la désélectionne
-        const copy = { ...prev };
-        delete copy[produitId];
-        return copy;
-      } else {
-        // Sinon on remplace la sélection par la nouvelle couleur
-        return { ...prev, [produitId]: couleur };
-      }
-    });
-  };
-
-  const handleSubmitCommande = () => {
-    console.log("Commande envoyée 🛒", {
-      panier,
-      utilisateur: form,
-      couleursSelectionnees: selectedColors,
-    });
-    setShowModal(false);
-    setPanier([]);
-    setShowSidebar(false);
-    setSelectedColors({});
-    localStorage.removeItem("panier");
-  };
+  const filteredProducts = filter === 'TOUT' 
+    ? products 
+    : products.filter(p => p.category === filter);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 relative">
-      {/* Header */}
-      <div className="text-center py-20 flex justify-center items-center gap-3">
-        <h2 className="text-4xl font-bold text-normal-purple">
-          Habille-toi aux couleurs du #
-          <span className="text-normal-yellow">S2C</span>
-        </h2>
-      </div>
+    <div className="selection:bg-brand-green selection:text-white">
+      <header className="pt-48 pb-20 px-6 relative overflow-hidden bg-brand-black-soft/30 border-b border-white/5">
+        <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-brand-yellow/10 rounded-full blur-[100px]"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10 reveal">
+          <span className="section-label flex justify-center">Lifestyle Merch</span>
+          <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight text-brand-white">
+            La Boutique <br />
+            <span className="text-brand-yellow">Represent.</span>
+          </h1>
+          <p className="text-xl text-brand-white/60 leading-relaxed max-w-2xl mx-auto">
+            Découvrez notre collection de vêtements, ressources et accessoires exclusifs.
+          </p>
+        </div>
+      </header>
 
-      {/* Produits */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
-        {produits.map((prod) => (
-          <div
-            key={prod._id}
-            className="bg-white rounded-xl shadow p-4 flex flex-col"
-          >
-            <div className="w-full h-70 bg-gray-300 rounded-sm mb-4"></div>
-            <h3 className="text-xl font-semibold">{prod.nom}</h3>
-            <p className="text-sm mt-2 font-josefin">Prix : {prod.prix} FCFA</p>
-
-            <div className="flex gap-3 mt-3">
-              {prod.couleurs.map((couleur) => {
-                const isSelected = selectedColors[prod._id] === couleur;
-                return (
-                  <button
-                    key={couleur}
-                    onClick={() => toggleColor(prod._id, couleur)}
-                    type="button"
-                    aria-label={`Couleur ${couleur}`}
-                    className={`w-8 h-8 rounded-full border-2 ${
-                      isSelected ? "border-normal-yellow" : "border-gray-300"
-                    } flex items-center justify-center transition`}
-                    style={{ backgroundColor: colorMap[couleur] || couleur }}
-                  ></button>
-                );
-              })}
-            </div>
-
-            <button
-              onClick={() => ajouterAuPanier(prod)}
-              className="mt-4 bg-normal-purple text-white w-full py-2 rounded hover:bg-[#440077] transition"
-            >
-              Ajouter
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* Bouton panier fixe à droite (disparu si sidebar ouvert) */}
-      {!showSidebar && (
-        <button
-          onClick={() => setShowSidebar(true)}
-          className="fixed top-1/4 right-4 z-50 bg-normal-purple text-white p-4 rounded-full shadow-lg flex items-center justify-center hover:bg-[#440077] transition"
-          aria-label="Ouvrir le panier"
-        >
-          <FaShoppingCart className="text-2xl" />
-          {nombreArticles > 0 && (
-            <span className="absolute -top-2 -right-2 ml-1 text-xs font-bold bg-red-600 rounded-full px-2 py-0.5">
-              {nombreArticles}
-            </span>
-          )}
-        </button>
-      )}
-
-      {/* Sidebar Panier */}
-      <div
-        className={`fixed top-0 right-0 w-80 h-full bg-white shadow-lg z-40 transition-transform duration-300 ${
-          showSidebar ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-5 h-full flex flex-col justify-between">
-          <div>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">🧺 Mon panier</h2>
+      <section className="py-24 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto pt-8">
+          {/* Filters */}
+          <div className="flex flex-wrap gap-4 mb-12 justify-center reveal">
+            {['TOUT', 'VÊTEMENTS', 'OUVRAGES', 'ACCESSOIRES'].map((cat) => (
               <button
-                onClick={() => setShowSidebar(false)}
-                className="text-red-500 text-sm hover:underline"
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-6 py-2 rounded-full border border-white/20 text-sm font-bold transition-all ${
+                  filter === cat 
+                    ? 'bg-brand-yellow text-brand-black' 
+                    : 'hover:bg-white/5 text-brand-white'
+                }`}
               >
-                Fermer
+                {cat}
               </button>
-            </div>
+            ))}
+          </div>
 
-            {panier.length === 0 ? (
-              <p className="text-gray-500">Aucun article pour le moment.</p>
-            ) : (
-              <div className="space-y-4 overflow-y-auto max-h-[60vh] pr-1">
-                {panier.map((item) => (
-                  <div
-                    key={item._id}
-                    className="flex justify-between items-center border-b pb-2"
-                  >
-                    <div>
-                      <h4 className="font-medium text-gray-700">{item.nom}</h4>
-                      <p className="text-sm text-gray-500">x{item.quantite}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-gray-700">
-                        {item.prix * item.quantite} FCFA
+          {/* Product Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+            {filteredProducts.map((product, i) => (
+              <div key={product.id} className="reveal group cursor-pointer">
+                <div className="relative rounded-[40px] overflow-hidden aspect-square bg-brand-black-soft mb-6">
+                  <img
+                    src={product.img}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    alt={product.name}
+                  />
+                  {product.soldOut ? (
+                    <div className="absolute inset-x-0 bottom-4 px-4">
+                      <span className="bg-brand-green text-brand-white text-[10px] font-bold px-3 py-1 rounded-full">
+                        SOLD OUT
                       </span>
-                      <button
-                        onClick={() => retirerDuPanier(item._id)}
-                        className="text-red-500 hover:underline text-sm"
-                      >
-                        Supprimer
-                      </button>
                     </div>
+                  ) : (
+                    <div className="absolute inset-0 bg-brand-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="w-14 h-14 bg-brand-white text-brand-black rounded-full flex items-center justify-center text-xl">
+                        <Plus weight="bold" />
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <h4 className={`font-bold text-xl uppercase tracking-tight ${product.soldOut ? 'text-brand-white/30' : 'text-brand-white'}`}>
+                  {product.name}
+                </h4>
+                <p className={`font-bold mt-1 ${product.soldOut ? 'text-brand-white/10' : 'text-brand-yellow'}`}>
+                  {product.price}
+                </p>
+              </div>
+            ))}
+
+            {/* Special Pack Item */}
+            {filter === 'TOUT' || filter === 'OUVRAGES' ? (
+              <div className="reveal group cursor-pointer delay-100">
+                <div className="relative rounded-[40px] overflow-hidden aspect-[4/5] bg-brand-black-soft mb-6 flex items-center justify-center border border-white/5">
+                  <div className="text-center p-6">
+                    <Books className="text-4xl text-brand-green mb-4 mx-auto" weight="bold" />
+                    <h3 className="text-xl font-bold mb-2 text-brand-white">Pack Vision Complète</h3>
+                    <p className="text-sm text-brand-white/40 mb-4">
+                      Comprenant tous nos ouvrages de la deuxième édition.
+                    </p>
+                    <button className="px-6 py-2 bg-white/10 rounded-full text-xs font-bold hover:bg-brand-green hover:text-brand-black transition-all text-brand-white">
+                      VOIR L'OFFRE
+                    </button>
                   </div>
-                ))}
+                </div>
               </div>
-            )}
-          </div>
-
-          {panier.length > 0 && (
-            <div>
-              <button
-                onClick={viderPanier}
-                className="w-full mb-3 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
-              >
-                Vider le panier
-              </button>
-              <div className="pt-4 border-t text-lg font-semibold flex justify-between">
-                <span>Total :</span>
-                <span>{total} FCFA</span>
-              </div>
-              <button
-                onClick={() => setShowModal(true)}
-                className="w-full mt-4 bg-green-600 text-white py-2 rounded-full hover:bg-green-700 transition"
-              >
-                Valider ma commande
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Modal de commande */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl w-full max-w-md">
-            <h3 className="text-xl text-normal-purple font-bold mb-4">
-              Confirmation de commande
-            </h3>
-
-            <input
-              type="text"
-              placeholder="Nom complet"
-              className="outline-none w-full border p-2 rounded mb-3"
-              value={form.nom}
-              onChange={(e) => setForm({ ...form, nom: e.target.value })}
-            />
-            <input
-              type="tel"
-              placeholder="Numéro de téléphone"
-              className="outline-none w-full border p-2 rounded mb-3"
-              value={form.numero}
-              onChange={(e) => setForm({ ...form, numero: e.target.value })}
-            />
-            <select
-              className="w-full border p-2 rounded mb-4"
-              value={form.paiement}
-              onChange={(e) => setForm({ ...form, paiement: e.target.value })}
-            >
-              <option value="livraison">Payer à la livraison</option>
-              <option value="maintenant">Payer maintenant</option>
-            </select>
-
-            <div className="flex justify-end gap-3">
-              <button
-                className="text-gray-500"
-                onClick={() => setShowModal(false)}
-              >
-                Annuler
-              </button>
-              <button
-                className="bg-normal-purple text-white px-4 py-2 rounded hover:bg-[#440077]"
-                onClick={handleSubmitCommande}
-              >
-                Confirmer
-              </button>
-            </div>
+            ) : null}
           </div>
         </div>
-      )}
+      </section>
     </div>
   );
 };

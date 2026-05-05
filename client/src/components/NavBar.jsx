@@ -1,75 +1,100 @@
-import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router'; // Remplace 'react-router' par 'react-router-dom'
-import Logo from "../assets/logo.svg";
-import { FaTimes } from "react-icons/fa"
-import { FiMenu } from "react-icons/fi";; // ou tout autre icône pour menu
-
-const navLinks = [
-    { path: "/", label: "Accueil" },
-    { path: "/soutien", label: "Soutenir" },
-    { path: "/inscription", label: "S'inscrire" },
-    { path: "/boutique", label: "Boutique" },
-];
+import React, { useState, useEffect } from 'react';
+import { Link, NavLink } from 'react-router';
+import { List } from '@phosphor-icons/react';
 
 const NavBar = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-    return (
-        <nav className="fixed top-0 left-0 w-full z-20 bg-white shadow px-6 md:px-14 py-3 font-montserrat">
-            <div className="flex items-center justify-between">
-                {/* Logo */}
-                <div className="flex items-center space-x-2">
-                    <Link to='/'>
-                        <img src={Logo} loading="lazy" alt="logo" className="h-12 w-auto" />
-                    </Link>
-                </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-                {/* Menu (Desktop) */}
-                <div className="hidden md:flex space-x-8">
-                    {navLinks.map((link, index) => (
-                        <NavLink
-                            key={index}
-                            to={link.path}
-                            className={({ isActive }) =>
-                                isActive
-                                    ? 'text-normal-purple text-base font-bold'
-                                    : 'text-gray-700 hover:text-normal-purple-hover transition duration-200'
-                            }
-                        >
-                            {link.label}
-                        </NavLink>
-                    ))}
-                </div>
+  return (
+    <nav 
+      className={`fixed top-0 w-full z-50 px-6 transition-all duration-500 ${
+        isScrolled ? 'glass py-4' : 'py-8'
+      }`} 
+      id="main-nav"
+    >
+      <div className="max-w-7xl mx-auto flex items-center justify-between relative">
+        {/* Logo */}
+        <Link
+          to="/"
+          id="nav-logo"
+          className={`flex items-center gap-3 transition-all duration-500 whitespace-nowrap ${
+            isScrolled 
+              ? 'opacity-100 max-w-xs pointer-events-auto mr-8' 
+              : 'opacity-0 max-w-0 overflow-hidden pointer-events-none'
+          }`}
+        >
+          <div className="w-12 h-12 bg-brand-yellow rounded-xl flex items-center justify-center rotate-3 shadow-xl shrink-0">
+            <span className="text-brand-black font-display font-bold text-2xl tracking-tighter">S2C</span>
+          </div>
+          <span className="font-display font-bold text-2xl tracking-wide hidden sm:block shrink-0">STRUCTURE S2C</span>
+        </Link>
 
-                {/* Hamburger Icon (Mobile) */}
-                <div className="md:hidden">
-                    <button onClick={() => setMenuOpen(!menuOpen)} className="text-[#111]">
-                        {menuOpen ? <FaTimes size={24} /> : <FiMenu size={24} />}
-                    </button>
-                </div>
-            </div>
+        {/* Links Container */}
+        <div
+          id="nav-links-container"
+          className={`flex-1 flex transition-all duration-500 pr-8 lg:pr-0 ${
+            isScrolled ? 'justify-center' : 'justify-start'
+          }`}
+        >
+          <div className="hidden lg:flex items-center gap-10">
+            <NavLink
+              to="/"
+              className={({ isActive }) => 
+                `text-sm font-semibold transition-colors hover:text-brand-yellow ${isActive ? 'text-brand-yellow' : ''}`
+              }
+            >
+              ACCUEIL
+            </NavLink>
+            <NavLink
+              to="/soutien"
+              className={({ isActive }) => 
+                `text-sm font-semibold transition-colors hover:text-brand-yellow ${isActive ? 'text-brand-yellow' : ''}`
+              }
+            >
+              DONS
+            </NavLink>
+            <NavLink
+              to="/departements"
+              className={({ isActive }) => 
+                `text-sm font-semibold transition-colors hover:text-brand-yellow ${isActive ? 'text-brand-yellow' : ''}`
+              }
+            >
+              DÉPARTEMENTS
+            </NavLink>
+            <NavLink
+              to="/boutique"
+              className={({ isActive }) => 
+                `text-sm font-semibold transition-colors hover:text-brand-yellow ${isActive ? 'text-brand-yellow' : ''}`
+              }
+            >
+              BOUTIQUE
+            </NavLink>
+          </div>
+        </div>
 
-            {/* Mobile Menu Dropdown */}
-            {menuOpen && (
-                <div className="md:hidden mt-4 flex items-center flex-col space-y-4">
-                    {navLinks.map((link, index) => (
-                        <NavLink
-                            key={index}
-                            to={link.path}
-                            onClick={() => setMenuOpen(false)} // close on click
-                            className={({ isActive }) =>
-                                isActive
-                                    ? 'text-normal-purple font-bold'
-                                    : 'text-gray-700 hover:text-normal-purple-hover transition duration-200'
-                            }
-                        >
-                            {link.label}
-                        </NavLink>
-                    ))}
-                </div>
-            )}
-        </nav>
-    );
+        {/* CTA */}
+        <div className="flex items-center gap-6 shrink-0">
+          <Link
+            to="/inscription"
+            className="px-6 py-3 border border-brand-white/20 rounded-full text-sm font-bold bg-white/5 hover:bg-white/10 transition-all"
+          >
+            S'INSCRIRE
+          </Link>
+          <button className="text-3xl lg:hidden">
+            <List />
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
 };
 
 export default NavBar;

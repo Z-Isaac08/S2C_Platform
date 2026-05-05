@@ -1,70 +1,91 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,100..700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Palette yellow */
-  --color-light-yellow-hover: #fef9ea;
-  --color-light-yellow-active: #fdf6e0;
-  --color-light-yellow: #fcedbf;
-  
-  --color-normal-yellow: #f4c430;
-  --color-normal-yellow-hover: #dcb02b;
-  --color-normal-yellow-active: #c39d26;
-  
+  --color-brand-yellow: #fcbe0c;
+  --color-brand-yellow-light: #fdc319;
+  --color-brand-green: #00a19a;
+  --color-brand-white: #fdfdfd;
+  --color-brand-black: #1d1d1b;
+  --color-brand-black-soft: #2a2a28;
 
-  /* Palette Bleu */
-  --color-light-purple: #ede6f3;
-  --color-light-purple-hover: #e4d9ec;
-  --color-light-purple-active: #c7b0d8;
-
-  --color-normal-purple: #4b0082;
-  --color-normal-purple-hover: #440077;
-  --color-normal-purple-active: #3c0068;
-
-  --color-tertiary: #ffffff;
-  --color-tertiary-hover: #e6e6e6;
-  --color-tertiary-active: #cccccc;
-
-  --color-tertiary-dark: #bfbfbf;
-  --color-tertiary-dark-hover: #999999;
-  --color-tertiary-dark-active: #737373;
-
-  --color-tertiary-darker: #595959;
+  --font-display: 'Josefin Sans', sans-serif;
+  --font-sans: 'Montserrat', sans-serif;
 }
 
 @layer base {
-  .font-montserrat {
-    font-family: 'Montserrat', sans-serif;
+  body {
+    @apply bg-brand-black text-brand-white font-sans antialiased overflow-x-hidden;
   }
-
-  .font-josefin {
-    font-family: 'Josefin Sans', sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight text-brand-white;
   }
 }
 
-
-* {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
+@layer utilities {
+  .glass {
+    @apply bg-brand-black/40 backdrop-blur-xl border border-white/10;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-yellow via-brand-white to-brand-green;
+  }
+  .btn-primary {
+    @apply px-8 py-4 bg-brand-yellow text-brand-black font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg shadow-brand-yellow/20 flex items-center gap-2;
+  }
+  .btn-secondary {
+    @apply px-8 py-4 border-2 border-brand-green text-brand-green font-bold rounded-full hover:bg-brand-green hover:text-brand-white transition-all duration-300 flex items-center gap-2;
+  }
+  .section-label {
+    @apply text-brand-green font-bold tracking-[0.2em] uppercase text-xs mb-4 block;
+  }
 }
 
-@keyframes drawSVG {
+/* Animations */
+@keyframes scrollDown {
   0% {
-    stroke-dasharray: 0, 150;
+    transform: translateY(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
   }
   100% {
-    stroke-dasharray: 150, 0;
+    transform: translateY(10px);
+    opacity: 0;
   }
 }
-
-.animate-draw {
-  animation: drawSVG 2s ease forwards;
+.animate-scroll {
+  animation: scrollDown 2s infinite;
 }
 
-
-#root {
-  width: 100%;
+/* Custom Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
-
+/* Video Mask */
+.video-mask {
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}

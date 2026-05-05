@@ -1,203 +1,174 @@
-import React, { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
-import { Link } from "react-router";
-import Hero from "../components/Hero";
-import { indicatifs } from "../data/CountryCodes";
+import React, { useState } from 'react';
+import useReveal from '../hooks/useReveal';
 
 const SignPage = () => {
+  useReveal();
+  
   const [formData, setFormData] = useState({
-    nom: "",
-    prenoms: "",
-    email: "",
-    indicatif: "",
-    telephone: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    countryCode: '+225',
+    phone: '',
+    website: '', // Honeypot
   });
-  const [qrData, setQrData] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const validatePhone = (phone) => {
+    // Validation souple pour l'international : au moins 8 chiffres
+    return /^\d{8,15}$/.test(phone.replace(/\s/g, ''));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
+    setIsSubmitting(true);
+    setError('');
 
-    if (!captchaToken) {
-      setErrorMessage("Veuillez valider le reCAPTCHA !");
+    // 1. Check Honeypot
+    if (formData.website) {
+      console.warn("Bot detected via honeypot");
       return;
     }
 
-    if (!formData.indicatif || !formData.telephone) {
-      setErrorMessage("Veuillez renseigner un numéro de téléphone valide.");
+    // 2. Validation
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
+      setError('Tous les champs sont obligatoires.');
+      setIsSubmitting(false);
       return;
-    }    
-
-    const payload = {
-      nom: formData.nom,
-      prenoms: formData.prenoms,
-      email: formData.email,
-      telephone: `${formData.indicatif}${formData.telephone}`,
-      captcha: captchaToken,
-    };    
-
-    try {
-      const response = await fetch(
-        "https://s2c-platform.onrender.com/api/inscriptions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        setErrorMessage(result.error || "Une erreur inconnue est survenue.");
-        throw new Error(result.error || "Erreur inconnue");
-      }
-
-      setQrData(result.qrCode || "");
-      setSubmitted(true);
-    } catch (err) {
-      console.error(err);
-      setErrorMessage(err.message);
     }
-  };
 
-  const resetForm = () => {
-    setSubmitted(false);
-    setQrData("");
-    setErrorMessage("");
-    setFormData({ nom: "", prenoms: "", email: "", telephone: "", indicatif: "" });
-    setCaptchaToken(null);
+    if (!validatePhone(formData.phone)) {
+      setError('Veuillez entrer un numéro de téléphone valide.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // TODO: Send to Server
+    console.log("Form valid, sending to server...", formData);
+    
+    // Simulate delay
+    setTimeout(() => {
+      setIsSubmitting(false);
+      alert("Inscription réussie !");
+    }, 1500);
   };
 
   return (
-    <section className="bg-white text-[#222] font-montserrat mt-[72px]">
-      {!qrData ? (
-        <Hero
-          title={"S'inscrire pour le S2C #3"}
-          subtitle={"C'est juste une formalité, t'inquiète ! 😊"}
-        />
-      ) : (
-        <Hero
-          title={"Inscription réussie !!!"}
-          subtitle={"Tu as reçu ton Code QR par mail."}
-        />
-      )}
+    <div className="selection:bg-brand-green selection:text-white">
+      <header className="pt-48 pb-10 px-6 text-center reveal">
+        <h1 className="text-5xl md:text-6xl font-bold mb-4 uppercase tracking-tighter">
+          Rejoindre le <span className="text-brand-yellow italic">Mouvement</span>
+        </h1>
+        <p className="text-brand-white/50 text-xl font-display uppercase tracking-widest">
+          Inscrivez-vous pour la prochaine édition
+        </p>
+      </header>
 
-      {!submitted ? (
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-6 my-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-            <input
-              type="text"
-              name="nom"
-              placeholder="Nom"
-              value={formData.nom}
-              onChange={handleChange}
-              className="outline-none border p-3 rounded w-full mb-5 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
-              required
-            />
-
-            <input
-              type="text"
-              name="prenoms"
-              placeholder="Prénoms"
-              value={formData.prenoms}
-              onChange={handleChange}
-              className="outline-none border p-3 rounded w-full mb-5 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
-              required
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="outline-none border p-3 rounded w-full mb-5 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70 col-span-1 sm:col-span-2"
-              required
-            />
-
-            {/* Numéro avec indicatif sur une ligne complète */}
-            <div className="flex gap-3 items-center mb-8 col-span-1 sm:col-span-2">
-              <select
-                name="indicatif"
-                value={formData.indicatif}
-                onChange={handleChange}
-                className="outline-none border p-3 rounded w-1/4 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
-                required
-              >
-                {indicatifs.map((item) => (
-                  <option key={item.name} value={item.dial_code}>
-                    {item.name} ({item.dial_code})
-                  </option>
-                ))}
-              </select>
-
-              <input
-                type="text"
-                name="telephone"
-                placeholder="Numéro de téléphone"
-                value={formData.telephone}
-                onChange={handleChange}
-                className="outline-none border p-3 rounded flex-1 focus:ring-2 focus:border-0 focus:ring-normal-yellow/70"
-                required
+      <section className="py-12 px-6 max-w-2xl mx-auto reveal delay-100">
+        <div className="glass p-10 md:p-12 rounded-[40px]">
+          {error && (
+            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm font-bold text-center">
+              {error}
+            </div>
+          )}
+          
+          <form className="space-y-8" onSubmit={handleSubmit}>
+            {/* Honeypot */}
+            <div className="hidden" aria-hidden="true">
+              <input 
+                type="text" 
+                name="website" 
+                value={formData.website} 
+                onChange={(e) => setFormData({...formData, website: e.target.value})} 
+                tabIndex="-1" 
+                autoComplete="off" 
               />
             </div>
-          </div>
 
-          <div className="flex flex-col items-center justify-center gap-4">
-            {errorMessage && (
-              <div className="text-red-600 font-semibold text-center mb-4">
-                {errorMessage}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold tracking-widest text-brand-white/40 uppercase">
+                  Prénom
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Paul"
+                  value={formData.firstName}
+                  onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                  className="w-full bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-yellow transition-all text-brand-white"
+                />
               </div>
-            )}
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold tracking-widest text-brand-white/40 uppercase">
+                  Nom
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Koffi"
+                  value={formData.lastName}
+                  onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                  className="w-full bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-yellow transition-all text-brand-white"
+                />
+              </div>
+            </div>
 
-            <ReCAPTCHA
-              sitekey="6Ld_RRArAAAAAE3WGo8_qk4x4_Ew-C55CVRUcRUp"
-              onChange={(token) => setCaptchaToken(token)}
-            />
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold tracking-widest text-brand-white/40 uppercase">
+                Adresse Email
+              </label>
+              <input
+                type="email"
+                required
+                placeholder="paul.koffi@example.com"
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                className="w-full bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-yellow transition-all text-brand-white"
+              />
+            </div>
 
-            <button
-              type="submit"
-              className="bg-normal-purple w-1/2 mx-auto text-white cursor-pointer py-3 px-8 mt-4 rounded hover:bg-purple-800 transition"
-            >
-              Je m'inscris
-            </button>
-          </div>
-        </form>
-      ) : (
-        <div className="text-center my-10">
-          {qrData ? (
-            <>
-              <p className="mt-6 italic text-xl">
-                Envie de soutenir l'oeuvre ?
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold tracking-widest text-brand-white/40 uppercase">
+                Numéro de Téléphone
+              </label>
+              <div className="flex gap-4">
+                <input
+                  type="text"
+                  placeholder="+225"
+                  value={formData.countryCode}
+                  onChange={(e) => setFormData({...formData, countryCode: e.target.value})}
+                  className="w-24 bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-4 text-center text-sm font-bold text-brand-white focus:outline-none focus:border-brand-yellow transition-all"
+                />
+                <input
+                  type="tel"
+                  required
+                  placeholder="07 XX XX XX XX"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  className="flex-1 bg-brand-black/50 border border-white/10 rounded-2xl py-4 px-6 focus:outline-none focus:border-brand-yellow transition-all text-brand-white"
+                />
+              </div>
+            </div>
+
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full btn-primary justify-center text-lg uppercase tracking-widest font-display ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                {isSubmitting ? 'TRAITEMENT EN COURS...' : 'CONFIRMER MON INSCRIPTION'}
+              </button>
+              <p className="text-[10px] text-center text-brand-white/30 mt-6 uppercase tracking-[0.2em]">
+                En vous inscrivant, vous acceptez de recevoir nos actualités par email.
               </p>
-              <p className="italic font-bold text-normal-purple text-xl">
-                <Link to={"/soutien"}>CLIQUE ICI</Link>
-              </p>
-            </>
-          ) : (
-            <p className="text-gray-600 mt-4">Pas de QR Code disponible.</p>
-          )}
-
-          <button
-            onClick={resetForm}
-            className="mt-6 bg-normal-yellow cursor-pointer text-[#222] py-2 px-4 rounded hover:bg-yellow-400 transition"
-          >
-            Retour au formulaire
-          </button>
+            </div>
+          </form>
         </div>
-      )}
-    </section>
+      </section>
+    </div>
   );
 };
 
