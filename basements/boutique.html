@@ -43,7 +43,7 @@
           @apply bg-brand-black/40 backdrop-blur-xl border border-white/10;
         }
         .text-gradient {
-          @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-yellow via-brand-white to-brand-green;
+          @apply bg-clip-text text-transparent bg-linear-to-r from-brand-yellow via-brand-white to-brand-green;
         }
         .btn-primary {
           @apply px-8 py-4 bg-brand-yellow text-brand-black font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg shadow-brand-yellow/20 flex items-center gap-2;
@@ -281,7 +281,7 @@
           <!-- Item 6 -->
           <div class="reveal group cursor-pointer delay-100">
             <div
-              class="relative rounded-[40px] overflow-hidden aspect-[4/5] bg-brand-black-soft mb-6 flex items-center justify-center border border-white/5"
+              class="relative rounded-[40px] overflow-hidden aspect-4/5 bg-brand-black-soft mb-6 flex items-center justify-center border border-white/5"
             >
               <div class="text-center p-6">
                 <i class="ph-bold ph-books text-4xl text-brand-green mb-4"></i>

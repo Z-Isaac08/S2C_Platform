@@ -383,7 +383,7 @@
           </div>
         </div>
         <div
-          class="reveal aspect-[4/5] rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
+          class="reveal aspect-4/5 rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
           onclick="
             openLightbox(
               [
@@ -401,7 +401,7 @@
             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-60"
+            class="absolute inset-0 bg-linear-to-t from-brand-black via-transparent to-transparent opacity-60"
           ></div>
           <div class="absolute bottom-8 left-8">
             <h4 class="text-xl font-bold">V4 CONFERENCE</h4>
@@ -411,7 +411,7 @@
           </div>
         </div>
         <div
-          class="reveal aspect-[4/5] rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
+          class="reveal aspect-4/5 rounded-[40px] overflow-hidden bg-brand-black-soft relative group cursor-pointer"
           onclick="
             openLightbox(
               [
@@ -428,7 +428,7 @@
             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent opacity-60"
+            class="absolute inset-0 bg-linear-to-t from-brand-black via-transparent to-transparent opacity-60"
           ></div>
           <div class="absolute bottom-8 left-8">
             <h4 class="text-xl font-bold">RELATIONSHIP GOALS LIVE</h4>
@@ -691,12 +691,12 @@
     <!-- ==================== LIGHTBOX OVERLAY ==================== -->
     <div
       id="lightbox"
-      class="fixed inset-0 z-[100] bg-brand-black/95 backdrop-blur-2xl hidden flex-col items-center justify-center p-4 md:p-20"
+      class="fixed inset-0 z-100 bg-brand-black/95 backdrop-blur-2xl hidden flex-col items-center justify-center p-4 md:p-20"
     >
       <!-- Close Button -->
       <button
         onclick="closeLightbox()"
-        class="absolute top-6 right-6 md:top-10 md:right-10 text-brand-white text-4xl md:text-5xl hover:text-brand-yellow transition-colors z-[110]"
+        class="absolute top-6 right-6 md:top-10 md:right-10 text-brand-white text-4xl md:text-5xl hover:text-brand-yellow transition-colors z-110"
       >
         <i class="ph ph-x"></i>
       </button>
@@ -704,13 +704,13 @@
       <!-- Navigation Arrows -->
       <button
         onclick="changeImage(-1)"
-        class="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-[110]"
+        class="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-110"
       >
         <i class="ph ph-caret-left"></i>
       </button>
       <button
         onclick="changeImage(1)"
-        class="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-[110]"
+        class="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-brand-white text-4xl md:text-6xl hover:text-brand-yellow transition-all p-4 z-110"
       >
         <i class="ph ph-caret-right"></i>
       </button>
