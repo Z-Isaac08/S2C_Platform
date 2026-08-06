@@ -1,4 +1,5 @@
-import { prisma } from '../../lib/prisma.js';
+import { createPaymentIntent } from '../lib/hub2.js';
+import { prisma } from '../lib/prisma.js';
 import { donationSchema } from '../schemas/index.js';
 
 export const initiateDonation = async (req, res) => {
@@ -15,24 +16,22 @@ export const initiateDonation = async (req, res) => {
         method: validatedData.method,
         type: validatedData.type,
         status: 'PENDING',
-      }
+      },
     });
 
-    // 3. TODO: Appeler l'API Hub2 pour obtenir l'URL de paiement
-    // Pour l'instant, on simule une URL
-    const paymentUrl = `https://checkout.hub2.io/pay/${donation.id}`;
+    // 3. Appeler l'API Hub2 pour obtenir l'URL de paiement
+    const paymentUrl = await createPaymentIntent(donation);
 
-    res.status(200).json({ 
-      message: "Don initialisé",
+    res.status(200).json({
+      message: 'Don initialisé',
       paymentUrl,
-      donationId: donation.id 
+      donationId: donation.id,
     });
-
   } catch (error) {
     if (error.name === 'ZodError') {
       return res.status(400).json({ errors: error.errors });
     }
-    console.error("Donation Error:", error);
+    console.error('Donation Error:', error);
     res.status(500).json({ error: "Impossible d'initialiser le don." });
   }
 };

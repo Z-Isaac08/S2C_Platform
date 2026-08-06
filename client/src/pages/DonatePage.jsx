@@ -35,20 +35,42 @@ const DonatePage = () => {
 
     setIsSubmitting(true);
     
-    // TODO: Send to Server (Hub2 Integration)
-    console.log("Initiating payment with Hub2...", {
-      amount: selectedAmount,
-      type: donationType,
-      method: paymentMethod,
-      email: formData.email,
-      phone: formData.phone
-    });
+    // 3. Send to Server (Hub2 Integration)
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1'}/donations/init`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: selectedAmount,
+          type: donationType,
+          method: paymentMethod,
+          email: formData.email,
+          phone: formData.phone,
+          website: formData.website,
+        }),
+      });
 
-    // Simulate delay
-    setTimeout(() => {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || data.errors?.[0]?.message || 'Une erreur est survenue.');
+      }
+
       setIsSubmitting(false);
-      alert(`Redirection vers Hub2 pour le paiement de ${selectedAmount} FCFA...`);
-    }, 1500);
+      
+      // Redirect to Hub2 Payment URL
+      if (data.paymentUrl) {
+        window.location.href = data.paymentUrl;
+      } else {
+        alert("Paiement initialisé, mais aucune URL de redirection n'a été reçue.");
+      }
+
+    } catch (err) {
+      setError(err.message);
+      setIsSubmitting(false);
+    }
   };
 
   return (

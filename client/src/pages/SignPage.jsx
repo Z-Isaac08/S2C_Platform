@@ -45,14 +45,46 @@ const SignPage = () => {
       return;
     }
 
-    // TODO: Send to Server
-    console.log("Form valid, sending to server...", formData);
-    
-    // Simulate delay
-    setTimeout(() => {
+    // 3. Send to Server
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1'}/members/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          countryCode: formData.countryCode,
+          phone: formData.phone,
+          website: formData.website,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || data.errors?.[0]?.message || 'Une erreur est survenue.');
+      }
+
       setIsSubmitting(false);
-      alert("Inscription réussie !");
-    }, 1500);
+      alert("Inscription réussie ! Un email de confirmation vous a été envoyé.");
+      
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        countryCode: '+225',
+        phone: '',
+        website: '',
+      });
+
+    } catch (err) {
+      setError(err.message);
+      setIsSubmitting(false);
+    }
   };
 
   return (

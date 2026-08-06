@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
@@ -16,8 +16,6 @@ model Member {
   phone       String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  donations Donation[]
 }
 
 model Donation {
@@ -30,8 +28,6 @@ model Donation {
   type          DonationType  @default(ONCE)
   status        PaymentStatus @default(PENDING)
   transactionId String?       @unique // ID fourni par Hub2
-
-  member Member? @relation(fields: [email], references: [email])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

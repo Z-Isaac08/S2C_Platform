@@ -1,4 +1,5 @@
-import { prisma } from '../../lib/prisma.js';
+import { sendConfirmationEmail } from '../lib/mailer.js';
+import { prisma } from '../lib/prisma.js';
 import { memberSchema } from '../schemas/index.js';
 
 export const registerMember = async (req, res) => {
@@ -8,11 +9,11 @@ export const registerMember = async (req, res) => {
 
     // 2. Vérification existence
     const existingMember = await prisma.member.findUnique({
-      where: { email: validatedData.email }
+      where: { email: validatedData.email },
     });
 
     if (existingMember) {
-      return res.status(400).json({ error: "Cet email est déjà inscrit." });
+      return res.status(400).json({ error: 'Cet email est déjà inscrit.' });
     }
 
     // 3. Création
@@ -23,21 +24,21 @@ export const registerMember = async (req, res) => {
         email: validatedData.email,
         countryCode: validatedData.countryCode,
         phone: validatedData.phone,
-      }
+      },
     });
 
-    // TODO: Envoyer email de confirmation via Nodemailer
+    // 4. Envoyer email de confirmation via Nodemailer
+    await sendConfirmationEmail(member.email, member.firstName);
 
-    res.status(201).json({ 
-      message: "Inscription réussie !",
-      member: { id: member.id, email: member.email }
+    res.status(201).json({
+      message: 'Inscription réussie !',
+      member: { id: member.id, email: member.email },
     });
-
   } catch (error) {
     if (error.name === 'ZodError') {
       return res.status(400).json({ errors: error.errors });
     }
-    console.error("Register Error:", error);
+    console.error('Register Error:', error);
     res.status(500).json({ error: "Une erreur est survenue lors de l'inscription." });
   }
 };
